@@ -1,4 +1,5 @@
 import { useEffect, useRef, useCallback } from 'react';
+import { useTheme } from '../context/ThemeContext.jsx';
 
 class Particle {
   constructor(canvas) {
@@ -33,6 +34,9 @@ export default function ParticleBackground() {
   const particlesRef = useRef([]);
   const mouseRef = useRef({ x: null, y: null, radius: 150 });
   const animationRef = useRef(null);
+  const { resolvedTheme } = useTheme();
+
+  const isDark = resolvedTheme === 'dark';
 
   const init = useCallback(() => {
     const canvas = canvasRef.current;
@@ -42,6 +46,8 @@ export default function ParticleBackground() {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
+    const dark = document.documentElement.classList.contains('dark');
+
     const particleCount = Math.min(Math.floor(window.innerWidth / 10), 120);
     particlesRef.current = Array.from(
       { length: particleCount },
@@ -50,6 +56,10 @@ export default function ParticleBackground() {
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
+      const currentDark = document.documentElement.classList.contains('dark');
+      const particleAlpha = currentDark ? 1 : 0.6;
+      const lineAlpha = currentDark ? 0.08 : 0.06;
+      const mouseAlpha = currentDark ? 0.15 : 0.12;
 
       for (let i = 0; i < particlesRef.current.length; i++) {
         particlesRef.current[i].update(canvas);
@@ -62,7 +72,7 @@ export default function ParticleBackground() {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < 120) {
-            ctx.strokeStyle = `rgba(0, 240, 255, ${0.08 * (1 - distance / 120)})`;
+            ctx.strokeStyle = `rgba(0, 240, 255, ${lineAlpha * (1 - distance / 120)})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
             ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
@@ -78,7 +88,7 @@ export default function ParticleBackground() {
           const distance = Math.sqrt(dx * dx + dy * dy);
 
           if (distance < mouseRef.current.radius) {
-            ctx.strokeStyle = `rgba(168, 85, 247, ${0.15 * (1 - distance / mouseRef.current.radius)})`;
+            ctx.strokeStyle = `rgba(168, 85, 247, ${mouseAlpha * (1 - distance / mouseRef.current.radius)})`;
             ctx.lineWidth = 1;
             ctx.beginPath();
             ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);

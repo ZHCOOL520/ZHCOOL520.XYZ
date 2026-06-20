@@ -64,7 +64,7 @@ export default function Projects() {
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             <span className="gradient-text">项目展示</span>
           </h2>
-          <p className="text-gray-500 font-mono text-sm">{'// Featured Projects'}</p>
+          <p className="text-light-700 dark:text-gray-500 font-mono text-sm">{'// Featured Projects'}</p>
         </motion.div>
 
         {/* Projects Grid */}
@@ -79,7 +79,7 @@ export default function Projects() {
               className="group relative"
             >
               <div
-                className={`card-hover glass rounded-2xl p-6 h-full flex flex-col border border-white/5 hover:border-neon-cyan/30`}
+                className={`card-hover glass rounded-2xl p-6 h-full flex flex-col border border-black/5 dark:border-white/5 hover:border-neon-cyan/30`}
               >
                 {/* Project Icon */}
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform`}>
@@ -87,10 +87,10 @@ export default function Projects() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-lg font-bold mb-3 text-white group-hover:text-neon-cyan transition-colors">
+                <h3 className="text-lg font-bold mb-3 text-light-900 dark:text-white group-hover:text-neon-cyan transition-colors">
                   {project.title}
                 </h3>
-                <p className="text-gray-400 text-sm leading-relaxed mb-5 flex-1">
+                <p className="text-light-700 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">
                   {project.description}
                 </p>
 
@@ -99,7 +99,7 @@ export default function Projects() {
                   {project.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="px-2.5 py-1 text-xs rounded-full bg-dark-600 text-gray-400 border border-white/5 font-mono"
+                      className="px-2.5 py-1 text-xs rounded-full bg-light-200 dark:bg-dark-600 text-light-700 dark:text-gray-400 border border-black/5 dark:border-white/5 font-mono"
                     >
                       {tag}
                     </span>
@@ -107,7 +107,7 @@ export default function Projects() {
                 </div>
 
                 {/* Stars & Links */}
-                <div className="flex items-center justify-between pt-4 border-t border-white/5">
+                <div className="flex items-center justify-between pt-4 border-t border-black/5 dark:border-white/5">
                   <div className="flex items-center gap-1 text-sm text-yellow-400">
                     <span>⭐</span>
                     <span className="font-mono text-xs">{project.stars}</span>
@@ -117,7 +117,7 @@ export default function Projects() {
                       href={project.html_url}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-neon-cyan transition-colors"
+                      className="flex items-center gap-1.5 text-sm text-light-700 dark:text-gray-400 hover:text-neon-cyan transition-colors"
                     >
                       <FiGithub size={16} />
                       <span>源码</span>

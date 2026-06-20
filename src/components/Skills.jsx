@@ -56,7 +56,7 @@ export default function Skills() {
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             <span className="gradient-text">技术栈</span>
           </h2>
-          <p className="text-gray-500 font-mono text-sm">{'// Tech Stack'}</p>
+          <p className="text-light-700 dark:text-gray-500 font-mono text-sm">{'// Tech Stack'}</p>
         </motion.div>
 
         {/* Skills Grid */}
@@ -88,11 +88,11 @@ export default function Skills() {
                           size={18}
                           style={{ color: skill.color }}
                         />
-                        <span className="text-sm text-gray-300 font-medium">
+                        <span className="text-sm text-light-800 dark:text-gray-300 font-medium">
                           {skill.name}
                         </span>
                       </div>
-                      <span className="text-xs text-gray-500 font-mono">
+                      <span className="text-xs text-light-700 dark:text-gray-500 font-mono">
                         {skill.level}%
                       </span>
                     </div>
@@ -136,7 +136,7 @@ export default function Skills() {
                   className="flex flex-col items-center gap-2 p-4 rounded-xl glass-hover transition-all cursor-default"
                 >
                   <skill.icon size={36} style={{ color: skill.color }} />
-                  <span className="text-xs text-gray-400">{skill.name}</span>
+                  <span className="text-xs text-light-700 dark:text-gray-400">{skill.name}</span>
                 </motion.div>
               ))
             )}

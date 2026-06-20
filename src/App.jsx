@@ -9,7 +9,7 @@ import Footer from './components/Footer';
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-dark-900">
+    <div className="relative min-h-screen bg-light-50 dark:bg-dark-900 transition-colors duration-300">
       <ParticleBackground />
       <Navbar />
       <main className="relative z-10">

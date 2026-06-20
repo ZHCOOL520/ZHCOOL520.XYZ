@@ -30,7 +30,7 @@ export default function Hero() {
           transition={{ duration: 0.6, delay: 0.15 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
         >
-          <span className="text-white">你好，我是</span>
+          <span className="text-light-900 dark:text-white">你好，我是</span>
           <br />
           <span className="gradient-text">ZHCOOL520</span>
         </motion.h1>
@@ -49,7 +49,7 @@ export default function Hero() {
               'HarmonyOS & Android 开发者',
               'Minecraft Mod & Plugin 创作者',
             ]}
-            className="text-lg sm:text-xl md:text-2xl text-gray-400 font-mono"
+            className="text-lg sm:text-xl md:text-2xl text-light-700 dark:text-gray-400 font-mono"
           />
         </motion.div>
 
@@ -66,7 +66,7 @@ export default function Hero() {
               e.preventDefault();
               document.querySelector('#projects')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="glow-btn group px-8 py-3 rounded-lg bg-gradient-to-r from-neon-cyan to-neon-purple text-dark-900 font-semibold text-sm uppercase tracking-wider hover:scale-105 transition-transform"
+            className="glow-btn group px-8 py-3 rounded-lg bg-gradient-to-r from-neon-cyan to-neon-purple text-light-50 dark:text-dark-900 font-semibold text-sm uppercase tracking-wider hover:scale-105 transition-transform"
           >
             查看项目
             <FiArrowDown className="inline ml-2 group-hover:animate-bounce" />
@@ -94,7 +94,7 @@ export default function Hero() {
             href="https://github.com/ZHCOOL520"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-neon-cyan transition-colors"
+            className="text-gray-500 dark:text-gray-500 hover:text-neon-cyan transition-colors"
           >
             <FiGithub size={22} />
           </a>
@@ -102,13 +102,13 @@ export default function Hero() {
             href="https://space.bilibili.com/1414910921?spm_id_from=333.1007.0.0"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-neon-pink transition-colors"
+            className="text-gray-500 dark:text-gray-500 hover:text-neon-pink transition-colors"
           >
             <SiBilibili size={22} />
           </a>
           <a
             href="mailto:ZHCOOL520@qq.com"
-            className="text-gray-500 hover:text-neon-purple transition-colors"
+            className="text-gray-500 dark:text-gray-500 hover:text-neon-purple transition-colors"
           >
             <FiMail size={22} />
           </a>
@@ -116,7 +116,7 @@ export default function Hero() {
             href="https://qm.qq.com/q/1125585497"
             target="_blank"
             rel="noopener noreferrer"
-            className="text-gray-500 hover:text-neon-cyan transition-colors"
+            className="text-gray-500 dark:text-gray-500 hover:text-neon-cyan transition-colors"
             title="QQ群: 1125585497"
           >
             <FiMessageCircle size={22} />

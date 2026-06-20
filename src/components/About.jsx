@@ -31,7 +31,7 @@ export default function About() {
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             <span className="gradient-text">关于我</span>
           </h2>
-          <p className="text-gray-500 font-mono text-sm">{'// About Me'}</p>
+          <p className="text-light-700 dark:text-gray-500 font-mono text-sm">{'// About Me'}</p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
@@ -45,12 +45,12 @@ export default function About() {
           >
             <div className="relative">
               <div className="w-64 h-64 sm:w-80 sm:h-80 rounded-2xl gradient-border overflow-hidden">
-                <div className="w-full h-full bg-dark-700 flex items-center justify-center">
+                <div className="w-full h-full bg-light-100 dark:bg-dark-700 flex items-center justify-center">
                   <div className="text-center">
                     <span className="text-6xl font-bold gradient-text font-mono">
                       {'{ }'}
                     </span>
-                    <p className="text-gray-500 mt-4 text-sm font-mono">ZHCOOL520</p>
+                    <p className="text-light-700 dark:text-gray-500 mt-4 text-sm font-mono">ZHCOOL520</p>
                   </div>
                 </div>
               </div>
@@ -67,7 +67,7 @@ export default function About() {
             transition={{ duration: 0.6, delay: 0.1 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-2xl font-bold mb-6">
+            <h3 className="text-2xl font-bold mb-6 text-light-900 dark:text-white">
               <span className="gradient-text">多平台开发者</span>
             </h3>
 
@@ -79,7 +79,7 @@ export default function About() {
                   whileInView={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.4, delay: 0.1 + i * 0.08 }}
                   viewport={{ once: true }}
-                  className="flex items-start gap-3 text-gray-400"
+                  className="flex items-start gap-3 text-light-700 dark:text-gray-400"
                 >
                   <span className="text-neon-cyan mt-1 flex-shrink-0">{'>'}</span>
                   <span>{item}</span>
@@ -99,8 +99,8 @@ export default function About() {
                   className="glass rounded-xl p-4 text-center neon-border"
                 >
                   <stat.icon className="mx-auto mb-2 text-neon-cyan" size={20} />
-                  <div className="text-xl font-bold text-white">{stat.value}</div>
-                  <div className="text-xs text-gray-500">{stat.label}</div>
+                  <div className="text-xl font-bold text-light-900 dark:text-white">{stat.value}</div>
+                  <div className="text-xs text-light-700 dark:text-gray-500">{stat.label}</div>
                 </motion.div>
               ))}
             </div>

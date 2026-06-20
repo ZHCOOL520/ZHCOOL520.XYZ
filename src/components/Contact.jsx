@@ -55,7 +55,7 @@ export default function Contact() {
           <h2 className="text-3xl sm:text-4xl font-bold mb-4">
             <span className="gradient-text">联系我</span>
           </h2>
-          <p className="text-gray-500 font-mono text-sm">{'// Get In Touch'}</p>
+          <p className="text-light-700 dark:text-gray-500 font-mono text-sm">{'// Get In Touch'}</p>
         </motion.div>
 
         <div className="grid md:grid-cols-2 gap-8">
@@ -66,10 +66,10 @@ export default function Contact() {
             transition={{ duration: 0.6 }}
             viewport={{ once: true }}
           >
-            <h3 className="text-xl font-bold mb-4">
+            <h3 className="text-xl font-bold mb-4 text-light-900 dark:text-white">
               一起<span className="gradient-text">创造</span>吧
             </h3>
-            <p className="text-gray-400 leading-relaxed mb-8">
+            <p className="text-light-700 dark:text-gray-400 leading-relaxed mb-8">
               如果你有有趣的项目想法，或者想聊聊技术、开源，欢迎随时联系我！
               我始终对新技术和合作机会保持开放态度。
             </p>
@@ -88,12 +88,12 @@ export default function Contact() {
                   viewport={{ once: true }}
                   className={`flex items-center gap-4 p-4 rounded-xl glass neon-border ${link.color} transition-all group`}
                 >
-                  <div className="w-10 h-10 rounded-lg bg-dark-700 flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-10 h-10 rounded-lg bg-light-100 dark:bg-dark-700 flex items-center justify-center group-hover:scale-110 transition-transform">
                     <link.icon size={20} />
                   </div>
                   <div>
-                    <div className="font-medium text-white text-sm">{link.label}</div>
-                    <div className="text-xs text-gray-500">{link.desc}</div>
+                    <div className="font-medium text-light-900 dark:text-white text-sm">{link.label}</div>
+                    <div className="text-xs text-light-700 dark:text-gray-500">{link.desc}</div>
                   </div>
                 </motion.a>
               ))}
@@ -110,32 +110,32 @@ export default function Contact() {
           >
             <form className="space-y-5" onSubmit={(e) => e.preventDefault()}>
               <div>
-                <label className="block text-sm text-gray-400 mb-2 font-mono">{'> 姓名'}</label>
+                <label className="block text-sm text-light-700 dark:text-gray-400 mb-2 font-mono">{'> 姓名'}</label>
                 <input
                   type="text"
                   placeholder="你的名字"
-                  className="w-full px-4 py-3 rounded-lg bg-dark-700 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-neon-cyan/50 transition-colors text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-light-100 dark:bg-dark-700 border border-black/10 dark:border-white/10 text-light-900 dark:text-white placeholder-light-400 dark:placeholder-gray-600 focus:outline-none focus:border-neon-cyan/50 transition-colors text-sm"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2 font-mono">{'> 邮箱'}</label>
+                <label className="block text-sm text-light-700 dark:text-gray-400 mb-2 font-mono">{'> 邮箱'}</label>
                 <input
                   type="email"
                   placeholder="your@email.com"
-                  className="w-full px-4 py-3 rounded-lg bg-dark-700 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-neon-cyan/50 transition-colors text-sm"
+                  className="w-full px-4 py-3 rounded-lg bg-light-100 dark:bg-dark-700 border border-black/10 dark:border-white/10 text-light-900 dark:text-white placeholder-light-400 dark:placeholder-gray-600 focus:outline-none focus:border-neon-cyan/50 transition-colors text-sm"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-400 mb-2 font-mono">{'> 消息'}</label>
+                <label className="block text-sm text-light-700 dark:text-gray-400 mb-2 font-mono">{'> 消息'}</label>
                 <textarea
                   rows={4}
                   placeholder="你想说点什么..."
-                  className="w-full px-4 py-3 rounded-lg bg-dark-700 border border-white/10 text-white placeholder-gray-600 focus:outline-none focus:border-neon-cyan/50 transition-colors text-sm resize-none"
+                  className="w-full px-4 py-3 rounded-lg bg-light-100 dark:bg-dark-700 border border-black/10 dark:border-white/10 text-light-900 dark:text-white placeholder-light-400 dark:placeholder-gray-600 focus:outline-none focus:border-neon-cyan/50 transition-colors text-sm resize-none"
                 />
               </div>
               <button
                 type="submit"
-                className="glow-btn w-full py-3 rounded-lg bg-gradient-to-r from-neon-cyan to-neon-purple text-dark-900 font-semibold text-sm uppercase tracking-wider hover:scale-[1.02] transition-transform flex items-center justify-center gap-2"
+                className="glow-btn w-full py-3 rounded-lg bg-gradient-to-r from-neon-cyan to-neon-purple text-light-50 dark:text-dark-900 font-semibold text-sm uppercase tracking-wider hover:scale-[1.02] transition-transform flex items-center justify-center gap-2"
               >
                 <FiSend size={16} />
                 发送消息

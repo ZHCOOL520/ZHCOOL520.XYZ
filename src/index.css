@@ -16,9 +16,15 @@
 
   body {
     overflow-x: hidden;
+    background: #f8fafc;
+    color: #1e293b;
+    font-family: 'Inter', system-ui, sans-serif;
+    transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  .dark body {
     background: #0a0a0f;
     color: #e2e8f0;
-    font-family: 'Inter', system-ui, sans-serif;
   }
 
   ::-webkit-scrollbar {
@@ -26,6 +32,10 @@
   }
 
   ::-webkit-scrollbar-track {
+    background: #e2e8f0;
+  }
+
+  .dark ::-webkit-scrollbar-track {
     background: #0a0a0f;
   }
 
@@ -42,12 +52,23 @@
 
 @layer components {
   .glass {
-    background: rgba(18, 18, 26, 0.7);
+    background: rgba(255, 255, 255, 0.75);
     backdrop-filter: blur(12px);
+    border: 1px solid rgba(0, 0, 0, 0.06);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+
+  .dark .glass {
+    background: rgba(18, 18, 26, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .glass-hover:hover {
+    background: rgba(241, 245, 249, 0.9);
+    border-color: rgba(0, 180, 216, 0.15);
+  }
+
+  .dark .glass-hover:hover {
     background: rgba(26, 26, 46, 0.8);
     border-color: rgba(0, 240, 255, 0.2);
   }
@@ -115,8 +136,12 @@
     position: relative;
     height: 8px;
     border-radius: 4px;
-    background: rgba(255, 255, 255, 0.05);
+    background: rgba(0, 0, 0, 0.06);
     overflow: hidden;
+  }
+
+  .dark .skill-bar {
+    background: rgba(255, 255, 255, 0.05);
   }
 
   .skill-bar-fill {
