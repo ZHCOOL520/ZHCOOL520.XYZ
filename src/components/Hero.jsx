@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiArrowDown, FiGithub, FiMail } from 'react-icons/fi';
+import { FiArrowDown, FiGithub, FiMail, FiMessageCircle } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 import { Typewriter } from './Typewriter';
 
@@ -111,6 +111,15 @@ export default function Hero() {
             className="text-gray-500 hover:text-neon-purple transition-colors"
           >
             <FiMail size={22} />
+          </a>
+          <a
+            href="https://qm.qq.com/q/1125585497"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-gray-500 hover:text-neon-cyan transition-colors"
+            title="QQ群: 1125585497"
+          >
+            <FiMessageCircle size={22} />
           </a>
         </motion.div>
 

@@ -46,9 +46,15 @@ export default function Navbar() {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: 'easeOut' }}
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        scrolled ? 'glass shadow-lg shadow-neon-cyan/5' : 'bg-transparent'
-      }`}
+      className={`fixed top-0 left-0 right-0 z-50 will-change-transform ${
+        scrolled ? 'glass shadow-lg shadow-neon-cyan/5' : ''
+      }}`}
+      style={{
+        background: scrolled ? undefined : 'transparent',
+        backdropFilter: scrolled ? undefined : 'none',
+        WebkitBackdropFilter: scrolled ? undefined : 'none',
+        transform: 'translateZ(0)',
+      }}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { FiGithub, FiMail, FiSend } from 'react-icons/fi';
+import { FiGithub, FiMail, FiSend, FiMessageCircle } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 
 const socialLinks = [
@@ -30,6 +30,13 @@ const socialLinks = [
     href: 'mailto:ZHCOOL520@foxmail.com',
     color: 'hover:text-neon-blue',
     desc: 'ZHCOOL520@foxmail.com',
+  },
+  {
+    icon: FiMessageCircle,
+    label: 'QQ群',
+    href: 'https://qm.qq.com/q/1125585497',
+    color: 'hover:text-neon-cyan',
+    desc: 'QQ群: 1125585497',
   },
 ];
 
