@@ -3,7 +3,7 @@
   "private": true,
   "version": "1.0.0",
   "type": "module",
-  "homepage": "https://zhcool520.github.io/ZHCOOL520.XYZ",
+  "homepage": "https://zhcool520.xyz",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
