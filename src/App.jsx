@@ -13,6 +13,7 @@ import SkillDetail from './pages/SkillDetail';
 import ProjectDetail from './pages/ProjectDetail';
 import ResourcePreview from './components/ResourcePreview';
 import TzXyz from './pages/TzXyz';
+import TzResources from './pages/TzResources';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -47,6 +48,7 @@ export default function App() {
             <Route path="/skills/:skillId" element={<SkillDetail />} />
             <Route path="/projects/:projectId" element={<ProjectDetail />} />
             <Route path="/tz.xyz" element={<TzXyz />} />
+            <Route path="/tz-resources" element={<TzResources />} />
           </Routes>
         </main>
         <Footer />

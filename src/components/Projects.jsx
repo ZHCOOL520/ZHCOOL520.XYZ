@@ -73,8 +73,11 @@ export default function Projects() {
               viewport={{ once: true }}
               className="group relative"
             >
-              <div
-                className={`card-hover glass rounded-2xl p-6 h-full flex flex-col border border-black/5 dark:border-white/5 hover:border-neon-cyan/30`}
+              <Link
+                to={`/projects/${project.linkId}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`card-hover glass rounded-2xl p-6 h-full flex flex-col border border-black/5 dark:border-white/5 hover:border-neon-cyan/30 block`}
               >
                 {/* Project Icon */}
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform`}>
@@ -82,13 +85,8 @@ export default function Projects() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-lg font-bold mb-3">
-                  <Link
-                    to={`/projects/${project.linkId}`}
-                    className="text-light-900 dark:text-white group-hover:text-neon-cyan transition-colors"
-                  >
-                    {project.title}
-                  </Link>
+                <h3 className="text-lg font-bold mb-3 text-light-900 dark:text-white group-hover:text-neon-cyan transition-colors">
+                  {project.title}
                 </h3>
                 <p className="text-light-700 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">
                   {project.description}
@@ -112,19 +110,18 @@ export default function Projects() {
                     <span>⭐</span>
                     <span className="font-mono text-xs">{project.stars}</span>
                   </div>
-                  <div className="flex items-center gap-4">
-                    <a
-                      href={project.html_url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center gap-1.5 text-sm text-light-700 dark:text-gray-400 hover:text-neon-cyan transition-colors"
-                    >
-                      <FiGithub size={16} />
-                      <span>源码</span>
-                    </a>
-                  </div>
+                  <a
+                    href={project.html_url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    onClick={(e) => e.stopPropagation()}
+                    className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-neon-purple/10 hover:bg-neon-purple/20 text-neon-purple border border-neon-purple/25 transition-all"
+                  >
+                    <FiGithub size={16} />
+                    <span>源码</span>
+                  </a>
                 </div>
-              </div>
+              </Link>
 
               {/* Hover glow effect */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-t from-neon-cyan/5 to-transparent" />

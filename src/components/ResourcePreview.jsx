@@ -43,6 +43,8 @@ export default function ResourcePreview() {
 
                 <Link
                   to="/resources"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-neon-cyan to-neon-purple text-light-50 dark:text-dark-900 font-semibold text-xs uppercase tracking-wider hover:scale-105 transition-transform shadow-lg shadow-neon-cyan/10"
                 >
                   查看全部
@@ -53,19 +55,25 @@ export default function ResourcePreview() {
               {/* Mini cards */}
               <div className="grid grid-cols-3 gap-4">
                 {previewItems.map((item, i) => (
-                  <motion.div
+                  <Link
                     key={i}
-                    initial={{ opacity: 0, y: 15 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.35, delay: 0.2 + i * 0.08, ease: 'easeOut' }}
-                    viewport={{ once: true }}
-                    className="glass rounded-2xl p-4 text-center neon-border hover:border-neon-cyan/30 transition-all"
+                    to="/resources"
+                    target="_blank"
+                    rel="noopener noreferrer"
                   >
-                    <div className={`w-10 h-10 mx-auto mb-2 rounded-xl bg-gradient-to-br ${item.accent.replace('text-', 'from-').replace('-400', '-500/20')} flex items-center justify-center`}>
-                      <item.icon className={item.accent} size={20} />
-                    </div>
-                    <span className="text-xs text-light-700 dark:text-gray-400 font-medium">{item.label}</span>
-                  </motion.div>
+                    <motion.div
+                      initial={{ opacity: 0, y: 15 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.35, delay: 0.2 + i * 0.08, ease: 'easeOut' }}
+                      viewport={{ once: true }}
+                      className="glass rounded-2xl p-4 text-center neon-border hover:border-neon-cyan/30 cursor-pointer hover:scale-105 transition-all"
+                    >
+                      <div className={`w-10 h-10 mx-auto mb-2 rounded-xl bg-gradient-to-br ${item.accent.replace('text-', 'from-').replace('-400', '-500/20')} flex items-center justify-center`}>
+                        <item.icon className={item.accent} size={20} />
+                      </div>
+                      <span className="text-xs text-light-700 dark:text-gray-400 font-medium">{item.label}</span>
+                    </motion.div>
+                  </Link>
                 ))}
               </div>
             </div>

@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { FiSun, FiMoon, FiArrowLeft } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext.jsx';
 
 const navLinks = [
@@ -11,6 +12,13 @@ const navLinks = [
   { name: '技能', href: '#skills' },
   { name: '项目', href: '#projects' },
   { name: '联系', href: '#contact' },
+];
+
+const tzNavLinks = [
+  { name: '视频', href: '#tz-video' },
+  { name: '社区', href: '#tz-community' },
+  { name: '资源', href: '/tz-resources' },
+  { name: '联系', href: '#tz-contact' },
 ];
 
 const linkBase = 'text-sm font-medium transition-colors';
@@ -31,6 +39,12 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const { resolvedTheme, toggleTheme } = useTheme();
+  const location = useLocation();
+  const navigate = useNavigate();
+  const isTz = location.pathname === '/tz.xyz';
+  const isTzResources = location.pathname === '/tz-resources';
+  const isTzArea = isTz || isTzResources;
+  const links = isTzArea ? tzNavLinks : navLinks;
 
   useEffect(() => {
     const onScroll = () => {
@@ -45,10 +59,21 @@ export default function Navbar() {
 
   const handleNav = (href) => {
     setMobileOpen(false);
+    if (href.startsWith('/')) {
+      navigate(href);
+      return;
+    }
+    if (isTzArea && href === '#tz-home') {
+      navigate('/');
+      return;
+    }
     document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
   };
 
-  const isActive = (link) => activeSection === link.href.slice(1);
+  const isActive = (link) => {
+    if (link.href.startsWith('/')) return location.pathname === link.href;
+    return activeSection === link.href.slice(1);
+  };
 
   return (
     <motion.nav
@@ -59,9 +84,16 @@ export default function Navbar() {
       style={{ background: scrolled ? undefined : 'transparent', backdropFilter: scrolled ? undefined : 'none', WebkitBackdropFilter: scrolled ? undefined : 'none', transform: 'translateZ(0)' }}
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
-        <button onClick={() => handleNav('#hero')} className="text-xl font-bold font-mono gradient-text bg-transparent border-none cursor-pointer">
-          {'ZHCOOL520'}
-        </button>
+        {isTzArea ? (
+          <button onClick={() => navigate('/tz.xyz')} className="inline-flex items-center gap-2 text-[#A8A8AB] hover:text-[#43B9B8] transition-colors text-sm">
+            <FiArrowLeft size={16} />
+            <span className="font-bold text-white">主页</span>
+          </button>
+        ) : (
+          <button onClick={() => handleNav('#hero')} className="text-xl font-bold font-mono gradient-text bg-transparent border-none cursor-pointer">
+            {'ZHCOOL520'}
+          </button>
+        )}
 
         <div className="hidden md:flex items-center gap-4">
           <button onClick={toggleTheme}
@@ -69,7 +101,7 @@ export default function Navbar() {
             title={resolvedTheme === 'dark' ? '切换到亮色模式' : '切换到暗色模式'}>
             {resolvedTheme === 'dark' ? <FiSun size={18} /> : <FiMoon size={18} />}
           </button>
-          {navLinks.map((link) => (
+          {links.map((link) => (
             <NavItem key={link.href} link={link} isActive={isActive(link)} onClick={() => handleNav(link.href)} />
           ))}
         </div>
@@ -90,7 +122,7 @@ export default function Navbar() {
             transition={{ duration: 0.2, ease: 'easeOut' }}
             className="md:hidden glass border-t border-black/5 dark:border-white/5">
             <div className="flex flex-col py-4 px-6 gap-4">
-              {navLinks.map((link) => (
+              {links.map((link) => (
                 <NavItem key={link.href} link={link} isActive={isActive(link)} onClick={() => handleNav(link.href)} compact />
               ))}
             </div>

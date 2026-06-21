@@ -96,6 +96,8 @@ export default function Skills() {
                         {sid ? (
                           <Link
                             to={`/skills/${sid}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
                             className="text-sm text-light-800 dark:text-gray-300 font-medium hover:text-neon-cyan transition-colors"
                           >
                             {skill.name}
@@ -157,6 +159,8 @@ export default function Skills() {
                   <Link
                     key={skill.name}
                     to={`/skills/${skillId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="flex flex-col items-center gap-2 p-4 rounded-xl glass-hover transition-all cursor-pointer hover:scale-115"
                   >
                     <skill.icon size={36} style={{ color: skill.color }} />
