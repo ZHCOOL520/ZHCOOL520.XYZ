@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FiGithub } from 'react-icons/fi';
 import SectionTitle from './shared/SectionTitle.jsx';
 
@@ -82,14 +83,12 @@ export default function Projects() {
 
                 {/* Content */}
                 <h3 className="text-lg font-bold mb-3">
-                  <a
-                    href={`/#/projects/${project.linkId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                  <Link
+                    to={`/projects/${project.linkId}`}
                     className="text-light-900 dark:text-white group-hover:text-neon-cyan transition-colors"
                   >
                     {project.title}
-                  </a>
+                  </Link>
                 </h3>
                 <p className="text-light-700 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">
                   {project.description}

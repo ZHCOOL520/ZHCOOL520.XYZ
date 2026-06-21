@@ -1,4 +1,4 @@
-import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
 import ParticleBackground from './components/ParticleBackground';
 import Navbar from './components/Navbar';
@@ -12,6 +12,7 @@ import Resources from './pages/Resources';
 import SkillDetail from './pages/SkillDetail';
 import ProjectDetail from './pages/ProjectDetail';
 import ResourcePreview from './components/ResourcePreview';
+import TzXyz from './pages/TzXyz';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -34,7 +35,7 @@ function HomePage() {
 
 export default function App() {
   return (
-    <HashRouter>
+    <BrowserRouter>
       <ScrollToTop />
       <div className="relative min-h-screen bg-light-100 dark:bg-dark-900 transition-colors duration-300">
         <ParticleBackground />
@@ -45,10 +46,11 @@ export default function App() {
             <Route path="/resources" element={<Resources />} />
             <Route path="/skills/:skillId" element={<SkillDetail />} />
             <Route path="/projects/:projectId" element={<ProjectDetail />} />
+            <Route path="/tz.xyz" element={<TzXyz />} />
           </Routes>
         </main>
         <Footer />
       </div>
-    </HashRouter>
+    </BrowserRouter>
   );
 }

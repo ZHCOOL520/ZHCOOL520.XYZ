@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { FiDownload, FiMonitor, FiPackage, FiMusic, FiArrowRight } from 'react-icons/fi';
 
 const previewItems = [
@@ -40,15 +41,13 @@ export default function ResourcePreview() {
                   </p>
                 </div>
 
-                <a
-                  href="/#/resources"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  to="/resources"
                   className="flex-shrink-0 inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-neon-cyan to-neon-purple text-light-50 dark:text-dark-900 font-semibold text-xs uppercase tracking-wider hover:scale-105 transition-transform shadow-lg shadow-neon-cyan/10"
                 >
                   查看全部
                   <FiArrowRight size={14} />
-                </a>
+                </Link>
               </div>
 
               {/* Mini cards */}

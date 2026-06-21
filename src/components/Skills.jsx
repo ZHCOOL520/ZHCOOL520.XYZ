@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import {
   SiKotlin, SiTypescript, SiJavascript, SiCplusplus,
   SiAndroid, SiGit, SiGradle,
@@ -93,14 +94,12 @@ export default function Skills() {
                           style={{ color: skill.color }}
                         />
                         {sid ? (
-                          <a
-                            href={`/#/skills/${sid}`}
-                            target="_blank"
-                            rel="noopener noreferrer"
+                          <Link
+                            to={`/skills/${sid}`}
                             className="text-sm text-light-800 dark:text-gray-300 font-medium hover:text-neon-cyan transition-colors"
                           >
                             {skill.name}
-                          </a>
+                          </Link>
                         ) : (
                           <span className="text-sm text-light-800 dark:text-gray-300 font-medium">
                             {skill.name}
@@ -155,16 +154,14 @@ export default function Skills() {
                 );
 
                 return skillId ? (
-                  <a
+                  <Link
                     key={skill.name}
-                    href={`/#/skills/${skillId}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    to={`/skills/${skillId}`}
                     className="flex flex-col items-center gap-2 p-4 rounded-xl glass-hover transition-all cursor-pointer hover:scale-115"
                   >
                     <skill.icon size={36} style={{ color: skill.color }} />
                     <span className="text-xs text-light-700 dark:text-gray-400">{skill.name}</span>
-                  </a>
+                  </Link>
                 ) : (
                   <motion.div
                     key={skill.name}
