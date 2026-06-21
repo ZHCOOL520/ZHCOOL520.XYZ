@@ -97,7 +97,7 @@
         l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
         (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
         l.hash;
-      setTimeout(function() { l.replace(target); }, 600);
+      setTimeout(function() { l.replace(target); }, 0);
     })(window.location);
   </script>
 </body>
