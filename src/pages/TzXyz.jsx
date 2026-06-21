@@ -14,7 +14,7 @@ const featuredItems = [
   {
     title: '蒸汽合金炉合出创造能源？开启AE2！格雷空岛爽包Ep1',
     desc: '格雷科技空岛整合包实况，蒸汽合金炉开启创造能源，全面启动AE2自动化！',
-    image: 'https://i0.hdslb.com/bfs/archive/1ce8c8fb92ee253a9a2190d3f94a6f562016caa1.jpg@672w_378h_1c.webp',
+    image: '/images/video1.webp',
     url: 'https://www.bilibili.com/video/BV1mdCTBgEjZ',
     tag: '16.0万播放',
     tagColor: 'bg-[#FB7299]',
@@ -22,7 +22,7 @@ const featuredItems = [
   {
     title: '模块化巅峰神包！开局送AE，做出创造飞行！新星工程EP1',
     desc: '模块化巅峰整合包实况，开局赠送AE系统，一步到位做出创造飞行！',
-    image: 'https://i0.hdslb.com/bfs/archive/7988c25c5777730979cfecd713875234f3f0de13.jpg@672w_378h_1c.webp',
+    image: '/images/video2.webp',
     url: 'https://www.bilibili.com/video/BV1tWVh6NEtz',
     tag: '7.7万播放',
     tagColor: 'bg-[#FF6B35]',
@@ -30,7 +30,7 @@ const featuredItems = [
   {
     title: '资源蜜蜂版无中生有 开局送创造马达！蜂蜂空坊Ep1',
     desc: '蜜蜂版无中生有整合包实况，开局赠送创造马达，开启蜂蜂空坊全新系列冒险！',
-    image: 'https://i0.hdslb.com/bfs/archive/5e5d2990b3de178eb142c2dac94fe0d3512d4b70.jpg@672w_378h_1c.webp',
+    image: '/images/video3.webp',
     url: 'https://www.bilibili.com/video/BV1xeSRBpEt9',
     tag: '6.1万播放',
     tagColor: 'bg-[#7CC722]',
@@ -64,7 +64,7 @@ const downloadItems = [
     desc: '新群开放中，欢迎各位小伙伴加入！',
     btnLabel: '加入群聊',
     btnColor: 'bg-[#7CC722] hover:bg-[#5FA319]',
-    url: 'https://qm.qq.com/q/694474933',
+    url: 'https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933',
     code: '694474933',
   },
   {
@@ -114,10 +114,9 @@ export default function TzXyz() {
             {/* 头像 */}
             <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden flex-shrink-0 ring-4 ring-white/10 shadow-2xl">
               <img
-                src="https://i0.hdslb.com/bfs/face/57d91e3923b5234ace34cedf97851eb83a0e42a3.jpg@128w_128h_1c_1s.webp"
+                src="/images/avatar.webp"
                 alt="天真SkyerNovie"
                 className="w-full h-full object-cover"
-                referrerPolicy="no-referrer"
               />
             </div>
 
@@ -238,7 +237,6 @@ export default function TzXyz() {
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
-                    referrerPolicy="no-referrer"
                   />
                   {/* hover 遮罩 */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
