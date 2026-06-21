@@ -41,7 +41,7 @@ export default function Navbar() {
   const { resolvedTheme, toggleTheme } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
-  const isTz = location.pathname === '/tz.xyz';
+  const isTz = location.pathname === '/tz';
   const isTzResources = location.pathname === '/tz-resources';
   const isTzArea = isTz || isTzResources;
   const links = isTzArea ? tzNavLinks : navLinks;
@@ -85,7 +85,7 @@ export default function Navbar() {
     >
       <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
         {isTzArea ? (
-          <button onClick={() => navigate('/tz.xyz')} className="inline-flex items-center gap-2 text-[#A8A8AB] hover:text-[#43B9B8] transition-colors text-sm">
+          <button onClick={() => navigate('/tz')} className="inline-flex items-center gap-2 text-[#A8A8AB] hover:text-[#43B9B8] transition-colors text-sm">
             <FiArrowLeft size={16} />
             <span className="font-bold text-white">主页</span>
           </button>

@@ -47,7 +47,7 @@ export default function App() {
             <Route path="/resources" element={<Resources />} />
             <Route path="/skills/:skillId" element={<SkillDetail />} />
             <Route path="/projects/:projectId" element={<ProjectDetail />} />
-            <Route path="/tz.xyz" element={<TzXyz />} />
+            <Route path="/tz" element={<TzXyz />} />
             <Route path="/tz-resources" element={<TzResources />} />
           </Routes>
         </main>

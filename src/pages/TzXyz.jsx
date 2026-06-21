@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 import { FiExternalLink, FiMessageCircle, FiHeart } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 import { Link } from 'react-router-dom';
@@ -87,6 +88,11 @@ const stagger = {
 };
 
 export default function TzXyz() {
+  useEffect(() => {
+    document.title = '天真SkyerNovie的个人主页';
+    return () => { document.title = '天真SkyerNovie的个人主页'; };
+  }, []);
+
   return (
     <div className="min-h-screen bg-[#F0EFEB] dark:bg-dark-900 transition-colors duration-300">
       {/* ==================== Hero Section ==================== */}
@@ -111,6 +117,7 @@ export default function TzXyz() {
                 src="https://i0.hdslb.com/bfs/face/57d91e3923b5234ace34cedf97851eb83a0e42a3.jpg@128w_128h_1c_1s.webp"
                 alt="天真SkyerNovie"
                 className="w-full h-full object-cover"
+                referrerPolicy="no-referrer"
               />
             </div>
 
@@ -231,6 +238,7 @@ export default function TzXyz() {
                     src={item.image}
                     alt={item.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    referrerPolicy="no-referrer"
                   />
                   {/* hover 遮罩 */}
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
@@ -416,7 +424,9 @@ export default function TzXyz() {
             className="mt-12 text-xs text-[#9DA0A4] dark:text-gray-500"
           >
             Copyright © {new Date().getFullYear()} 天真SkyerNovie · 2.4万粉丝 · Powered by{' '}
-            <span className="text-[#43B9B8]"><FiHeart className="inline" size={12} /></span>
+            <Link to="/" className="hover:text-[#43B9B8] transition-colors">
+              <span className="text-[#43B9B8]">ZHCOOL520 <FiHeart className="inline" size={12} /></span>
+            </Link>
           </motion.p>
         </div>
       </section>
