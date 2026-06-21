@@ -8,14 +8,12 @@
   body {
     overflow-x: hidden;
     background: linear-gradient(135deg, #c8d0e8 0%, #bcc5de 25%, #cbc0de 55%, #c5cede 80%, #c8d0e8 100%);
-    background-attachment: fixed;
     color: #1e293b;
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     transition: background 0.5s ease, color 0.3s ease;
   }
   .dark body {
     background: linear-gradient(135deg, #080812 0%, #0c0c1a 30%, #100c18 60%, #0a0c14 100%);
-    background-attachment: fixed;
     color: #e2e8f0;
   }
   ::-webkit-scrollbar { width: 5px; }

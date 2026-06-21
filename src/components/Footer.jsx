@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { FiGithub, FiHeart, FiArrowRight } from 'react-icons/fi';
+import { FiGithub, FiHeart } from 'react-icons/fi';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -15,9 +15,7 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-4">
-          <Link to="/" className="btn-glass text-[11px] py-1.5 px-3 font-medium gap-1">
-            <FiArrowRight size={10} /> 主站
-          </Link>
+          <Link to="/" className="btn-glass text-[11px] py-1.5 px-3 font-medium">主站</Link>
           <a href="https://github.com/ZHCOOL520" target="_blank" rel="noopener noreferrer" className="text-neutral-400 dark:text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-200 transition-colors">
             <FiGithub size={15} />
           </a>

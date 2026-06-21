@@ -86,10 +86,6 @@ export default function TzXyz() {
   return (
     <div ref={pageRef} className="min-h-screen">
       <section className="relative pt-20 sm:pt-28 pb-6 sm:pb-8 px-6">
-        <div className="absolute inset-0 opacity-30 dark:opacity-40">
-          <div className="absolute top-20 left-10 w-96 h-96 bg-indigo-500/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-10 right-10 w-80 h-80 bg-violet-500/15 rounded-full blur-3xl" />
-        </div>
         <div className="relative max-w-6xl mx-auto">
           <div data-anim="hero" className="glass-card text-center sm:text-left flex flex-col sm:flex-row items-center gap-8">
             <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden flex-shrink-0 ring-2 ring-white/20 shadow-xl">
@@ -166,7 +162,7 @@ export default function TzXyz() {
                 <div className="p-5"><h3 className="font-semibold text-neutral-800 dark:text-neutral-100 line-clamp-2">{item.title}</h3><p className="text-neutral-500 dark:text-neutral-400 text-sm mt-1 line-clamp-2">{item.desc}</p></div>
               </a>
             ))}
-            <a data-anim="video-card" href="https://space.bilibili.com/25770857" target="_blank" rel="noopener noreferrer" className="glass-card flex flex-col items-center justify-center gap-4 py-12 group cursor-pointer">
+            <a data-anim="video-card" href="https://space.bilibili.com/25770857" target="_blank" rel="noopener noreferrer" className="glass-card flex flex-col items-center justify-center gap-4 py-12 group cursor-pointer overflow-hidden">
               <div className="relative">
                 <div className="absolute inset-0 w-20 h-20 rounded-full bg-primary/20 blur-xl group-hover:bg-primary/40 group-hover:scale-150 transition-all duration-500" />
                 <div className="relative w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center group-hover:bg-primary group-hover:text-white group-hover:scale-110 transition-all duration-300">
@@ -183,7 +179,7 @@ export default function TzXyz() {
         </div>
       </section>
 
-      <section className="py-16 sm:py-20 px-6 section-glass">
+      <section className="py-16 sm:py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <div data-anim="res-title" className="mb-6">
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50 mb-2">天真SkyerNovie的资源下载</h2>
@@ -197,11 +193,8 @@ export default function TzXyz() {
         </div>
       </section>
 
-      <section id="tz-community" className="py-20 sm:py-24 px-6 relative">
-        <div className="absolute inset-0 opacity-20 dark:opacity-30">
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-emerald-500/20 rounded-full blur-3xl" />
-        </div>
-        <div className="relative max-w-3xl mx-auto">
+      <section id="tz-community" className="py-20 sm:py-24 px-6">
+        <div className="max-w-3xl mx-auto">
           <div data-anim="com-title" className="text-center mb-14">
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50 mb-3">粉丝社区</h2>
             <p className="text-neutral-500 dark:text-neutral-400 text-sm">加入粉丝群，获取最新开播和更新通知</p>
@@ -232,7 +225,7 @@ export default function TzXyz() {
         </div>
       </section>
 
-      <section id="tz-contact" className="py-20 sm:py-24 px-6 section-glass">
+      <section id="tz-contact" className="py-20 sm:py-24 px-6">
         <div className="max-w-xl mx-auto text-center">
           <div data-anim="contact-title" className="mb-10">
             <h2 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50 mb-2">与我联系</h2>
