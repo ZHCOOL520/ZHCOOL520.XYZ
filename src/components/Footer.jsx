@@ -1,47 +1,25 @@
-import { FiGithub, FiHeart } from 'react-icons/fi';
+import { Link } from 'react-router-dom';
+import { FiGithub, FiHeart, FiArrowRight } from 'react-icons/fi';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative py-10 px-6 border-t border-black/5 dark:border-white/5 z-10">
-      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-        {/* Logo & Copyright */}
-        <div className="text-center sm:text-left">
-          <span className="text-sm font-mono gradient-text font-bold">
-            {'ZHCOOL520'}
+    <footer className="relative py-7 px-6 z-10 border-t border-black/5 dark:border-white/5 glass-light">
+      <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-3 text-sm">
+        <div className="flex items-center gap-3">
+          <span className="font-mono text-gradient font-bold text-xs">ZHCOOL520</span>
+          <span className="text-[11px] text-neutral-400 dark:text-neutral-500">
+            &copy; {currentYear} · Made with <FiHeart className="inline text-rose-400" size={10} />
           </span>
-          <p className="text-xs text-light-500 dark:text-gray-600 mt-1">
-            &copy; {currentYear} All rights reserved.
-          </p>
         </div>
 
-        {/* Center - Made with */}
-        <div className="flex items-center gap-1.5 text-xs text-light-500 dark:text-gray-600">
-          <span>Made with</span>
-          <FiHeart className="text-neon-pink" size={14} />
-          <span>by ZHCOOL520</span>
-        </div>
-
-        {/* Right - Links */}
         <div className="flex items-center gap-4">
-          <a
-            href="https://github.com/ZHCOOL520"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-light-500 dark:text-gray-500 hover:text-neon-cyan transition-colors"
-          >
-            <FiGithub size={18} />
-          </a>
-          <a
-            href="#hero"
-            onClick={(e) => {
-              e.preventDefault();
-              document.querySelector('#hero')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="text-xs text-light-500 dark:text-gray-600 hover:text-neon-cyan transition-colors font-mono"
-          >
-            {'// Back to top ↑'}
+          <Link to="/" className="btn-glass text-[11px] py-1.5 px-3 font-medium gap-1">
+            <FiArrowRight size={10} /> 主站
+          </Link>
+          <a href="https://github.com/ZHCOOL520" target="_blank" rel="noopener noreferrer" className="text-neutral-400 dark:text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-200 transition-colors">
+            <FiGithub size={15} />
           </a>
         </div>
       </div>

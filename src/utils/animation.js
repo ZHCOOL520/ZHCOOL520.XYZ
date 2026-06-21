@@ -1,33 +1,26 @@
-export const fadeUp = {
-  hidden: { opacity: 0, y: 15 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+import gsap from 'gsap';
+
+// Fade up animation
+export const fadeUp = (el, delay = 0, duration = 0.5, y = 15) => {
+  gsap.fromTo(el, { opacity: 0, y }, { opacity: 1, y: 0, duration, delay, ease: 'power2.out' });
 };
 
-export const staggerFadeUp = {
-  hidden: { opacity: 0, y: 15 },
-  visible: (i = 0) => ({
-    opacity: 1, y: 0,
-    transition: { duration: 0.35, delay: 0.08 + i * 0.04, ease: 'easeOut' },
-  }),
+// Stagger fade up animation
+export const staggerFadeUp = (els, stagger = 0.04, duration = 0.35, y = 15) => {
+  gsap.fromTo(els, { opacity: 0, y }, { opacity: 1, y: 0, duration, stagger, ease: 'power2.out' });
 };
 
-export const fadeIn = {
-  hidden: { opacity: 0 },
-  visible: (delay = 0) => ({
-    opacity: 1,
-    transition: { duration: 0.4, delay, ease: 'easeOut' },
-  }),
+// Fade in animation
+export const fadeIn = (el, delay = 0, duration = 0.4) => {
+  gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration, delay, ease: 'power2.out' });
 };
 
-export const slideLeft = {
-  hidden: { opacity: 0, x: -40 },
-  visible: { opacity: 1, x: 0, transition: { duration: 0.5, ease: 'easeOut' } },
+// Slide left animation
+export const slideLeft = (el, delay = 0) => {
+  gsap.fromTo(el, { opacity: 0, x: -40 }, { opacity: 1, x: 0, duration: 0.5, delay, ease: 'power2.out' });
 };
 
-export const slideRight = {
-  hidden: { opacity: 0, x: 40 },
-  visible: (delay = 0.1) => ({
-    opacity: 1, x: 0,
-    transition: { duration: 0.5, delay, ease: 'easeOut' },
-  }),
+// Slide right animation
+export const slideRight = (el, delay = 0) => {
+  gsap.fromTo(el, { opacity: 0, x: 40 }, { opacity: 1, x: 0, duration: 0.5, delay, ease: 'power2.out' });
 };

@@ -1,58 +1,23 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: 'class',
-  content: [
-    "./index.html",
-    "./src/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
-        neon: {
-          cyan: '#00f0ff',
-          purple: '#a855f7',
-          pink: '#ec4899',
-          blue: '#3b82f6',
+        primary: { DEFAULT: '#6366f1', light: '#818cf8', dark: '#4f46e5' },
+        neutral: {
+          50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0',
+          700: '#475569', 800: '#1e293b', 900: '#0f172a',
         },
-        dark: {
-          900: '#0a0a0f',
-          800: '#12121a',
-          700: '#1a1a2e',
-          600: '#252540',
-        },
-        light: {
-          50: '#f8fafc',
-          100: '#f1f5f9',
-          200: '#e2e8f0',
-          300: '#cbd5e1',
-          700: '#334155',
-          800: '#1e293b',
-          900: '#0f172a',
-        }
+        dark: { bg: '#0f0f1a', card: '#1a1a2e', surface: '#252540' },
       },
       fontFamily: {
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
-        sans: ['Inter', 'system-ui', 'sans-serif'],
       },
-      animation: {
-        'glow': 'glow 2s ease-in-out infinite alternate',
-        'float': 'float 6s ease-in-out infinite',
-        'typing': 'typing 3.5s steps(40, end), blink-caret .75s step-end infinite',
-      },
-      keyframes: {
-        glow: {
-          '0%': { textShadow: '0 0 10px #00f0ff, 0 0 20px #00f0ff, 0 0 40px #00f0ff' },
-          '100%': { textShadow: '0 0 20px #a855f7, 0 0 40px #a855f7, 0 0 80px #a855f7' },
-        },
-        float: {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-20px)' },
-        },
-        typing: {
-          '0%': { width: '0' },
-          '100%': { width: '100%' },
-        },
-      },
+      animation: { 'glass-pulse': 'glassPulse 4s ease-in-out infinite' },
+      keyframes: { glassPulse: { '0%,100%': { opacity: '0.8' }, '50%': { opacity: '1' } } },
     },
   },
   plugins: [],

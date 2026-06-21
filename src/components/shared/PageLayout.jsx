@@ -1,9 +1,10 @@
-import { motion } from 'framer-motion';
+import { useGsapPageEnter } from '../../utils/gsapAnimations';
 
 export default function PageLayout({ children, maxWidth = 'max-w-4xl' }) {
+  const ref = useGsapPageEnter();
   return (
     <div className="min-h-screen bg-light-100 dark:bg-dark-900 transition-colors duration-300">
-      <div className={`${maxWidth} mx-auto px-6 py-20`}>
+      <div ref={ref} className={`${maxWidth} mx-auto px-6 py-20`}>
         {children}
       </div>
     </div>

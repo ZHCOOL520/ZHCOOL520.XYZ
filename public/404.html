@@ -1,22 +1,104 @@
 <!DOCTYPE html>
-<html>
+<html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <title>Redirecting...</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>404 - 页面走丢了</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, #c8d0e8 0%, #c5cede 100%);
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      overflow: hidden;
+    }
+    .container {
+      text-align: center;
+      padding: 40px;
+      animation: fadeIn 0.6s ease-out;
+    }
+    .emoji {
+      font-size: 80px;
+      animation: bounce 1.5s ease-in-out infinite;
+    }
+    h1 {
+      font-size: 42px;
+      font-weight: 900;
+      background: linear-gradient(135deg, #6366f1, #8b5cf6);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin: 16px 0;
+    }
+    .joke {
+      font-size: 15px;
+      color: #6366f1;
+      margin: 8px 0;
+      min-height: 24px;
+      animation: fadeText 2.5s ease-in-out infinite;
+    }
+    .hint {
+      font-size: 13px;
+      color: #94a3b8;
+      margin-top: 24px;
+    }
+    .dot { animation: dotAnim 1.2s ease-in-out infinite; }
+    .dot:nth-child(2) { animation-delay: 0.2s; }
+    .dot:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes bounce { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    @keyframes fadeText { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
+    @keyframes dotAnim { 0%, 100% { opacity: 0.2; } 50% { opacity: 1; } }
+
+    .dark body { background: linear-gradient(135deg, #080812, #100c18); }
+    .dark .joke { color: #a5b4fc; }
+    .dark .hint { color: #64748b; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="emoji">🔮</div>
+    <h1>404</h1>
+    <p class="joke" id="joke">正在施展传送魔法...</p>
+    <p class="hint">即将带你回到正确的地方<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span></p>
+  </div>
+
   <script>
-    // SPA redirect for GitHub Pages
-    // Captures the current path and redirects to index.html with path as query param
+    var jokes = [
+      '这个页面去异世界冒险了...',
+      '程序员写了个 bug，把页面吃掉了 🐛',
+      '404：页面学会了隐身术 🫥',
+      '别慌，只是宇宙的一次小小抖动 🌌',
+      '你发现了一个隐藏的维度入口...',
+      '这个 URL 比我的代码还短命 😅',
+      '正在召唤页面回来...施法中 ⚡',
+      '页面：我出门买个酱油，马上回来',
+      '404 Not Found，但你的幽默感还在 ✨',
+      '放心，这不是蓝屏，只是白屏而已',
+    ];
+    var i = 0;
+    var el = document.getElementById('joke');
+    setInterval(function() {
+      el.style.opacity = '0';
+      setTimeout(function() {
+        el.textContent = jokes[i % jokes.length];
+        el.style.opacity = '1';
+        i++;
+      }, 300);
+    }, 2200);
+
+    // SPA redirect
     (function(l) {
       var pathSegmentsToKeep = 0;
-      l.replace(
-        l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
+      var target = l.protocol + '//' + l.hostname + (l.port ? ':' + l.port : '') +
         l.pathname.split('/').slice(0, 1 + pathSegmentsToKeep).join('/') + '/?/' +
         l.pathname.slice(1).split('/').slice(pathSegmentsToKeep).join('/').replace(/&/g, '~and~') +
         (l.search ? '&' + l.search.slice(1).replace(/&/g, '~and~') : '') +
-        l.hash
-      );
+        l.hash;
+      setTimeout(function() { l.replace(target); }, 600);
     })(window.location);
   </script>
-</head>
-<body></body>
+</body>
 </html>

@@ -4,9 +4,9 @@ import ParticleBackground from './components/ParticleBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import About from './components/About';
-import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
+import Skills from './components/Skills';
 import Footer from './components/Footer';
 import Resources from './pages/Resources';
 import SkillDetail from './pages/SkillDetail';
@@ -14,6 +14,8 @@ import ProjectDetail from './pages/ProjectDetail';
 import ResourcePreview from './components/ResourcePreview';
 import TzXyz from './pages/TzXyz';
 import TzResources from './pages/TzResources';
+import MouseGlow from './components/MouseGlow';
+import ScrollToTopFab from './components/ScrollToTopFab';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -40,6 +42,7 @@ export default function App() {
       <ScrollToTop />
       <div className="relative min-h-screen bg-light-100 dark:bg-dark-900 transition-colors duration-300">
         <ParticleBackground />
+        <MouseGlow />
         <Navbar />
         <main className="relative z-10">
           <Routes>
@@ -52,6 +55,7 @@ export default function App() {
           </Routes>
         </main>
         <Footer />
+        <ScrollToTopFab />
       </div>
     </BrowserRouter>
   );
