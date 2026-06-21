@@ -4,6 +4,20 @@ import {
   SiAndroid, SiGit, SiGradle,
 } from 'react-icons/si';
 import { FiCode, FiBox, FiTerminal } from 'react-icons/fi';
+import SectionTitle from './shared/SectionTitle.jsx';
+
+const skillNameToId = {
+  'Kotlin': 'kotlin',
+  'Java': 'java',
+  'C++': 'cpp',
+  'TypeScript': 'typescript',
+  'JavaScript': 'javascript',
+  'Android': 'android',
+  'HarmonyOS': 'harmonyos',
+  'Minecraft Forge': 'minecraft-forge',
+  'Minecraft Mod': 'minecraft-mod',
+  'Minecraft Plugin': 'minecraft-plugin',
+};
 
 const skillCategories = [
   {
@@ -45,19 +59,7 @@ export default function Skills() {
   return (
     <section id="skills" className="relative py-24 px-6 z-10">
       <div className="max-w-6xl mx-auto">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="gradient-text">技术栈</span>
-          </h2>
-          <p className="text-light-700 dark:text-gray-500 font-mono text-sm">{'// Tech Stack'}</p>
-        </motion.div>
+        <SectionTitle title="技术栈" subtitle="// Tech Stack" />
 
         {/* Skills Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -74,7 +76,9 @@ export default function Skills() {
                 {category.title}
               </h3>
               <div className="space-y-5">
-                {category.skills.map((skill, si) => (
+                {category.skills.map((skill, si) => {
+                  const sid = skillNameToId[skill.name];
+                  return (
                   <motion.div
                     key={si}
                     initial={{ opacity: 0, x: -10 }}
@@ -88,9 +92,20 @@ export default function Skills() {
                           size={18}
                           style={{ color: skill.color }}
                         />
-                        <span className="text-sm text-light-800 dark:text-gray-300 font-medium">
-                          {skill.name}
-                        </span>
+                        {sid ? (
+                          <a
+                            href={`/#/skills/${sid}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-sm text-light-800 dark:text-gray-300 font-medium hover:text-neon-cyan transition-colors"
+                          >
+                            {skill.name}
+                          </a>
+                        ) : (
+                          <span className="text-sm text-light-800 dark:text-gray-300 font-medium">
+                            {skill.name}
+                          </span>
+                        )}
                       </div>
                       <span className="text-xs text-light-700 dark:text-gray-500 font-mono">
                         {skill.level}%
@@ -110,7 +125,8 @@ export default function Skills() {
                       />
                     </div>
                   </motion.div>
-                ))}
+                  );
+                })}
               </div>
             </motion.div>
           ))}
@@ -129,16 +145,37 @@ export default function Skills() {
           </h3>
           <div className="flex flex-wrap justify-center gap-4">
             {skillCategories.flatMap((cat) =>
-              cat.skills.map((skill) => (
-                <motion.div
-                  key={skill.name}
-                  whileHover={{ scale: 1.15 }}
-                  className="flex flex-col items-center gap-2 p-4 rounded-xl glass-hover transition-all cursor-default"
-                >
-                  <skill.icon size={36} style={{ color: skill.color }} />
-                  <span className="text-xs text-light-700 dark:text-gray-400">{skill.name}</span>
-                </motion.div>
-              ))
+              cat.skills.map((skill) => {
+                const skillId = skillNameToId[skill.name];
+                const content = (
+                  <div className="flex flex-col items-center gap-2">
+                    <skill.icon size={36} style={{ color: skill.color }} />
+                    <span className="text-xs text-light-700 dark:text-gray-400">{skill.name}</span>
+                  </div>
+                );
+
+                return skillId ? (
+                  <a
+                    key={skill.name}
+                    href={`/#/skills/${skillId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl glass-hover transition-all cursor-pointer hover:scale-115"
+                  >
+                    <skill.icon size={36} style={{ color: skill.color }} />
+                    <span className="text-xs text-light-700 dark:text-gray-400">{skill.name}</span>
+                  </a>
+                ) : (
+                  <motion.div
+                    key={skill.name}
+                    whileHover={{ scale: 1.15 }}
+                    className="flex flex-col items-center gap-2 p-4 rounded-xl glass-hover transition-all cursor-default"
+                  >
+                    <skill.icon size={36} style={{ color: skill.color }} />
+                    <span className="text-xs text-light-700 dark:text-gray-400">{skill.name}</span>
+                  </motion.div>
+                );
+              })
             )}
           </div>
         </motion.div>

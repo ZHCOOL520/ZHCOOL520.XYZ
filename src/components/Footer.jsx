@@ -9,7 +9,7 @@ export default function Footer() {
         {/* Logo & Copyright */}
         <div className="text-center sm:text-left">
           <span className="text-sm font-mono gradient-text font-bold">
-            {'<ZHCOOL520 />'}
+            {'ZHCOOL520'}
           </span>
           <p className="text-xs text-light-500 dark:text-gray-600 mt-1">
             &copy; {currentYear} All rights reserved.

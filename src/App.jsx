@@ -1,3 +1,5 @@
+import { HashRouter, Routes, Route, useLocation } from 'react-router-dom';
+import { useEffect } from 'react';
 import ParticleBackground from './components/ParticleBackground';
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
@@ -6,20 +8,47 @@ import Skills from './components/Skills';
 import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Footer from './components/Footer';
+import Resources from './pages/Resources';
+import SkillDetail from './pages/SkillDetail';
+import ProjectDetail from './pages/ProjectDetail';
+import ResourcePreview from './components/ResourcePreview';
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
+  return null;
+}
+
+function HomePage() {
+  return (
+    <>
+      <Hero />
+      <ResourcePreview />
+      <About />
+      <Skills />
+      <Projects />
+      <Contact />
+    </>
+  );
+}
 
 export default function App() {
   return (
-    <div className="relative min-h-screen bg-light-50 dark:bg-dark-900 transition-colors duration-300">
-      <ParticleBackground />
-      <Navbar />
-      <main className="relative z-10">
-        <Hero />
-        <About />
-        <Skills />
-        <Projects />
-        <Contact />
-      </main>
-      <Footer />
-    </div>
+    <HashRouter>
+      <ScrollToTop />
+      <div className="relative min-h-screen bg-light-100 dark:bg-dark-900 transition-colors duration-300">
+        <ParticleBackground />
+        <Navbar />
+        <main className="relative z-10">
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/resources" element={<Resources />} />
+            <Route path="/skills/:skillId" element={<SkillDetail />} />
+            <Route path="/projects/:projectId" element={<ProjectDetail />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </HashRouter>
   );
 }

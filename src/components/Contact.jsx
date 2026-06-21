@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { FiGithub, FiMail, FiSend, FiMessageCircle } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
+import SectionTitle from './shared/SectionTitle.jsx';
 
 const socialLinks = [
   {
@@ -44,19 +45,7 @@ export default function Contact() {
   return (
     <section id="contact" className="relative py-24 px-6 z-10">
       <div className="max-w-4xl mx-auto">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="gradient-text">联系我</span>
-          </h2>
-          <p className="text-light-700 dark:text-gray-500 font-mono text-sm">{'// Get In Touch'}</p>
-        </motion.div>
+        <SectionTitle title="联系我" subtitle="// Get In Touch" />
 
         <div className="grid md:grid-cols-2 gap-8">
           {/* Left - Contact Info */}

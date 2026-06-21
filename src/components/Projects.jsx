@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { FiGithub } from 'react-icons/fi';
+import SectionTitle from './shared/SectionTitle.jsx';
 
 const projects = [
   {
@@ -10,6 +11,7 @@ const projects = [
     icon: '🎵',
     stars: 1,
     html_url: 'https://github.com/ZHCOOL520/EchoMusicPluginst',
+    linkId: 'echomusic-pluginst',
   },
   {
     title: 'AUTOcall',
@@ -19,6 +21,7 @@ const projects = [
     icon: '📱',
     stars: 3,
     html_url: 'https://github.com/ZHCOOL520/AUTOcall',
+    linkId: 'auto-call',
   },
   {
     title: 'HarmonyOS-McCraftLaucher',
@@ -28,6 +31,7 @@ const projects = [
     icon: '🎮',
     stars: 2,
     html_url: 'https://github.com/ZHCOOL520/HarmonyOS-McCraftLaucher',
+    linkId: 'mccraft-launcher',
   },
   {
     title: 'HarmonyOS-AUTOcall',
@@ -37,6 +41,7 @@ const projects = [
     icon: '📲',
     stars: 1,
     html_url: 'https://github.com/ZHCOOL520/HarmonyOS-AUTOcall',
+    linkId: 'harmonyos-autocall',
   },
   {
     title: 'LoliPickaxe-1.20.1AI',
@@ -46,6 +51,7 @@ const projects = [
     icon: '⛏️',
     stars: 2,
     html_url: 'https://github.com/ZHCOOL520/LoliPickaxe-1.20.1AI',
+    linkId: 'lolipickaxe',
   },
 ];
 
@@ -53,19 +59,7 @@ export default function Projects() {
   return (
     <section id="projects" className="relative py-24 px-6 z-10">
       <div className="max-w-6xl mx-auto">
-        {/* Section Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl sm:text-4xl font-bold mb-4">
-            <span className="gradient-text">项目展示</span>
-          </h2>
-          <p className="text-light-700 dark:text-gray-500 font-mono text-sm">{'// Featured Projects'}</p>
-        </motion.div>
+        <SectionTitle title="项目展示" subtitle="// Featured Projects" />
 
         {/* Projects Grid */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -87,8 +81,15 @@ export default function Projects() {
                 </div>
 
                 {/* Content */}
-                <h3 className="text-lg font-bold mb-3 text-light-900 dark:text-white group-hover:text-neon-cyan transition-colors">
-                  {project.title}
+                <h3 className="text-lg font-bold mb-3">
+                  <a
+                    href={`/#/projects/${project.linkId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-light-900 dark:text-white group-hover:text-neon-cyan transition-colors"
+                  >
+                    {project.title}
+                  </a>
                 </h3>
                 <p className="text-light-700 dark:text-gray-400 text-sm leading-relaxed mb-5 flex-1">
                   {project.description}

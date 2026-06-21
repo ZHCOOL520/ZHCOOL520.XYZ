@@ -14,7 +14,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.5, ease: 'easeOut' }}
           className="inline-flex items-center gap-3 mb-6 px-4 py-2 rounded-full border border-neon-cyan/20 bg-neon-cyan/5"
         >
           <span className="w-2 h-2 rounded-full bg-neon-cyan animate-pulse" />
@@ -25,9 +25,9 @@ export default function Hero() {
 
         {/* Main Heading */}
         <motion.h1
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.15 }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.15 }}
           className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold mb-6 leading-tight"
         >
           <span className="text-light-900 dark:text-white">你好，我是</span>
@@ -37,9 +37,9 @@ export default function Hero() {
 
         {/* Typewriter subtitle */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.3 }}
           className="mb-10"
         >
           <Typewriter
@@ -55,9 +55,9 @@ export default function Hero() {
 
         {/* CTA Buttons */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 25 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.45 }}
           className="flex flex-wrap items-center justify-center gap-4"
         >
           <a
@@ -87,7 +87,7 @@ export default function Hero() {
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6, delay: 0.6 }}
+          transition={{ duration: 0.5, ease: 'easeOut', delay: 0.6 }}
           className="flex items-center justify-center gap-6 mt-12"
         >
           <a
@@ -126,8 +126,8 @@ export default function Hero() {
         {/* Scroll indicator */}
         <motion.div
           initial={{ opacity: 0 }}
-          animate={{ opacity: 0.5, y: [0, 10, 0] }}
-          transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+          animate={{ opacity: 0.45, y: [0, 6, 0] }}
+          transition={{ duration: 2.5, repeat: Infinity, delay: 1, ease: 'easeInOut' }}
           className="absolute bottom-10 left-1/2 -translate-x-1/2"
         >
           <FiArrowDown className="text-neon-cyan/50" size={24} />
