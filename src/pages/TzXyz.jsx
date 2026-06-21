@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 const socialLinks = [
   { icon: SiBilibili, label: 'B站主页', url: 'https://space.bilibili.com/25770857', color: 'hover:bg-[#FB7299]' },
   { icon: FiExternalLink, label: '直播间', url: 'https://live.bilibili.com/303427', color: 'hover:bg-[#FF6B35]' },
-  { icon: FiMessageCircle, label: 'QQ群', url: 'https://qm.qq.com/q/768587905', color: 'hover:bg-[#43B9B8]' },
+  { icon: FiMessageCircle, label: 'QQ群', url: 'https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933', color: 'hover:bg-[#43B9B8]' },
 ];
 
 const featuredItems = [
