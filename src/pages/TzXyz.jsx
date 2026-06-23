@@ -1,12 +1,53 @@
-import { useRef } from 'react';
+import { useRef, useState, useEffect, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FiExternalLink, FiMessageCircle, FiHeart, FiUsers, FiClock, FiPlayCircle, FiStar, FiPackage } from 'react-icons/fi';
+import { FiExternalLink, FiMessageCircle, FiHeart, FiUsers, FiClock, FiPlayCircle, FiStar, FiPackage, FiThumbsUp } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
+
+const COUNT_API = '/api/count';
+
+function TdButton() {
+  const [count, setCount] = useState(0);
+  const [animating, setAnimating] = useState(false);
+
+  useEffect(() => {
+    fetch(COUNT_API)
+      .then(r => r.json())
+      .then(data => setCount(data.count))
+      .catch(() => {
+        const saved = localStorage.getItem('tz_td_count');
+        if (saved) setCount(parseInt(saved, 10));
+      });
+  }, []);
+
+  const handleTd = useCallback(() => {
+    setAnimating(true);
+    setCount(c => c + 1);
+
+    fetch(COUNT_API, { method: 'POST' })
+      .then(r => r.json())
+      .then(data => setCount(data.count))
+      .catch(() => {})
+      .finally(() => setTimeout(() => setAnimating(false), 600));
+  }, []);
+
+  const display = count >= 10000 ? (count / 10000).toFixed(1).replace(/\.0$/, '') + '万' : count.toLocaleString('zh-CN');
+
+  return (
+    <button onClick={handleTd}
+      className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-300 liquid-glass-light text-neutral-600 dark:text-neutral-300 hover:scale-110 hover:shadow-lg hover:text-rose-500 hover:bg-rose-500/5 active:scale-95">
+      <FiThumbsUp size={15} className={`transition-all duration-300 ${animating ? 'scale-125 -rotate-12 text-rose-500' : ''}`} />
+      <span>TD</span>
+      <span className={`text-xs font-mono tabular-nums transition-all duration-200 ${animating ? 'text-rose-500 font-bold' : ''}`}>
+        {display}
+      </span>
+    </button>
+  );
+}
 
 const socialLinks = [
   { icon: SiBilibili, label: 'B站主页', url: 'https://space.bilibili.com/25770857', color: 'hover:bg-[#FB7299]' },
@@ -100,6 +141,7 @@ export default function TzXyz() {
                     <link.icon size={16} /><span>{link.label}</span>
                   </a>
                 ))}
+                <TdButton />
               </div>
             </div>
           </div>
