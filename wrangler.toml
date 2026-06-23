@@ -1,8 +1,0 @@
-name = "zhcool"
-main = "workers/count-worker.js"
-compatibility_date = "2025-06-01"
-
-[[kv_namespaces]]
-binding = "COUNTS"
-id = "5bc29dd2b7074b6e9be0aafadc541bb1"
-preview_id = "5bc29dd2b7074b6e9be0aafadc541bb1"

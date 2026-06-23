@@ -8,16 +8,16 @@ import { Link } from 'react-router-dom';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const COUNT_API = '/api/count';
+const COUNT_NS = 'zhcool520';
 
 function TdButton() {
   const [count, setCount] = useState(0);
   const [animating, setAnimating] = useState(false);
 
   useEffect(() => {
-    fetch(COUNT_API)
+    fetch(`https://api.countapi.xyz/get/${COUNT_NS}/tz-td`)
       .then(r => r.json())
-      .then(data => setCount(data.count))
+      .then(data => data?.value !== undefined && setCount(data.value))
       .catch(() => {
         const saved = localStorage.getItem('tz_td_count');
         if (saved) setCount(parseInt(saved, 10));
@@ -28,9 +28,9 @@ function TdButton() {
     setAnimating(true);
     setCount(c => c + 1);
 
-    fetch(COUNT_API, { method: 'POST' })
+    fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/tz-td`)
       .then(r => r.json())
-      .then(data => setCount(data.count))
+      .then(data => data?.value !== undefined && setCount(data.value))
       .catch(() => {})
       .finally(() => setTimeout(() => setAnimating(false), 600));
   }, []);
