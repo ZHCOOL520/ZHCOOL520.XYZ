@@ -1,24 +1,27 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
+import { useTheme } from '../context/ThemeContext.jsx';
 
 export default function MouseGlow() {
   const glowRef = useRef(null);
+  const posRef = useRef({ x: -999, y: -999 });
+  const { mouseGlow } = useTheme();
+  const enabledRef = useRef(mouseGlow);
+
+  useEffect(() => { enabledRef.current = mouseGlow; }, [mouseGlow]);
 
   useEffect(() => {
     const glow = glowRef.current;
     if (!glow) return;
 
-    const xTo = gsap.quickTo(glow, 'x', { duration: 0.6, ease: 'power2' });
-    const yTo = gsap.quickTo(glow, 'y', { duration: 0.6, ease: 'power2' });
-
     const onMove = (e) => {
-      xTo(e.clientX);
-      yTo(e.clientY);
-      gsap.to(glow, { opacity: 1, duration: 0.3, overwrite: 'auto' });
+      posRef.current = { x: e.clientX, y: e.clientY };
+      if (!enabledRef.current) return;
+      gsap.set(glow, { x: e.clientX, y: e.clientY, opacity: 1 });
     };
 
     const onLeave = () => {
-      gsap.to(glow, { opacity: 0, duration: 0.3 });
+      gsap.to(glow, { opacity: 0, duration: 0.15 });
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
@@ -30,5 +33,16 @@ export default function MouseGlow() {
     };
   }, []);
 
-  return <div ref={glowRef} className="mouse-glow" />
+  useEffect(() => {
+    const glow = glowRef.current;
+    if (!glow) return;
+    if (mouseGlow) {
+      const { x, y } = posRef.current;
+      if (x > -900) gsap.set(glow, { x, y, opacity: 1 });
+    } else {
+      gsap.to(glow, { opacity: 0, duration: 0.15 });
+    }
+  }, [mouseGlow]);
+
+  return <div ref={glowRef} className="mouse-glow" style={{ opacity: 0 }} />
 }

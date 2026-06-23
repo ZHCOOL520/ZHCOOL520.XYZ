@@ -53,6 +53,7 @@ const socialLinks = [
   { icon: SiBilibili, label: 'B站主页', url: 'https://space.bilibili.com/25770857', color: 'hover:bg-[#FB7299]' },
   { icon: FiExternalLink, label: '直播间', url: 'https://live.bilibili.com/303427', color: 'hover:bg-[#FF6B35]' },
   { icon: FiMessageCircle, label: 'QQ群', url: 'https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933', color: 'hover:bg-[#43B9B8]' },
+  { icon: FiExternalLink, label: '抖音', url: 'https://v.douyin.com/TCPDQ1sFpEA/', color: 'hover:bg-[#000000]' },
 ];
 
 const featuredItems = [
@@ -134,7 +135,7 @@ export default function TzXyz() {
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold text-neutral-800 dark:text-neutral-50 mb-2">天真SkyerNovie</h1>
-              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-lg">Minecraft实况主 · 模组游戏达人 · 每晚8-10直播</p>
+              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed max-w-lg">Minecraft实况主 · 模组游戏达人 · 每晚8点-10点直播（特殊情况可能暂停，详见B站动态或QQ群通知）</p>
               <div className="flex items-center gap-2.5 mt-5 justify-center sm:justify-start flex-wrap">
                 {socialLinks.map((link, i) => (
                   <a key={i} className="tz-hero-btn inline-flex items-center gap-1.5 px-4 py-2 rounded-xl liquid-glass-light text-sm font-medium transition-all duration-300 hover:scale-110 hover:shadow-lg hover:text-white" href={link.url} target="_blank" rel="noopener noreferrer">
@@ -173,12 +174,12 @@ export default function TzXyz() {
             </div>
             <div className="tz-about-stat glass-card-sm text-center">
               <FiClock className="mx-auto mb-1.5 text-amber-500" size={22} />
-              <div className="text-xl font-black text-neutral-800 dark:text-neutral-50">每日</div>
+              <div className="text-xl font-black text-neutral-800 dark:text-neutral-50">3天一次</div>
               <div className="text-[11px] text-neutral-500 dark:text-neutral-400">更新频率</div>
             </div>
             <div className="tz-about-stat glass-card-sm text-center">
               <FiStar className="mx-auto mb-1.5 text-rose-500" size={22} />
-              <div className="text-xl font-black text-neutral-800 dark:text-neutral-50">模组整合包</div>
+              <div className="text-xl font-black text-neutral-800 dark:text-neutral-50">整合包实况</div>
               <div className="text-[11px] text-neutral-500 dark:text-neutral-400">核心领域</div>
             </div>
           </div>
@@ -264,7 +265,7 @@ export default function TzXyz() {
               </div>
             ))}
           </div>
-          <p className="tz-com-footer text-center mt-10 text-xs text-neutral-400 dark:text-neutral-500">{'// 每晚8-10点直播，周二周五休息 · 视频3-4天更新'}</p>
+          <p className="tz-com-footer text-center mt-10 text-xs text-neutral-400 dark:text-neutral-500">{'// 每晚8点-10点直播 · 特殊情况可能暂停，详见B站动态或QQ群'}</p>
         </div>
       </section>
 
@@ -277,7 +278,7 @@ export default function TzXyz() {
           <div className="grid sm:grid-cols-2 gap-4">
             <a className="tz-contact-card glass-card flex items-center gap-4 group transition-all hover:shadow-lg" href="https://live.bilibili.com/303427" target="_blank" rel="noopener noreferrer">
               <div className="w-11 h-11 rounded-xl bg-orange-500/10 flex items-center justify-center text-orange-500 group-hover:bg-orange-500 group-hover:text-white transition-all duration-300"><FiExternalLink size={18} /></div>
-              <div className="text-left"><div className="font-medium text-neutral-800 dark:text-neutral-100 text-sm">B站直播间</div><div className="text-xs text-neutral-500">每晚8-10点直播</div></div>
+              <div className="text-left"><div className="font-medium text-neutral-800 dark:text-neutral-100 text-sm">B站直播间</div><div className="text-xs text-neutral-500">每晚8点-10点直播 · 特殊情况可能暂停，详见B站动态</div></div>
             </a>
             <a className="tz-contact-card glass-card flex items-center gap-4 group transition-all hover:shadow-lg" href="https://space.bilibili.com/25770857" target="_blank" rel="noopener noreferrer">
               <div className="w-11 h-11 rounded-xl bg-indigo-500/10 flex items-center justify-center text-indigo-500 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300"><FiMessageCircle size={18} /></div>

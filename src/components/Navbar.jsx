@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import gsap from 'gsap';
 import { HiMenuAlt3, HiX } from 'react-icons/hi';
-import { FiSun, FiMoon } from 'react-icons/fi';
+import { FiSun, FiMoon, FiMonitor, FiMousePointer, FiSettings } from 'react-icons/fi';
 import { useTheme } from '../context/ThemeContext.jsx';
 
 const navLinks = [
@@ -20,10 +20,65 @@ const tzNavLinks = [
   { name: '联系', href: '#tz-contact' },
 ];
 
+function SettingsPopover({ isOpen, onClose }) {
+  const { theme, setTheme, mouseGlow, toggleMouseGlow } = useTheme();
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const handleClick = (e) => { if (ref.current && !ref.current.contains(e.target)) onClose(); };
+    if (isOpen) document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, [isOpen, onClose]);
+
+  if (!isOpen) return null;
+
+  return (
+    <div ref={ref} className="absolute right-0 top-full mt-2 w-56 p-3 rounded-2xl liquid-glass-strong shadow-2xl z-50 animate-[fadeIn_0.15s_ease-out]">
+      <div className="text-[11px] font-mono text-neutral-400 mb-3 px-1">显示设置</div>
+
+      <div className="space-y-1 mb-3">
+        {[
+          { id: 'light', icon: FiSun, label: '浅色' },
+          { id: 'dark', icon: FiMoon, label: '深色' },
+          { id: 'system', icon: FiMonitor, label: '跟随系统' },
+        ].map(mode => (
+          <button key={mode.id} onClick={() => setTheme(mode.id)}
+            className={`w-full flex items-center gap-3 px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
+              theme === mode.id
+                ? 'liquid-glass-light text-indigo-500 font-medium'
+                : 'text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-200 hover:bg-white/30 dark:hover:bg-white/5'
+            }`}>
+            <mode.icon size={15} />
+            <span>{mode.label}</span>
+          </button>
+        ))}
+      </div>
+
+      <div className="h-px bg-gradient-to-r from-transparent via-neutral-200/50 dark:via-white/10 to-transparent mb-3" />
+
+      <button onClick={toggleMouseGlow}
+        className={`w-full flex items-center justify-between px-3 py-2 rounded-xl text-sm transition-all duration-200 ${
+          mouseGlow
+            ? 'text-indigo-500 font-medium'
+            : 'text-neutral-500 dark:text-neutral-400'
+        } hover:bg-white/30 dark:hover:bg-white/5`}>
+        <div className="flex items-center gap-3">
+          <FiMousePointer size={15} />
+          <span>鼠标光效</span>
+        </div>
+        <div className={`w-9 h-5 rounded-full transition-colors duration-300 ${mouseGlow ? 'bg-indigo-500' : 'bg-neutral-300 dark:bg-neutral-600'}`}>
+          <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300 mt-0.5 ${mouseGlow ? 'translate-x-[18px]' : 'translate-x-[2px]'}`} />
+        </div>
+      </button>
+    </div>
+  );
+}
+
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const { resolvedTheme, toggleTheme } = useTheme();
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const { theme, resolvedTheme, setTheme, toggleTheme, mouseGlow, toggleMouseGlow } = useTheme();
   const location = useLocation();
   const navigate = useNavigate();
   const isHome = location.pathname === '/';
@@ -61,6 +116,9 @@ export default function Navbar() {
     else { scrollTo(href); }
   };
 
+  const toggleSettings = useCallback(() => setSettingsOpen(v => !v), []);
+  const closeSettings = useCallback(() => setSettingsOpen(false), []);
+
   const linkClass = (active) =>
     `btn-glass text-sm font-medium ${active ? 'text-indigo-500 bg-indigo-500/10' : ''}`;
 
@@ -84,9 +142,12 @@ export default function Navbar() {
               <button key={link.href} onClick={() => scrollTo(link.href)} className={linkClass(false)}>{link.name}</button>
             )
           )}
-          <button onClick={toggleTheme} className="p-2 rounded-lg text-neutral-400 hover:text-indigo-500 transition-colors" title="主题">
-            {resolvedTheme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
-          </button>
+          <div className="relative">
+            <button onClick={toggleSettings} className="p-2 rounded-lg text-neutral-400 hover:text-indigo-500 transition-colors" title="显示设置">
+              <FiSettings size={16} />
+            </button>
+            <SettingsPopover isOpen={settingsOpen} onClose={closeSettings} />
+          </div>
         </div>
 
         <div className="md:hidden flex items-center gap-2">
@@ -109,6 +170,35 @@ export default function Navbar() {
                 </button>
               </div>
             ))}
+            <div className="mx-3 h-px bg-gradient-to-r from-transparent via-neutral-200/50 dark:via-white/5 to-transparent" />
+            <div className="px-4 py-2">
+              <div className="text-[10px] font-mono text-neutral-400 mb-2">显示设置</div>
+              <div className="flex gap-2 mb-2">
+                {[
+                  { id: 'light', icon: FiSun, label: '浅' },
+                  { id: 'dark', icon: FiMoon, label: '深' },
+                  { id: 'system', icon: FiMonitor, label: '自动' },
+                ].map(mode => (
+                  <button key={mode.id} onClick={() => setTheme(mode.id)}
+                    className={`flex-1 px-2 py-1.5 rounded-lg text-xs font-mono transition-colors ${
+                      theme === mode.id
+                        ? 'text-indigo-500 bg-indigo-500/10'
+                        : 'text-neutral-500 dark:text-neutral-400 bg-white/30 dark:bg-white/5 hover:text-indigo-500'
+                    }`}>
+                    {mode.label}
+                  </button>
+                ))}
+              </div>
+              <button onClick={toggleMouseGlow}
+                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg text-xs transition-colors ${
+                  mouseGlow ? 'text-indigo-500' : 'text-neutral-500 dark:text-neutral-400'
+                } bg-white/30 dark:bg-white/5 hover:text-indigo-500`}>
+                <span>鼠标光效</span>
+                <div className={`w-7 h-4 rounded-full transition-colors duration-300 ${mouseGlow ? 'bg-indigo-500' : 'bg-neutral-300 dark:bg-neutral-600'}`}>
+                  <div className={`w-3 h-3 rounded-full bg-white shadow-sm transition-transform duration-300 mt-0.5 ${mouseGlow ? 'translate-x-[14px]' : 'translate-x-[2px]'}`} />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       )}
