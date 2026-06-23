@@ -1,20 +1,19 @@
-import { useEffect, useRef, useCallback } from 'react';
+import { useEffect, useRef } from 'react';
 import { useTheme } from '../context/ThemeContext.jsx';
 
 class Particle {
   constructor(canvas) {
     this.x = Math.random() * canvas.width;
     this.y = Math.random() * canvas.height;
-    this.size = Math.random() * 2 + 0.5;
-    this.speedX = (Math.random() - 0.5) * 0.5;
-    this.speedY = (Math.random() - 0.5) * 0.5;
-    this.opacity = Math.random() * 0.5 + 0.2;
+    this.size = Math.random() * 1.5 + 0.3;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.3 + 0.1;
   }
 
   update(canvas) {
     this.x += this.speedX;
     this.y += this.speedY;
-
     if (this.x > canvas.width) this.x = 0;
     if (this.x < 0) this.x = canvas.width;
     if (this.y > canvas.height) this.y = 0;
@@ -22,7 +21,7 @@ class Particle {
   }
 
   draw(ctx) {
-    ctx.fillStyle = `rgba(0, 240, 255, ${this.opacity})`;
+    ctx.fillStyle = `rgba(99, 102, 241, ${this.opacity})`;
     ctx.beginPath();
     ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
     ctx.fill();
@@ -32,80 +31,50 @@ class Particle {
 export default function ParticleBackground() {
   const canvasRef = useRef(null);
   const particlesRef = useRef([]);
-  const mouseRef = useRef({ x: null, y: null, radius: 150 });
   const animationRef = useRef(null);
   const { resolvedTheme } = useTheme();
 
-  const isDark = resolvedTheme === 'dark';
-
-  const init = useCallback(() => {
+  useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
-
     const ctx = canvas.getContext('2d');
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
 
-    const dark = document.documentElement.classList.contains('dark');
-
-    const particleCount = Math.min(Math.floor(window.innerWidth / 10), 120);
-    particlesRef.current = Array.from(
-      { length: particleCount },
-      () => new Particle(canvas)
-    );
+    const count = Math.min(Math.floor(window.innerWidth / 12), 80);
+    particlesRef.current = Array.from({ length: count }, () => new Particle(canvas));
 
     const animate = () => {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      const currentDark = document.documentElement.classList.contains('dark');
-      const particleAlpha = currentDark ? 1 : 0.6;
-      const lineAlpha = currentDark ? 0.08 : 0.06;
-      const mouseAlpha = currentDark ? 0.15 : 0.12;
+      const dark = document.documentElement.classList.contains('dark');
+      const particleAlpha = dark ? 0.8 : 0.5;
+      const lineAlpha = dark ? 0.06 : 0.04;
 
       for (let i = 0; i < particlesRef.current.length; i++) {
-        particlesRef.current[i].update(canvas);
-        particlesRef.current[i].draw(ctx);
+        const p = particlesRef.current[i];
+        p.update(canvas);
+        ctx.fillStyle = `rgba(99, 102, 241, ${p.opacity * particleAlpha})`;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fill();
 
-        // Connect particles within range
         for (let j = i + 1; j < particlesRef.current.length; j++) {
-          const dx = particlesRef.current[i].x - particlesRef.current[j].x;
-          const dy = particlesRef.current[i].y - particlesRef.current[j].y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < 120) {
-            ctx.strokeStyle = `rgba(0, 240, 255, ${lineAlpha * (1 - distance / 120)})`;
+          const dx = p.x - particlesRef.current[j].x;
+          const dy = p.y - particlesRef.current[j].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 100) {
+            ctx.strokeStyle = `rgba(99, 102, 241, ${lineAlpha * (1 - dist / 100)})`;
             ctx.lineWidth = 0.5;
             ctx.beginPath();
-            ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
+            ctx.moveTo(p.x, p.y);
             ctx.lineTo(particlesRef.current[j].x, particlesRef.current[j].y);
             ctx.stroke();
           }
         }
-
-        // Mouse interaction
-        if (mouseRef.current.x != null && mouseRef.current.y != null) {
-          const dx = particlesRef.current[i].x - mouseRef.current.x;
-          const dy = particlesRef.current[i].y - mouseRef.current.y;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          if (distance < mouseRef.current.radius) {
-            ctx.strokeStyle = `rgba(168, 85, 247, ${mouseAlpha * (1 - distance / mouseRef.current.radius)})`;
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(particlesRef.current[i].x, particlesRef.current[i].y);
-            ctx.lineTo(mouseRef.current.x, mouseRef.current.y);
-            ctx.stroke();
-          }
-        }
       }
-
       animationRef.current = requestAnimationFrame(animate);
     };
-
     animate();
-  }, []);
-
-  useEffect(() => {
-    init();
 
     const handleResize = () => {
       if (canvasRef.current) {
@@ -113,35 +82,12 @@ export default function ParticleBackground() {
         canvasRef.current.height = window.innerHeight;
       }
     };
-
-    const handleMouseMove = (e) => {
-      mouseRef.current.x = e.clientX;
-      mouseRef.current.y = e.clientY;
-    };
-
-    const handleMouseLeave = () => {
-      mouseRef.current.x = null;
-      mouseRef.current.y = null;
-    };
-
     window.addEventListener('resize', handleResize);
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseleave', handleMouseLeave);
-
     return () => {
       window.removeEventListener('resize', handleResize);
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseleave', handleMouseLeave);
-      if (animationRef.current) {
-        cancelAnimationFrame(animationRef.current);
-      }
+      if (animationRef.current) cancelAnimationFrame(animationRef.current);
     };
-  }, [init]);
+  }, []);
 
-  return (
-    <canvas
-      ref={canvasRef}
-      className="fixed inset-0 pointer-events-none z-0"
-    />
-  );
+  return <canvas ref={canvasRef} className="fixed inset-0 pointer-events-none z-0" />;
 }

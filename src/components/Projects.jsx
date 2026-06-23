@@ -1,4 +1,5 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
@@ -18,51 +19,51 @@ const projects = [
 export default function Projects() {
   const sectionRef = useRef(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const cards = el.querySelectorAll('[data-anim="card"]');
-    const cta = el.querySelector('[data-anim="cta"]');
-    gsap.set(cards, { opacity: 0, y: 40 });
-    gsap.set(cta, { opacity: 0 });
-    const st1 = ScrollTrigger.create({ trigger: el, start: 'top 90%', onEnter: () => gsap.to(cards, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'power2.out' }), once: true });
-    const st2 = ScrollTrigger.create({ trigger: el, start: 'top 85%', onEnter: () => gsap.to(cta, { opacity: 1, duration: 0.5, delay: 0.5, ease: 'power2.out' }), once: true });
+    const cards = el.querySelectorAll('.project-card');
+    const cta = el.querySelector('.project-cta');
+    gsap.set(cards, { autoAlpha: 0, y: 40, scale: 0.95 });
+    gsap.set(cta, { autoAlpha: 0 });
+    const st1 = ScrollTrigger.create({ trigger: el, start: 'top 88%', onEnter: () => gsap.to(cards, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12, ease: 'power3.out' }), once: true });
+    const st2 = ScrollTrigger.create({ trigger: el, start: 'top 82%', onEnter: () => gsap.to(cta, { autoAlpha: 1, duration: 0.6, delay: 0.4, ease: 'power3.out' }), once: true });
     return () => { st1.kill(); st2.kill(); };
-  }, []);
+  }, { scope: sectionRef });
 
   return (
-    <section id="projects" ref={sectionRef} className="relative py-24 px-6 z-10 section-bg">
+    <section id="projects" ref={sectionRef} className="relative py-24 px-6 z-10">
       <div className="max-w-6xl mx-auto">
         <SectionTitle title="项目展示" subtitle="// Featured Projects" />
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {projects.map((project, i) => (
-            <div key={i} data-anim="card" className="group relative">
-              <Link to={`/projects/${project.linkId}`} target="_blank" rel="noopener noreferrer" className={`glass-card card-hover h-full flex flex-col block group`}>
+            <div key={i} className="project-card group relative">
+              <Link to={`/projects/${project.linkId}`} target="_blank" rel="noopener noreferrer" className="glass-card h-full flex flex-col block group">
                 <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center text-2xl mb-5 group-hover:scale-110 transition-transform`}>{project.icon}</div>
-                <h3 className="text-lg font-bold mb-3 text-neutral-800 dark:text-neutral-100 group-hover:text-neon-cyan transition-colors">{project.title}</h3>
-                <p className="text-neutral-700 dark:text-neutral-200 text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
+                <h3 className="text-lg font-bold mb-3 text-neutral-800 dark:text-neutral-100 group-hover:text-indigo-500 transition-colors">{project.title}</h3>
+                <p className="text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed mb-5 flex-1">{project.description}</p>
                 <div className="flex flex-wrap gap-2 mb-5">
                   {project.tags.map((tag) => (
-                    <span key={tag} className="px-2.5 py-1 text-xs rounded-full bg-light-200 dark:bg-dark-600 text-neutral-700 dark:text-neutral-200 border border-black/5 dark:border-white/5 font-mono">{tag}</span>
+                    <span key={tag} className="px-2.5 py-1 text-xs rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 font-mono">{tag}</span>
                   ))}
                 </div>
-                <div className="flex items-center justify-between pt-4 border-t border-black/5 dark:border-white/5">
-                  <div className="flex items-center gap-1 text-sm text-yellow-400">
+                <div className="flex items-center justify-between pt-4 border-t border-neutral-200/50 dark:border-white/5">
+                  <div className="flex items-center gap-1 text-sm text-yellow-500">
                     <span>⭐</span><span className="font-mono text-xs">{project.stars}</span>
                   </div>
-                  <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-neon-purple/10 hover:bg-neon-purple/20 text-accent-indigo border border-neon-purple/25 transition-all">
+                  <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="flex items-center gap-1.5 text-sm px-3 py-1.5 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400 border border-indigo-500/20 transition-all">
                     <FiGithub size={16} /><span>源码</span>
                   </a>
                 </div>
               </Link>
-              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-t from-neon-cyan/5 to-transparent" />
+              <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-t from-indigo-500/5 to-transparent" />
             </div>
           ))}
         </div>
 
-        <div data-anim="cta" className="text-center mt-12">
-          <a href="https://github.com/ZHCOOL520" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg border border-neon-purple/30 text-accent-indigo font-medium text-sm hover:bg-neon-purple/10 transition-all">
+        <div className="project-cta text-center mt-12">
+          <a href="https://github.com/ZHCOOL520" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-6 py-3 rounded-lg liquid-glass-light text-indigo-600 dark:text-indigo-400 font-medium text-sm hover:bg-indigo-500/10 transition-all">
             <FiGithub size={18} /> 在 GitHub 上查看更多
           </a>
         </div>

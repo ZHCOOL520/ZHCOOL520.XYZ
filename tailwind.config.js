@@ -8,16 +8,24 @@ export default {
         primary: { DEFAULT: '#6366f1', light: '#818cf8', dark: '#4f46e5' },
         neutral: {
           50: '#f8fafc', 100: '#f1f5f9', 200: '#e2e8f0',
-          700: '#475569', 800: '#1e293b', 900: '#0f172a',
+          300: '#cbd5e1', 400: '#94a3b8', 500: '#64748b',
+          600: '#475569', 700: '#334155', 800: '#1e293b', 900: '#0f172a',
         },
-        dark: { bg: '#0f0f1a', card: '#1a1a2e', surface: '#252540' },
+        dark: { bg: '#0a0a14', card: '#14142a', surface: '#1c1c38' },
+        glass: {
+          light: 'rgba(255,255,255,0.55)',
+          border: 'rgba(255,255,255,0.25)',
+          dark: 'rgba(20,20,42,0.45)',
+          darkBorder: 'rgba(255,255,255,0.06)',
+        },
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
       },
-      animation: { 'glass-pulse': 'glassPulse 4s ease-in-out infinite' },
-      keyframes: { glassPulse: { '0%,100%': { opacity: '0.8' }, '50%': { opacity: '1' } } },
+      backdropBlur: {
+        glass: '32px',
+      },
     },
   },
   plugins: [],

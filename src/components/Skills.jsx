@@ -1,11 +1,9 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-import {
-  SiKotlin, SiTypescript, SiJavascript, SiCplusplus,
-  SiAndroid, SiGit, SiGradle,
-} from 'react-icons/si';
+import { SiKotlin, SiTypescript, SiJavascript, SiCplusplus, SiAndroid, SiGit, SiGradle } from 'react-icons/si';
 import { FiCode, FiBox, FiTerminal } from 'react-icons/fi';
 import SectionTitle from './shared/SectionTitle.jsx';
 
@@ -62,14 +60,14 @@ function SkillCard({ skill }) {
         <div className="flex-1">
           <div className="flex items-center justify-between mb-1.5">
             {sid ? (
-              <Link to={`/skills/${sid}`} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-neutral-800 dark:text-neutral-100 hover:text-primary transition-colors">{skill.name}</Link>
+              <Link to={`/skills/${sid}`} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-neutral-800 dark:text-neutral-100 hover:text-indigo-500 transition-colors">{skill.name}</Link>
             ) : (
               <span className="text-sm font-semibold text-neutral-800 dark:text-neutral-100">{skill.name}</span>
             )}
-            <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono" data-count={skill.level}>0%</span>
+            <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono skill-count" data-count={skill.level}>0%</span>
           </div>
           <div className="skill-bar">
-            <div data-bar={skill.level} className="skill-bar-fill" />
+            <div className="skill-bar-fill" style={{ width: '0%' }} data-bar={skill.level} />
           </div>
         </div>
       </div>
@@ -80,51 +78,48 @@ function SkillCard({ skill }) {
 export default function Skills() {
   const sectionRef = useRef(null);
 
-  useEffect(() => {
+  useGSAP(() => {
     const el = sectionRef.current;
     if (!el) return;
     const triggers = [];
-    const progCards = el.querySelectorAll('[data-anim="prog"]');
-    const otherCats = el.querySelectorAll('[data-anim="cat"]');
-    const radar = el.querySelector('[data-anim="radar"]');
-    gsap.set(progCards, { opacity: 0, y: 25 });
-    gsap.set(otherCats, { opacity: 0, y: 30 });
-    gsap.set(radar, { opacity: 0 });
-    triggers.push(ScrollTrigger.create({ trigger: el, start: 'top 90%', onEnter: () => gsap.to(progCards, { opacity: 1, y: 0, duration: 0.45, stagger: 0.12, ease: 'power2.out' }), once: true }));
-    triggers.push(ScrollTrigger.create({ trigger: el, start: 'top 88%', onEnter: () => gsap.to(otherCats, { opacity: 1, y: 0, duration: 0.5, stagger: 0.12, ease: 'power2.out' }), once: true }));
-    triggers.push(ScrollTrigger.create({ trigger: el, start: 'top 85%', onEnter: () => gsap.to(radar, { opacity: 1, duration: 0.7, delay: 0.2, ease: 'power2.out' }), once: true }));
+    const progCards = el.querySelectorAll('.skill-prog');
+    const otherCats = el.querySelectorAll('.skill-cat');
+    const radar = el.querySelector('.skill-radar');
+    gsap.set(progCards, { autoAlpha: 0, y: 25 });
+    gsap.set(otherCats, { autoAlpha: 0, y: 30 });
+    gsap.set(radar, { autoAlpha: 0 });
+    triggers.push(ScrollTrigger.create({ trigger: el, start: 'top 88%', onEnter: () => gsap.to(progCards, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.1, ease: 'power3.out' }), once: true }));
+    triggers.push(ScrollTrigger.create({ trigger: el, start: 'top 85%', onEnter: () => gsap.to(otherCats, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.12, ease: 'power3.out' }), once: true }));
+    triggers.push(ScrollTrigger.create({ trigger: el, start: 'top 82%', onEnter: () => gsap.to(radar, { autoAlpha: 1, duration: 0.7, delay: 0.2, ease: 'power3.out' }), once: true }));
     el.querySelectorAll('[data-bar]').forEach((bar) => {
       const w = bar.getAttribute('data-bar');
-      gsap.set(bar, { width: '0%' });
       triggers.push(ScrollTrigger.create({ trigger: bar, start: 'top 92%', onEnter: () => gsap.to(bar, { width: `${w}%`, duration: 1.5, ease: 'power3.out' }), once: true }));
     });
-    el.querySelectorAll('[data-count]').forEach((span) => {
+    el.querySelectorAll('.skill-count').forEach((span) => {
       const target = parseInt(span.getAttribute('data-count')) || 0;
       const obj = { val: 0 };
       triggers.push(ScrollTrigger.create({ trigger: span, start: 'top 92%', onEnter: () => gsap.to(obj, { val: target, duration: 1.5, ease: 'power3.out', onUpdate: () => { span.textContent = Math.round(obj.val) + '%'; } }), once: true }));
     });
     return () => { triggers.forEach(st => st.kill()); };
-  }, []);
+  }, { scope: sectionRef });
 
   return (
     <section id="skills" ref={sectionRef} className="relative py-24 px-6 z-10">
       <div className="max-w-6xl mx-auto">
         <SectionTitle title="技术栈" subtitle="// Tech Stack" />
 
-        {/* Programming Languages - individual cards */}
         <div className="mb-14">
-          <h3 className="text-lg font-bold mb-6 text-primary font-mono">{'// 编程语言'}</h3>
+          <h3 className="text-lg font-bold mb-6 text-neutral-500 dark:text-neutral-400 font-mono">{'// 编程语言'}</h3>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {progLangs.map((skill) => (
-              <div key={skill.name} data-anim="prog"><SkillCard skill={skill} /></div>
+              <div key={skill.name} className="skill-prog"><SkillCard skill={skill} /></div>
             ))}
           </div>
         </div>
 
-        {/* Other categories - grouped cards */}
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
           {otherCategories.map((category, ci) => (
-            <div key={ci} data-anim="cat" className="glass-card">
+            <div key={ci} className="skill-cat glass-card">
               <h3 className="text-lg font-bold mb-6 text-neutral-500 dark:text-neutral-400 font-mono text-sm uppercase tracking-wide">{category.title}</h3>
               <div className="space-y-5">
                 {category.skills.map((skill) => {
@@ -135,15 +130,15 @@ export default function Skills() {
                         <div className="flex items-center gap-2">
                           <skill.icon size={18} style={{ color: skill.color }} />
                           {sid ? (
-                            <Link to={`/skills/${sid}`} target="_blank" rel="noopener noreferrer" className="text-sm text-neutral-800 dark:text-neutral-100 font-medium hover:text-primary transition-colors">{skill.name}</Link>
+                            <Link to={`/skills/${sid}`} target="_blank" rel="noopener noreferrer" className="text-sm text-neutral-800 dark:text-neutral-100 font-medium hover:text-indigo-500 transition-colors">{skill.name}</Link>
                           ) : (
                             <span className="text-sm text-neutral-800 dark:text-neutral-100 font-medium">{skill.name}</span>
                           )}
                         </div>
-                        <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono" data-count={skill.level}>0%</span>
+                        <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono skill-count" data-count={skill.level}>0%</span>
                       </div>
                       <div className="skill-bar">
-                        <div data-bar={skill.level} className="skill-bar-fill" />
+                        <div className="skill-bar-fill" style={{ width: '0%' }} data-bar={skill.level} />
                       </div>
                     </div>
                   );
@@ -153,21 +148,20 @@ export default function Skills() {
           ))}
         </div>
 
-        {/* Skill Radar */}
-        <div data-anim="radar" className="p-8 glass-card">
-          <h3 className="text-lg font-bold mb-8 text-center text-primary font-mono">{'// 技能雷达'}</h3>
+        <div className="skill-radar p-8 glass-card">
+          <h3 className="text-lg font-bold mb-8 text-center text-neutral-500 dark:text-neutral-400 font-mono">{'// 技能雷达'}</h3>
           <div className="flex flex-wrap justify-center gap-4">
             {[...progLangs, ...otherCategories.flatMap(c => c.skills)].map((skill) => {
               const skillId = skillNameToId[skill.name];
               return skillId ? (
-                <Link key={skill.name} to={`/skills/${skillId}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 p-4 rounded-xl glass-card-sm hover:scale-105 transition-all cursor-pointer">
+                <Link key={skill.name} to={`/skills/${skillId}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 p-4 rounded-xl liquid-glass-light hover:scale-105 transition-all cursor-pointer">
                   <skill.icon size={36} style={{ color: skill.color }} />
-                  <span className="text-xs text-neutral-700 dark:text-neutral-200">{skill.name}</span>
+                  <span className="text-xs text-neutral-600 dark:text-neutral-300">{skill.name}</span>
                 </Link>
               ) : (
-                <div key={skill.name} className="flex flex-col items-center gap-2 p-4 rounded-xl glass-card-sm cursor-default">
+                <div key={skill.name} className="flex flex-col items-center gap-2 p-4 rounded-xl liquid-glass-light cursor-default">
                   <skill.icon size={36} style={{ color: skill.color }} />
-                  <span className="text-xs text-neutral-700 dark:text-neutral-200">{skill.name}</span>
+                  <span className="text-xs text-neutral-600 dark:text-neutral-300">{skill.name}</span>
                 </div>
               );
             })}

@@ -1,93 +1,48 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
+import gsap from 'gsap';
 
 export function Typewriter({ texts, className = '', speed = 80, deleteSpeed = 40, pauseTime = 2000 }) {
-  const [displayText, setDisplayText] = useState('');
-  const [textIndex, setTextIndex] = useState(0);
-  const [charIndex, setCharIndex] = useState(0);
-  const [isDeleting, setIsDeleting] = useState(false);
+  const ref = useRef(null);
+  const stateRef = useRef({ textIndex: 0, charIndex: 0, isDeleting: false });
 
-  const tick = useCallback(() => {
-    const currentText = texts[textIndex];
-
-    if (!isDeleting) {
-      if (charIndex < currentText.length) {
-        setDisplayText(currentText.substring(0, charIndex + 1));
-        setCharIndex((prev) => prev + 1);
-        return speed;
-      } else {
-        setIsDeleting(true);
-        return pauseTime;
-      }
-    } else {
-      if (charIndex > 0) {
-        setDisplayText(currentText.substring(0, charIndex - 1));
-        setCharIndex((prev) => prev - 1);
-        return deleteSpeed;
-      } else {
-        setIsDeleting(false);
-        setTextIndex((prev) => (prev + 1) % texts.length);
-        return speed;
-      }
-    }
-  }, [charIndex, isDeleting, textIndex, texts, speed, deleteSpeed, pauseTime]);
-
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      const delay = tick();
-      // trigger re-render
-    }, tick());
-    return () => clearTimeout(timeout);
-  }, [tick, displayText]);
-
-  // Use a ref-based approach for smoother animation
-  useEffect(() => {
+  useGSAP(() => {
+    const el = ref.current;
+    if (!el) return;
+    const state = stateRef.current;
     let timeout;
-    const animate = () => {
-      const currentText = texts[textIndex];
-      if (!isDeleting) {
-        if (charIndex < currentText.length) {
-          setDisplayText(currentText.substring(0, charIndex + 1));
-          setCharIndex((prev) => prev + 1);
-          timeout = setTimeout(animate, speed);
+
+    const type = () => {
+      const currentText = texts[state.textIndex];
+      if (!state.isDeleting) {
+        if (state.charIndex < currentText.length) {
+          state.charIndex++;
+          el.textContent = currentText.substring(0, state.charIndex);
+          timeout = setTimeout(type, speed);
         } else {
-          timeout = setTimeout(() => {
-            setIsDeleting(true);
-            animateNext();
-          }, pauseTime);
+          timeout = setTimeout(() => { state.isDeleting = true; type(); }, pauseTime);
+        }
+      } else {
+        if (state.charIndex > 0) {
+          state.charIndex--;
+          el.textContent = currentText.substring(0, state.charIndex);
+          timeout = setTimeout(type, deleteSpeed);
+        } else {
+          state.isDeleting = false;
+          state.textIndex = (state.textIndex + 1) % texts.length;
+          timeout = setTimeout(type, speed);
         }
       }
     };
 
-    const animateDelete = () => {
-      const currentText = texts[textIndex];
-      if (charIndex > 0) {
-        setDisplayText(currentText.substring(0, charIndex - 1));
-        setCharIndex((prev) => prev - 1);
-        timeout = setTimeout(animateDelete, deleteSpeed);
-      } else {
-        setIsDeleting(false);
-        setTextIndex((prev) => (prev + 1) % texts.length);
-        timeout = setTimeout(animateNext, speed);
-      }
-    };
-
-    const animateNext = () => {
-      if (isDeleting) {
-        animateDelete();
-      } else {
-        animate();
-      }
-    };
-
-    timeout = setTimeout(animateNext, 500);
-
+    timeout = setTimeout(type, 500);
     return () => clearTimeout(timeout);
-  }, []);
+  }, { scope: ref });
 
   return (
     <span className={className}>
-      {displayText}
-      <span className="inline-block w-0.5 h-[1em] bg-neon-cyan ml-1 align-middle animate-pulse" />
+      <span ref={ref} />
+      <span className="inline-block w-0.5 h-[1em] bg-indigo-500 ml-1 align-middle animate-pulse" />
     </span>
   );
 }

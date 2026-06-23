@@ -1,118 +1,66 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(ScrollTrigger);
 
-// Enhanced page enter with scale + fade
 export function useGsapPageEnter() {
   const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    gsap.fromTo(el, { opacity: 0, scale: 0.96, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.55, ease: 'power3.out' });
-  }, []);
+  useGSAP(() => {
+    gsap.fromTo(ref.current, { opacity: 0, scale: 0.96, y: 30 }, { opacity: 1, scale: 1, y: 0, duration: 0.6, ease: 'power3.out' });
+  }, { scope: ref.current });
   return ref;
 }
 
-// Navbar slide in with bounce
 export function useGsapSlideDown() {
   const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    gsap.fromTo(el, { y: -100, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: 'power3.out' });
-  }, []);
+  useGSAP(() => {
+    gsap.fromTo(ref.current, { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.6, ease: 'power3.out' });
+  }, { scope: ref.current });
   return ref;
 }
 
-// Mobile menu with elastic
-export function useGsapMobileMenu(open) {
+export function useGsapInView(delay = 0, duration = 0.6, y = 25) {
   const ref = useRef(null);
-  useEffect(() => {
+  useGSAP(() => {
     const el = ref.current;
     if (!el) return;
-    if (open) {
-      gsap.fromTo(el, { opacity: 0, y: -20, scale: 0.95 }, { opacity: 1, y: 0, scale: 1, duration: 0.35, ease: 'back.out(1.4)' });
-    } else {
-      gsap.to(el, { opacity: 0, y: -10, duration: 0.2, ease: 'power2.in' });
-    }
-  }, [open]);
-  return ref;
-}
-
-// Scroll trigger with variety: fade + scale + slide
-export function useGsapInView(delay = 0, duration = 0.5, y = 25) {
-  const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    gsap.set(el, { opacity: 0, scale: 0.92, y });
+    gsap.set(el, { autoAlpha: 0, y });
     const st = ScrollTrigger.create({
       trigger: el, start: 'top 92%',
-      onEnter: () => gsap.to(el, { opacity: 1, scale: 1, y: 0, duration, delay, ease: 'power2.out' }),
+      onEnter: () => gsap.to(el, { autoAlpha: 1, y: 0, duration, delay, ease: 'power3.out' }),
       once: true,
     });
     return () => st.kill();
-  }, [delay, duration, y]);
+  }, { scope: ref.current, dependencies: [delay, duration, y] });
   return ref;
 }
 
-// Stagger with longer delays and elastic variation
-export function useGsapStaggerInView(stagger = 0.1, duration = 0.45, y = 30) {
+export function useGsapStaggerInView(stagger = 0.12, duration = 0.5, y = 30) {
   const containerRef = useRef(null);
-  useEffect(() => {
+  useGSAP(() => {
     const el = containerRef.current;
     if (!el) return;
     const children = el.children;
     if (!children.length) return;
-    gsap.set(children, { opacity: 0, scale: 0.9, y });
+    gsap.set(children, { autoAlpha: 0, y, scale: 0.95 });
     const st = ScrollTrigger.create({
       trigger: el, start: 'top 90%',
-      onEnter: () => gsap.to(children, { opacity: 1, scale: 1, y: 0, duration, stagger, ease: 'power2.out', overwrite: 'auto' }),
+      onEnter: () => gsap.to(children, { autoAlpha: 1, y: 0, scale: 1, duration, stagger, ease: 'power3.out', overwrite: 'auto' }),
       once: true,
     });
     return () => st.kill();
-  }, [stagger, duration, y]);
+  }, { scope: containerRef.current, dependencies: [stagger, duration, y] });
   return containerRef;
 }
 
-// Skill bar with count-up number animation
-export function useGsapSkillBar(width) {
-  const barRef = useRef(null);
-  const numRef = useRef(null);
-  useEffect(() => {
-    const bar = barRef.current;
-    const num = numRef.current;
-    if (!bar) return;
-    gsap.set(bar, { width: '0%' });
-    const obj = { val: 0 };
-    const st = ScrollTrigger.create({
-      trigger: bar, start: 'top 92%',
-      onEnter: () => {
-        gsap.to(bar, { width: `${width}%`, duration: 1.5, ease: 'power3.out' });
-        if (num) gsap.to(obj, { val: width, duration: 1.5, ease: 'power3.out', onUpdate: () => { num.textContent = Math.round(obj.val) + '%'; } });
-      },
-      once: true,
-    });
-    return () => st.kill();
-  }, [width]);
-  return { barRef, numRef };
-}
-
-// Pulse animation for icons
 export function useGsapPulse() {
   const ref = useRef(null);
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const tween = gsap.to(el, { scale: 1.05, duration: 1.8, repeat: -1, yoyo: true, ease: 'sine.inOut' });
+  useGSAP(() => {
+    const tween = gsap.to(ref.current, { scale: 1.06, duration: 2, repeat: -1, yoyo: true, ease: 'sine.inOut' });
     return () => tween.kill();
-  }, []);
+  }, { scope: ref.current });
   return ref;
-}
-
-// Cleanup helper
-export function gsapCleanup(ctx) {
-  return () => { if (ctx && typeof ctx.revert === 'function') ctx.revert(); };
 }

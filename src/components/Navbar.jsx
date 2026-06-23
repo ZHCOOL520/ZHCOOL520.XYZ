@@ -31,28 +31,35 @@ export default function Navbar() {
   const links = isTzArea ? tzNavLinks : navLinks;
   const navRef = useRef(null);
 
+  useEffect(() => { setMobileOpen(false); }, [location.pathname]);
+
   useEffect(() => {
-    gsap.fromTo(navRef.current, { y: -80, opacity: 0 }, { y: 0, opacity: 1, duration: 0.5, ease: 'power3.out' });
+    gsap.fromTo(navRef.current, { y: -80, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.6, ease: 'power3.out' });
     const onScroll = () => setScrolled(window.scrollY > 40);
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
   const scrollTo = (href) => {
-    if (!isHome || isTzArea) {
-      const target = isTzArea ? '/tz' : '/';
-      navigate(target);
-      setTimeout(() => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' }), 100);
-    } else {
+    if (isTzArea || isHome) {
       document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      navigate('/');
+      requestAnimationFrame(() => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' }));
     }
   };
 
+  const handleNav = (href) => {
+    setMobileOpen(false);
+    if (href.startsWith('/')) { navigate(href); }
+    else { scrollTo(href); }
+  };
+
   const linkClass = (active) =>
-    `btn-glass text-sm font-medium ${active ? 'text-primary bg-primary/5' : ''}`;
+    `btn-glass text-sm font-medium ${active ? 'text-indigo-500 bg-indigo-500/10' : ''}`;
 
   return (
-    <nav ref={navRef} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled ? 'nav-glass' : 'bg-transparent'}`}>
+    <nav ref={navRef} className={`nav-glass ${scrolled ? 'scrolled' : ''}`}>
       <div className="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between">
         {isTzArea ? (
           <div className="flex items-center gap-3">
@@ -71,30 +78,31 @@ export default function Navbar() {
               <button key={link.href} onClick={() => scrollTo(link.href)} className={linkClass(false)}>{link.name}</button>
             )
           )}
-          <button onClick={toggleTheme} className="p-2 rounded-lg text-neutral-700/40 dark:text-neutral-200/40 hover:text-primary transition-colors" title="主题">
+          <button onClick={toggleTheme} className="p-2 rounded-lg text-neutral-400 hover:text-indigo-500 transition-colors" title="主题">
             {resolvedTheme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
           </button>
         </div>
 
         <div className="md:hidden flex items-center gap-2">
-          <button onClick={toggleTheme} className="p-1.5 text-neutral-700/40 dark:text-neutral-200/40 hover:text-primary transition-colors">
+          <button onClick={toggleTheme} className="p-1.5 text-neutral-400 hover:text-indigo-500 transition-colors">
             {resolvedTheme === 'dark' ? <FiSun size={16} /> : <FiMoon size={16} />}
           </button>
-          <button onClick={() => setMobileOpen(!mobileOpen)} className="p-1.5 text-neutral-700/60 dark:text-neutral-200/60 hover:text-primary transition-colors">
+          <button onClick={() => setMobileOpen((v) => !v)} className="p-1.5 text-neutral-500 hover:text-indigo-500 transition-colors">
             {mobileOpen ? <HiX size={22} /> : <HiMenuAlt3 size={22} />}
           </button>
         </div>
       </div>
       {mobileOpen && (
-        <div className="md:hidden nav-glass border-t border-black/5 dark:border-white/5">
-          <div className="flex flex-col py-3 px-6 gap-2.5">
-            {links.map((link) =>
-              link.href.startsWith('/') ? (
-                <button key={link.href} onClick={() => { setMobileOpen(false); navigate(link.href); }} className={linkClass(location.pathname === link.href) + ' w-full py-1.5'}>{link.name}</button>
-              ) : (
-                <button key={link.href} onClick={() => { setMobileOpen(false); scrollTo(link.href); }} className={linkClass(false) + ' w-full py-1.5'}>{link.name}</button>
-              )
-            )}
+        <div className="md:hidden nav-mobile animate-[fadeIn_0.2s_ease-out]">
+          <div className="flex flex-col px-4 py-3 gap-1">
+            {links.map((link, i) => (
+              <div key={link.href}>
+                {i > 0 && <div className="mx-3 h-px bg-gradient-to-r from-transparent via-neutral-200/50 dark:via-white/5 to-transparent" />}
+                <button onClick={() => handleNav(link.href)} className="w-full text-left px-4 py-3 rounded-xl text-sm font-medium text-neutral-700 dark:text-neutral-200 hover:bg-white/40 dark:hover:bg-white/5 transition-all duration-200">
+                  {link.name}
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       )}

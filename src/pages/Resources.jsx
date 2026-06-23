@@ -1,13 +1,14 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useRef, useState, useCallback } from 'react';
+import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { FiDownload, FiMonitor, FiPackage, FiMusic, FiExternalLink, FiCheck } from 'react-icons/fi';
 import PageLayout from '../components/shared/PageLayout.jsx';
 import BackLink from '../components/shared/BackLink.jsx';
 
 const config = {
-  monitor: { accent: 'text-cyan-500', accentBg: 'bg-cyan-500/10', glow: 'group-hover:shadow-cyan-500/15', border: 'border-cyan-500/15 group-hover:border-cyan-500/30', iconBg: 'bg-gradient-to-br from-cyan-500 to-blue-500' },
-  package: { accent: 'text-purple-500', accentBg: 'bg-purple-500/10', glow: 'group-hover:shadow-purple-500/15', border: 'border-purple-500/15 group-hover:border-purple-500/30', iconBg: 'bg-gradient-to-br from-purple-500 to-pink-500' },
-  music: { accent: 'text-rose-500', accentBg: 'bg-rose-500/10', glow: 'group-hover:shadow-rose-500/15', border: 'border-rose-500/15 group-hover:border-rose-500/30', iconBg: 'bg-gradient-to-br from-rose-500 to-red-500' },
+  monitor: { accent: 'text-cyan-500', accentBg: 'bg-cyan-500/10', glow: 'hover:shadow-cyan-500/10', border: 'border-cyan-500/15', iconBg: 'bg-gradient-to-br from-cyan-500 to-blue-500' },
+  package: { accent: 'text-purple-500', accentBg: 'bg-purple-500/10', glow: 'hover:shadow-purple-500/10', border: 'border-purple-500/15', iconBg: 'bg-gradient-to-br from-purple-500 to-pink-500' },
+  music: { accent: 'text-rose-500', accentBg: 'bg-rose-500/10', glow: 'hover:shadow-rose-500/10', border: 'border-rose-500/15', iconBg: 'bg-gradient-to-br from-rose-500 to-red-500' },
 };
 
 const downloads = [
@@ -36,7 +37,7 @@ function DownloadLink({ link, accent, glow, accentBg }) {
 
   return (
     <a href={link.url} target="_blank" rel="noopener noreferrer" onClick={handleClick}
-      className={`glass-light flex items-center justify-between px-5 py-4 rounded-xl transition-all duration-300 group ${glow}`}>
+      className={`liquid-glass-light flex items-center justify-between px-5 py-4 rounded-xl transition-all duration-300 group ${glow}`}>
       <div className="flex items-center gap-3">
         <div className={`w-10 h-10 rounded-lg ${accentBg} flex items-center justify-center group-hover:scale-110 transition-transform`}>
           {copied ? <FiCheck className={accent} size={17} /> : <FiDownload className={accent} size={17} />}
@@ -45,7 +46,7 @@ function DownloadLink({ link, accent, glow, accentBg }) {
           <div className="font-semibold text-sm text-neutral-800 dark:text-neutral-100">{link.label}</div>
           <div className="flex items-center gap-2 mt-0.5">
             <span className={`text-[11px] font-mono ${copied ? 'text-emerald-500' : 'text-neutral-500 dark:text-neutral-400'}`}>
-              {copied ? `已复制 ✓` : link.note}
+              {copied ? '已复制 ✓' : link.note}
             </span>
             <span className="text-[10px] px-2 py-0.5 rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-500 dark:text-neutral-400 font-mono">{link.type}</span>
           </div>
@@ -63,25 +64,22 @@ export default function Resources() {
   const cardsRef = useRef(null);
   const footerRef = useRef(null);
 
-  useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: 'power2.out' } });
-    tl.fromTo(headerRef.current, { opacity: 0, y: 25 }, { opacity: 1, y: 0, duration: 0.5 })
-      .fromTo(cardsRef.current?.children || [],
-        { opacity: 0, y: 30 },
-        { opacity: 1, y: 0, duration: 0.5, stagger: 0.12 },
-        '+=0.1')
-      .fromTo(footerRef.current, { opacity: 0 }, { opacity: 1, duration: 0.4 }, '+=0.1');
-  }, []);
+  useGSAP(() => {
+    const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+    tl.fromTo(headerRef.current, { autoAlpha: 0, y: 25 }, { autoAlpha: 1, y: 0, duration: 0.6 })
+      .fromTo(cardsRef.current?.children || [], { autoAlpha: 0, y: 30 }, { autoAlpha: 1, y: 0, duration: 0.55, stagger: 0.12 }, '-=0.1')
+      .fromTo(footerRef.current, { autoAlpha: 0 }, { autoAlpha: 1, duration: 0.5 }, '-=0.1');
+  }, { scope: headerRef });
 
   return (
     <PageLayout maxWidth="max-w-3xl">
-      <BackLink to="/" label="返回首页" />
+      <BackLink to="/" label="返回首页" hash="resources" />
 
       <div ref={headerRef} className="text-center mb-16">
-        <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full glass-light text-xs font-mono text-neutral-500 dark:text-neutral-400">
+        <div className="inline-flex items-center gap-2 mb-6 px-4 py-2 rounded-full liquid-glass-light text-xs font-mono text-neutral-500 dark:text-neutral-400">
           <span className="relative flex h-2 w-2">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary opacity-75" />
-            <span className="relative inline-flex rounded-full h-2 w-2 bg-primary" />
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-500 opacity-75" />
+            <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-500" />
           </span>
           Available Now
         </div>
@@ -93,7 +91,7 @@ export default function Resources() {
         {downloads.map((item, i) => {
           const c = config[item.key];
           return (
-            <div key={i} className={`glass-card p-0 overflow-hidden group transition-all duration-500 ${c.glow} ${c.border}`}>
+            <div key={i} className={`glass-card p-0 overflow-hidden group transition-all duration-500 ${c.border}`}>
               <div className="p-6 sm:p-8">
                 <div className="flex items-start gap-5 mb-5">
                   <div className={`w-14 h-14 rounded-2xl ${c.iconBg} flex items-center justify-center flex-shrink-0 shadow-lg text-white`}>

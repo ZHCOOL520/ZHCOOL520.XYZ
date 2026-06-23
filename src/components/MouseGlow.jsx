@@ -1,4 +1,5 @@
 import { useEffect, useRef } from 'react';
+import gsap from 'gsap';
 
 export default function MouseGlow() {
   const glowRef = useRef(null);
@@ -7,22 +8,17 @@ export default function MouseGlow() {
     const glow = glowRef.current;
     if (!glow) return;
 
-    let leaving = false;
-
-    const snap = (x, y) => {
-      glow.style.transform = `translate(${x}px, ${y}px)`;
-      glow.style.opacity = '0';
-    };
+    const xTo = gsap.quickTo(glow, 'x', { duration: 0.6, ease: 'power2' });
+    const yTo = gsap.quickTo(glow, 'y', { duration: 0.6, ease: 'power2' });
 
     const onMove = (e) => {
-      leaving = false;
-      glow.style.opacity = '1';
-      glow.style.transform = `translate(${e.clientX - 150}px, ${e.clientY - 150}px)`;
+      xTo(e.clientX);
+      yTo(e.clientY);
+      gsap.to(glow, { opacity: 1, duration: 0.3, overwrite: 'auto' });
     };
 
     const onLeave = () => {
-      leaving = true;
-      snap(-300, -300);
+      gsap.to(glow, { opacity: 0, duration: 0.3 });
     };
 
     window.addEventListener('mousemove', onMove, { passive: true });
@@ -34,5 +30,5 @@ export default function MouseGlow() {
     };
   }, []);
 
-  return <div ref={glowRef} className="mouse-glow" style={{ opacity: 0 }} />;
+  return <div ref={glowRef} className="mouse-glow" />
 }
