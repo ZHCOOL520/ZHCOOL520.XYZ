@@ -1,4 +1,4 @@
-name = "zhcool520-count"
+name = "zhcool"
 main = "workers/count-worker.js"
 compatibility_date = "2025-06-01"
 
