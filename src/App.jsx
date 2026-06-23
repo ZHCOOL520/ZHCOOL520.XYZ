@@ -8,7 +8,8 @@ import Projects from './components/Projects';
 import Contact from './components/Contact';
 import Skills from './components/Skills';
 import Footer from './components/Footer';
-import Resources from './pages/Resources';
+import Resources from './pages/resources/index.jsx';
+import ResourceDetail from './pages/resources/detail.jsx';
 import SkillDetail from './pages/SkillDetail';
 import ProjectDetail from './pages/ProjectDetail';
 import ResourcePreview from './components/ResourcePreview';
@@ -58,6 +59,7 @@ export default function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/resources" element={<Resources />} />
+            <Route path="/resources/:resourceId" element={<ResourceDetail />} />
             <Route path="/skills/:skillId" element={<SkillDetail />} />
             <Route path="/projects/:projectId" element={<ProjectDetail />} />
             <Route path="/tz" element={<TzXyz />} />

@@ -20,49 +20,57 @@ export default function About() {
   useGSAP(() => {
     const el = sectionRef.current;
     if (!el) return;
-    const left = el.querySelector('.about-left');
-    const right = el.querySelector('.about-right');
     const avatar = el.querySelector('.about-avatar');
     const rings = el.querySelectorAll('.about-ring');
+    const ringGlow = el.querySelector('.about-ring-glow');
+    const text = el.querySelector('.about-text');
     const statEls = el.querySelectorAll('.about-stat');
 
-    gsap.set([left, right], { autoAlpha: 0 });
-    gsap.set(left, { x: -40 });
-    gsap.set(right, { x: 40 });
-    gsap.set(avatar, { scale: 0.6, rotation: -10 });
-    gsap.set(rings, { scale: 0, autoAlpha: 0 });
-    gsap.set(statEls, { autoAlpha: 0, y: 20 });
+    gsap.set(avatar, { autoAlpha: 0, scale: 0.2, rotation: -20 });
+    gsap.set(ringGlow, { autoAlpha: 0, scale: 0 });
+    gsap.set(rings, { autoAlpha: 0, scale: 0 });
+    gsap.set(text, { autoAlpha: 0, x: 50 });
+    gsap.set(statEls, { autoAlpha: 0, y: 30, scale: 0.6 });
 
-    const st0 = ScrollTrigger.create({ trigger: left, start: 'top 90%', onEnter: () => {
-      gsap.to(avatar, { scale: 1, rotation: 0, duration: 0.8, ease: 'elastic.out(1, 0.5)' });
-      gsap.to(rings, { scale: 1, autoAlpha: 1, duration: 0.6, stagger: 0.15, delay: 0.2, ease: 'back.out(1.4)' });
-    }, once: true });
-    const st1 = ScrollTrigger.create({ trigger: left, start: 'top 90%', onEnter: () => gsap.to(left, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' }), once: true });
-    const st2 = ScrollTrigger.create({ trigger: right, start: 'top 90%', onEnter: () => gsap.to(right, { autoAlpha: 1, x: 0, duration: 0.6, delay: 0.1, ease: 'power3.out' }), once: true });
-    const st3 = ScrollTrigger.create({ trigger: el, start: 'top 85%', onEnter: () => gsap.to(statEls, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.12, delay: 0.15, ease: 'back.out(1.4)' }), once: true });
-    return () => { st0.kill(); st1.kill(); st2.kill(); st3.kill(); };
+    const st = ScrollTrigger.create({
+      trigger: el, start: 'top 88%',
+      onEnter: () => {
+        const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
+        tl.to(avatar, { autoAlpha: 1, scale: 1, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.2)' }, 0)
+          .to(ringGlow, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(2.5)' }, '-=0.5')
+          .to(rings, { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.15, ease: 'back.out(2)' }, '-=0.3')
+          .to(text, { autoAlpha: 1, x: 0, duration: 0.6 }, '-=0.1')
+          .to(statEls, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.12, ease: 'back.out(2.5)' }, '-=0.1');
+      },
+      once: true,
+    });
+    return () => st.kill();
   }, { scope: sectionRef });
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-24 px-6 z-10">
+    <section id="about" ref={sectionRef} className="relative py-24 px-6 z-10 overflow-hidden">
+      <div className="absolute top-1/2 left-1/4 w-72 h-72 bg-indigo-500/8 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/6 rounded-full blur-3xl pointer-events-none" />
+
       <div className="max-w-6xl mx-auto">
         <SectionTitle title="关于我" subtitle="// About Me" />
 
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          <div className="about-left flex justify-center">
+          <div className="flex justify-center">
             <div className="relative">
-              <div className="about-avatar w-64 h-64 sm:w-80 sm:h-80 rounded-full liquid-glass-strong flex items-center justify-center shadow-xl">
+              <div className="about-ring-glow absolute -inset-8 rounded-full bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-transparent blur-2xl" />
+              <div className="about-ring absolute -inset-6 rounded-full border border-indigo-500/15" />
+              <div className="about-ring absolute -inset-3 rounded-full border border-violet-500/10" />
+              <div className="about-avatar w-64 h-64 sm:w-72 sm:h-72 rounded-full liquid-glass-strong flex items-center justify-center shadow-xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.04] hover:shadow-2xl hover:shadow-indigo-500/10 cursor-default">
                 <div className="text-center">
                   <span className="text-5xl sm:text-6xl font-black text-gradient font-mono tracking-tight">南瓜</span>
                   <p className="text-neutral-500 dark:text-neutral-400 mt-3 text-xs font-mono tracking-widest uppercase">ZHCOOL520</p>
                 </div>
               </div>
-              <div className="about-ring absolute -inset-3 rounded-full border border-indigo-500/20" />
-              <div className="about-ring absolute -inset-6 rounded-full border border-violet-500/10" />
             </div>
           </div>
 
-          <div className="about-right space-y-6">
+          <div className="about-text space-y-6">
             <div>
               <h3 className="text-2xl font-bold mb-3 text-neutral-800 dark:text-neutral-100">
                 <span className="text-gradient">多平台开发者</span>
@@ -75,7 +83,7 @@ export default function About() {
 
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
               {stats.map((stat, i) => (
-                <div key={i} className="about-stat glass-card-sm">
+                <div key={i} className="about-stat liquid-glass-light rounded-2xl p-4 text-center transition-all duration-300 hover:-translate-y-2 hover:scale-[1.08] hover:shadow-lg hover:shadow-indigo-500/5">
                   <stat.icon className="mx-auto mb-2 text-indigo-500" size={20} />
                   <div className="text-xl font-bold text-neutral-800 dark:text-neutral-100">{stat.value}</div>
                   <div className="text-xs text-neutral-500 dark:text-neutral-400">{stat.label}</div>

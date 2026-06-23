@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FiExternalLink, FiMessageCircle, FiHeart, FiUsers, FiClock, FiPlayCircle, FiStar } from 'react-icons/fi';
+import { FiExternalLink, FiMessageCircle, FiHeart, FiUsers, FiClock, FiPlayCircle, FiStar, FiPackage } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 import { Link } from 'react-router-dom';
 
@@ -182,13 +182,14 @@ export default function TzXyz() {
       <section className="py-16 sm:py-20 px-6">
         <div className="max-w-3xl mx-auto text-center">
           <div className="tz-res-title mb-6">
-            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50 mb-2">天真SkyerNovie的资源下载</h2>
+            <h2 className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50 mb-2">整合包资源导航</h2>
           </div>
           <p className="tz-res-desc text-neutral-600 dark:text-neutral-300 text-sm leading-relaxed max-w-lg mx-auto mb-8">
-            提供Minecraft整合包、汉化补丁、材质包以及主播同款配置等资源的下载，所有内容整理自直播与视频中使用的模组与资源，方便大家快速获取。
+            由于模组授权协议原因，本站无法直接提供整合包文件。我们整理了 MC百科、CurseForge、Modrinth 等主流平台的整合包导航，方便你快速找到视频中使用的整合包。
           </p>
-          <div className="tz-res-btn">
-            <Link to="/tz-resources" className="btn-glass text-sm">资源页面 <FiExternalLink size={14} /></Link>
+          <div className="tz-res-btn flex items-center justify-center gap-3 flex-wrap">
+            <Link to="/tz-resources" className="btn-glass text-sm">平台导航 <FiExternalLink size={14} /></Link>
+            <Link to="/resources/minecraft-pack" className="btn-glass text-sm">主页资源 <FiPackage size={14} /></Link>
           </div>
         </div>
       </section>

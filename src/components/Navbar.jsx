@@ -41,11 +41,17 @@ export default function Navbar() {
   }, []);
 
   const scrollTo = (href) => {
-    if (isTzArea || isHome) {
-      document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' });
-    } else {
+    const doScroll = () => {
+      const el = document.querySelector(href);
+      if (!el) return;
+      const top = el.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top, behavior: 'smooth' });
+    };
+    if (!isHome && !isTzArea) {
       navigate('/');
-      requestAnimationFrame(() => document.querySelector(href)?.scrollIntoView({ behavior: 'smooth' }));
+      requestAnimationFrame(() => requestAnimationFrame(doScroll));
+    } else {
+      doScroll();
     }
   };
 
@@ -63,7 +69,7 @@ export default function Navbar() {
       <div className="max-w-6xl mx-auto px-6 py-3.5 flex items-center justify-between">
         {isTzArea ? (
           <div className="flex items-center gap-3">
-            <button onClick={() => navigate('/tz')} className="btn-glass text-sm font-medium">主页</button>
+            <button onClick={() => { if (location.pathname === '/tz') window.scrollTo({ top: 0, behavior: 'smooth' }); else navigate('/tz'); }} className="btn-glass text-sm font-medium">主页</button>
             <button onClick={() => navigate('/tz-resources')} className="btn-glass text-sm font-medium">资源</button>
           </div>
         ) : (
