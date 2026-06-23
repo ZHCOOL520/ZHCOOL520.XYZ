@@ -1,0 +1,8 @@
+name = "zhcool520-count"
+main = "workers/count-worker.js"
+compatibility_date = "2025-06-01"
+
+[[kv_namespaces]]
+binding = "COUNTS"
+id = "5a2a953d13974936bbb0121c8de46a4e"
+preview_id = "5a2a953d13974936bbb0121c8de46a4e"
