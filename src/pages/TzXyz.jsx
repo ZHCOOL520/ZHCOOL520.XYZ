@@ -2,49 +2,86 @@ import { useRef, useState, useEffect, useCallback } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Helmet } from 'react-helmet-async';
 import { FiExternalLink, FiMessageCircle, FiUsers, FiClock, FiPlayCircle, FiStar, FiThumbsUp, FiTrendingUp, FiEye } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 import { Link } from 'react-router-dom';
+import AnimatedButton from '../components/shared/AnimatedButton';
+import AnimatedLink from '../components/shared/AnimatedLink';
 
 gsap.registerPlugin(ScrollTrigger);
 
-const COUNT_NS = 'zhcool520';
+const WORKER_URL = 'https://api.zhcool520.xyz';
 
 function TdButton() {
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(() => {
+    const saved = localStorage.getItem('tz_td_count_backup');
+    return saved ? parseInt(saved, 10) : 0;
+  });
   const [animating, setAnimating] = useState(false);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch(`https://api.countapi.xyz/get/${COUNT_NS}/tz-td`)
+    fetch(`${WORKER_URL}/get`)
       .then(r => r.json())
-      .then(data => data?.value !== undefined && setCount(data.value))
+      .then(data => {
+        if (data.value !== undefined) {
+          setCount(data.value);
+          localStorage.setItem('tz_td_count_backup', data.value.toString());
+          setError(false);
+        }
+      })
       .catch(() => {
-        const saved = localStorage.getItem('tz_td_count');
+        const saved = localStorage.getItem('tz_td_count_backup');
         if (saved) setCount(parseInt(saved, 10));
+        setError(true);
       });
   }, []);
+
+
 
   const handleTd = useCallback(() => {
     setAnimating(true);
     setCount(c => c + 1);
-    fetch(`https://api.countapi.xyz/hit/${COUNT_NS}/tz-td`)
+
+    fetch(`${WORKER_URL}/hit`, { method: 'POST' })
       .then(r => r.json())
-      .then(data => data?.value !== undefined && setCount(data.value))
-      .catch(() => {})
+      .then(data => {
+        if (data.value !== undefined) {
+          setCount(data.value);
+          localStorage.setItem('tz_td_count_backup', data.value.toString());
+          setError(false);
+        }
+      })
+      .catch(() => {
+        setError(true);
+      })
       .finally(() => setTimeout(() => setAnimating(false), 600));
   }, []);
 
   const display = count >= 10000 ? (count / 10000).toFixed(1).replace(/\.0$/, '') + '万' : count.toLocaleString('zh-CN');
 
   return (
-    <button onClick={handleTd}
-      className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 liquid-glass-light text-neutral-600 dark:text-neutral-300 hover:scale-110 hover:shadow-xl hover:text-rose-500 hover:bg-rose-500/15 active:scale-95">
-      <FiThumbsUp size={16} className={`transition-all duration-300 ${animating ? 'scale-125 -rotate-12 text-rose-500' : ''}`} />
-      <span>TD</span>
-      <span className={`text-xs font-mono tabular-nums transition-all duration-200 ${animating ? 'text-rose-500 font-bold' : ''}`}>
+    <AnimatedButton
+      onClick={handleTd}
+      title={error ? '同步中...' : '点击 TD'}
+      className={`tz-hero-btn relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ease-out liquid-glass-light
+        ${error ? 'text-amber-500' : 'text-neutral-600 dark:text-neutral-300'}
+        ${animating ? 'scale-120 bg-rose-500/40 shadow-2xl shadow-rose-500/50 -rotate-6' : ''}
+        hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:text-rose-500 hover:bg-rose-500/15 hover:-translate-y-1`}>
+      {animating && (
+        <>
+          <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-rose-400/30 via-pink-400/30 to-rose-400/30 animate-pulse" />
+          <span className="absolute inset-0 rounded-xl bg-white/40 animate-ping" />
+        </>
+      )}
+      <FiThumbsUp size={16} className={`relative transition-all duration-200 ${animating ? 'scale-250 -rotate-20 text-rose-500' : 'hover:scale-110'}`} />
+      <span className={`relative transition-all duration-150 ${animating ? 'text-rose-500 font-bold scale-130' : ''}`}>TD</span>
+      <span className={`relative text-xs font-mono tabular-nums transition-all duration-150 ${animating ? 'text-rose-500 font-bold scale-180' : ''}`}>
         {display}
       </span>
-    </button>
+      {error && <span className="relative w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />}
+    </AnimatedButton>
   );
 }
 
@@ -80,96 +117,98 @@ export default function TzXyz() {
     const el = pageRef.current;
     if (!el) return;
     const triggers = [];
+    const BASE_DURATION = 0.6;
+    const STAGGER_DELAY = 0.12;
 
-    // Hero 入场动画 - 更流畅的弹性效果
+    // Hero 入场动画 - 统一弹性效果
     const hero = el.querySelector('.tz-hero');
     if (hero) {
       gsap.fromTo(hero, 
-        { autoAlpha: 0, y: 50, scale: 0.9 }, 
-        { autoAlpha: 1, y: 0, scale: 1, duration: 1, ease: 'power3.out' }
+        { autoAlpha: 0, y: 50, scale: 0.9, rotateX: -10 }, 
+        { autoAlpha: 1, y: 0, scale: 1, rotateX: 0, duration: 1, ease: 'power3.out' }
       );
       
-      // 社交按钮依次入场
+      // 社交按钮依次入场 - 统一动画
       const btns = el.querySelectorAll('.tz-hero-btn');
       gsap.fromTo(btns, 
-        { autoAlpha: 0, y: 20, scale: 0.8 }, 
-        { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.1, delay: 0.4, ease: 'back.out(1.7)' }
+        { autoAlpha: 0, y: 25, scale: 0.75, rotate: -5 }, 
+        { autoAlpha: 1, y: 0, scale: 1, rotate: 0, duration: BASE_DURATION, stagger: STAGGER_DELAY, delay: 0.4, ease: 'back.out(1.5)' }
       );
     }
 
-    // 统计卡片动画
+    // 统计卡片动画 - 增强缩放和延迟
     const statCards = el.querySelectorAll('.tz-stat-card');
     if (statCards.length) {
-      gsap.set(statCards, { autoAlpha: 0, y: 30, scale: 0.9 });
+      gsap.set(statCards, { autoAlpha: 0, y: 40, scale: 0.85, rotateX: 15 });
       triggers.push(ScrollTrigger.create({
         trigger: statCards[0], start: 'top 85%',
-        onEnter: () => gsap.to(statCards, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12, ease: 'power2.out' }),
+        onEnter: () => gsap.to(statCards, { autoAlpha: 1, y: 0, scale: 1, rotateX: 0, duration: BASE_DURATION, stagger: STAGGER_DELAY, ease: 'back.out(1.3)' }),
         once: true
       }));
     }
 
-    // 视频标题动画
+    // 视频标题动画 - 统一缓动
     const videoTitle = el.querySelector('.tz-video-title');
     if (videoTitle) {
-      gsap.set(videoTitle, { autoAlpha: 0, y: 40 });
+      gsap.set(videoTitle, { autoAlpha: 0, y: 50, scale: 0.95 });
       triggers.push(ScrollTrigger.create({
         trigger: videoTitle, start: 'top 85%',
-        onEnter: () => gsap.to(videoTitle, { autoAlpha: 1, y: 0, duration: 0.7, ease: 'power3.out' }),
+        onEnter: () => gsap.to(videoTitle, { autoAlpha: 1, y: 0, scale: 1, duration: BASE_DURATION, ease: 'power3.out' }),
         once: true
       }));
     }
 
-    // 视频卡片动画 - 交错入场
+    // 视频卡片动画 - 交错入场，增强效果
     const videoCards = el.querySelectorAll('.tz-video-card');
     if (videoCards.length) {
-      gsap.set(videoCards, { autoAlpha: 0, y: 60, scale: 0.85 });
+      gsap.set(videoCards, { autoAlpha: 0, y: 60, scale: 0.8, rotateY: -15 });
       triggers.push(ScrollTrigger.create({
         trigger: videoCards[0], start: 'top 85%',
-        onEnter: () => gsap.to(videoCards, { autoAlpha: 1, y: 0, scale: 1, duration: 0.7, stagger: 0.15, ease: 'power3.out' }),
+        onEnter: () => gsap.to(videoCards, { autoAlpha: 1, y: 0, scale: 1, rotateY: 0, duration: BASE_DURATION + 0.1, stagger: STAGGER_DELAY + 0.03, ease: 'power3.out' }),
         once: true
       }));
     }
 
-    // 资源导航动画
+    // 资源导航动画 - 统一风格
     const resSection = el.querySelector('.tz-resources-section');
     if (resSection) {
-      gsap.set(resSection, { autoAlpha: 0, y: 40 });
+      gsap.set(resSection, { autoAlpha: 0, y: 40, scale: 0.95 });
       triggers.push(ScrollTrigger.create({
         trigger: resSection, start: 'top 85%',
-        onEnter: () => gsap.to(resSection, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }),
+        onEnter: () => gsap.to(resSection, { autoAlpha: 1, y: 0, scale: 1, duration: BASE_DURATION, ease: 'power3.out' }),
         once: true
       }));
     }
 
-    // 社区标题动画
+    // 社区标题动画 - 统一风格
     const comTitle = el.querySelector('.tz-com-title');
     if (comTitle) {
-      gsap.set(comTitle, { autoAlpha: 0, y: 40 });
+      gsap.set(comTitle, { autoAlpha: 0, y: 40, scale: 0.95 });
       triggers.push(ScrollTrigger.create({
         trigger: comTitle, start: 'top 85%',
-        onEnter: () => gsap.to(comTitle, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }),
+        onEnter: () => gsap.to(comTitle, { autoAlpha: 1, y: 0, scale: 1, duration: BASE_DURATION, ease: 'power3.out' }),
         once: true
       }));
     }
 
-    // 社区卡片动画
+    // 社区卡片动画 - 增强效果
     const comCards = el.querySelectorAll('.tz-com-card');
     if (comCards.length) {
-      gsap.set(comCards, { autoAlpha: 0, y: 40, scale: 0.9 });
+      gsap.set(comCards, { autoAlpha: 0, y: 50, scale: 0.85, rotateX: 10 });
       triggers.push(ScrollTrigger.create({
         trigger: comCards[0], start: 'top 85%',
-        onEnter: () => gsap.to(comCards, { autoAlpha: 1, y: 0, scale: 1, duration: 0.6, stagger: 0.12, ease: 'power2.out' }),
+        onEnter: () => gsap.to(comCards, { autoAlpha: 1, y: 0, scale: 1, rotateX: 0, duration: BASE_DURATION, stagger: STAGGER_DELAY, ease: 'back.out(1.3)' }),
         once: true
       }));
     }
 
-    // 联系区域动画
+    // 联系区域动画 - 统一风格
     const contactSection = el.querySelector('.tz-contact-section');
     if (contactSection) {
-      gsap.set(contactSection, { autoAlpha: 0, y: 40 });
+      gsap.set(contactSection, { autoAlpha: 0, y: 40, scale: 0.95 });
       triggers.push(ScrollTrigger.create({
         trigger: contactSection, start: 'top 85%',
-        onEnter: () => gsap.to(contactSection, { autoAlpha: 1, y: 0, duration: 0.6, ease: 'power2.out' }),
+        onEnter: () => gsap.to(contactSection, { autoAlpha: 1, y: 0, scale: 1, duration: BASE_DURATION, ease: 'power3.out' }),
         once: true
       }));
     }
@@ -179,6 +218,17 @@ export default function TzXyz() {
 
   return (
     <div ref={pageRef} className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 via-slate-800 dark:to-indigo-900/20">
+      <Helmet>
+        <title>天真SkyerNovie - Minecraft 游戏主播主页</title>
+        <meta name="description" content="天真SkyerNovie 的个人主页 - Minecraft 游戏视频创作者，整合包推荐，粉丝社区互动。" />
+        <link rel="canonical" href="https://zhcool520.xyz/tz" />
+        <meta property="og:title" content="天真SkyerNovie - Minecraft 游戏主播" />
+        <meta property="og:description" content="Minecraft 游戏视频创作者，整合包推荐，粉丝社区互动" />
+        <meta property="og:url" content="https://zhcool520.xyz/tz" />
+        <meta property="og:image" content="https://zhcool520.xyz/images/avatar.webp" />
+        <meta name="twitter:title" content="天真SkyerNovie - Minecraft 游戏主播" />
+        <meta name="twitter:description" content="Minecraft 游戏视频创作者，整合包推荐，粉丝社区互动" />
+      </Helmet>
 
       {/* Hero Section - 个人信息 */}
       <section className="relative pt-24 sm:pt-32 pb-8 sm:pb-12 px-6">
@@ -207,11 +257,11 @@ export default function TzXyz() {
                 {/* 社交链接 */}
                 <div className="flex items-center gap-3 justify-center sm:justify-start flex-wrap">
                   {socialLinks.map((link, i) => (
-                    <a key={i} 
-                      className={`tz-hero-btn inline-flex items-center gap-2 px-4 py-2.5 rounded-xl liquid-glass-light text-sm font-medium transition-all duration-300 hover:scale-105 hover:shadow-lg ${link.color}`}
+                    <AnimatedLink key={i} 
+                      className={`tz-hero-btn relative inline-flex items-center gap-2 px-4 py-2.5 rounded-xl liquid-glass-light text-sm font-medium transition-all duration-300 ease-out hover:shadow-xl hover:-translate-y-1 ${link.color}`}
                       href={link.url} target="_blank" rel="noopener noreferrer">
-                      <link.icon size={18} /><span>{link.label}</span>
-                    </a>
+                      <link.icon size={18} className="transition-transform duration-300 hover:scale-110" /><span>{link.label}</span>
+                    </AnimatedLink>
                   ))}
                   <TdButton />
                 </div>
@@ -225,23 +275,23 @@ export default function TzXyz() {
       <section className="py-8 sm:py-12 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center hover:scale-105 transition-transform duration-300">
-              <FiUsers className="mx-auto mb-3 text-indigo-500" size={28} />
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+              <FiUsers className="mx-auto mb-3 text-indigo-500 transition-transform duration-300 hover:scale-110" size={28} />
               <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">2.4万</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">B站粉丝</div>
             </div>
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center hover:scale-105 transition-transform duration-300">
-              <FiPlayCircle className="mx-auto mb-3 text-emerald-500" size={28} />
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+              <FiPlayCircle className="mx-auto mb-3 text-emerald-500 transition-transform duration-300 hover:scale-110" size={28} />
               <div className="text-lg sm:text-xl font-bold text-neutral-800 dark:text-neutral-50">《格雷空岛》</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">主要系列</div>
             </div>
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center hover:scale-105 transition-transform duration-300">
-              <FiClock className="mx-auto mb-3 text-amber-500" size={28} />
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+              <FiClock className="mx-auto mb-3 text-amber-500 transition-transform duration-300 hover:scale-110" size={28} />
               <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">3天/期</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">更新频率</div>
             </div>
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center hover:scale-105 transition-transform duration-300">
-              <FiTrendingUp className="mx-auto mb-3 text-rose-500" size={28} />
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+              <FiTrendingUp className="mx-auto mb-3 text-rose-500 transition-transform duration-300 hover:scale-110" size={28} />
               <div className="text-lg sm:text-xl font-bold text-neutral-800 dark:text-neutral-50">整合包实况</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">核心领域</div>
             </div>
