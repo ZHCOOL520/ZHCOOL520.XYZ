@@ -51,7 +51,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <div className="relative min-h-screen bg-light-100 dark:bg-dark-900 transition-colors duration-300">
+      <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900/20 transition-colors duration-300">
         <ParticleBackground />
         <MouseGlow />
         <Navbar />

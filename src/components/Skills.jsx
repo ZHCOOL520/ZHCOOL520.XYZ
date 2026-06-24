@@ -58,7 +58,7 @@ function SkillCard({ skill }) {
       <div className="flex items-center gap-3 mb-3">
         <skill.icon size={22} style={{ color: skill.color }} />
         <div className="flex-1">
-          <div className="flex items-center justify-between mb-1.5">
+          <div className="flex items-center justify-between mb-2">
             {sid ? (
               <Link to={`/skills/${sid}`} target="_blank" rel="noopener noreferrer" className="text-sm font-semibold text-neutral-800 dark:text-neutral-100 hover:text-indigo-500 transition-colors">{skill.name}</Link>
             ) : (
@@ -66,7 +66,7 @@ function SkillCard({ skill }) {
             )}
             <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono skill-count" data-count={skill.level}>0%</span>
           </div>
-          <div className="skill-bar">
+          <div className="skill-bar-container">
             <div className="skill-bar-fill" style={{ width: '0%' }} data-bar={skill.level} />
           </div>
         </div>
@@ -104,24 +104,24 @@ export default function Skills() {
   }, { scope: sectionRef });
 
   return (
-    <section id="skills" ref={sectionRef} className="relative py-24 px-6 z-10">
-      <div className="max-w-6xl mx-auto">
+    <section id="skills" ref={sectionRef} className="relative py-32 px-6 z-10">
+      <div className="max-w-7xl mx-auto">
         <SectionTitle title="技术栈" subtitle="// Tech Stack" />
 
-        <div className="mb-14">
+        <div className="mb-16">
           <h3 className="text-lg font-bold mb-6 text-neutral-500 dark:text-neutral-400 font-mono">{'// 编程语言'}</h3>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
             {progLangs.map((skill) => (
               <div key={skill.name} className="skill-prog"><SkillCard skill={skill} /></div>
             ))}
           </div>
         </div>
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-14">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
           {otherCategories.map((category, ci) => (
             <div key={ci} className="skill-cat glass-card">
               <h3 className="text-lg font-bold mb-6 text-neutral-500 dark:text-neutral-400 font-mono text-sm uppercase tracking-wide">{category.title}</h3>
-              <div className="space-y-5">
+              <div className="space-y-6">
                 {category.skills.map((skill) => {
                   const sid = skillNameToId[skill.name];
                   return (
@@ -137,7 +137,7 @@ export default function Skills() {
                         </div>
                         <span className="text-xs text-neutral-500 dark:text-neutral-400 font-mono skill-count" data-count={skill.level}>0%</span>
                       </div>
-                      <div className="skill-bar">
+                      <div className="skill-bar-container">
                         <div className="skill-bar-fill" style={{ width: '0%' }} data-bar={skill.level} />
                       </div>
                     </div>
@@ -154,12 +154,12 @@ export default function Skills() {
             {[...progLangs, ...otherCategories.flatMap(c => c.skills)].map((skill) => {
               const skillId = skillNameToId[skill.name];
               return skillId ? (
-                <Link key={skill.name} to={`/skills/${skillId}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 p-4 rounded-xl liquid-glass-light hover:scale-105 transition-all cursor-pointer">
+                <Link key={skill.name} to={`/skills/${skillId}`} target="_blank" rel="noopener noreferrer" className="flex flex-col items-center gap-2 p-4 rounded-xl glass-effect hover:scale-110 transition-all cursor-pointer">
                   <skill.icon size={36} style={{ color: skill.color }} />
                   <span className="text-xs text-neutral-600 dark:text-neutral-300">{skill.name}</span>
                 </Link>
               ) : (
-                <div key={skill.name} className="flex flex-col items-center gap-2 p-4 rounded-xl liquid-glass-light cursor-default">
+                <div key={skill.name} className="flex flex-col items-center gap-2 p-4 rounded-xl glass-effect cursor-default">
                   <skill.icon size={36} style={{ color: skill.color }} />
                   <span className="text-xs text-neutral-600 dark:text-neutral-300">{skill.name}</span>
                 </div>

@@ -48,45 +48,43 @@ export default function About() {
   }, { scope: sectionRef });
 
   return (
-    <section id="about" ref={sectionRef} className="relative py-24 px-6 z-10 overflow-hidden">
-      <div className="absolute top-1/2 left-1/4 w-72 h-72 bg-indigo-500/8 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-violet-500/6 rounded-full blur-3xl pointer-events-none" />
+    <section id="about" ref={sectionRef} className="relative py-32 px-6 z-10">
 
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-7xl mx-auto">
         <SectionTitle title="关于我" subtitle="// About Me" />
 
-        <div className="grid md:grid-cols-2 gap-12 items-center">
+        <div className="grid lg:grid-cols-2 gap-16 items-center">
           <div className="flex justify-center">
             <div className="relative">
-              <div className="about-ring-glow absolute -inset-8 rounded-full bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-transparent blur-2xl" />
-              <div className="about-ring absolute -inset-6 rounded-full border border-indigo-500/15" />
-              <div className="about-ring absolute -inset-3 rounded-full border border-violet-500/10" />
-              <div className="about-avatar w-64 h-64 sm:w-72 sm:h-72 rounded-full liquid-glass-strong flex items-center justify-center shadow-xl transition-all duration-500 hover:-translate-y-2 hover:scale-[1.04] hover:shadow-2xl hover:shadow-indigo-500/10 cursor-default">
+              <div className="about-ring-glow absolute -inset-10 rounded-full bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-transparent blur-3xl" />
+              <div className="about-ring absolute -inset-6 rounded-full border border-indigo-500/10" />
+              <div className="about-ring absolute -inset-3 rounded-full border border-violet-500/8" />
+              <div className="about-avatar w-64 h-64 sm:w-80 sm:h-80 rounded-full glass-effect flex items-center justify-center shadow-xl transition-all duration-500 hover:-translate-y-3 hover:scale-[1.05] hover:shadow-2xl hover:shadow-indigo-500/15 cursor-default">
                 <div className="text-center">
-                  <span className="text-5xl sm:text-6xl font-black text-gradient font-mono tracking-tight">南瓜</span>
-                  <p className="text-neutral-500 dark:text-neutral-400 mt-3 text-xs font-mono tracking-widest uppercase">ZHCOOL520</p>
+                  <span className="text-5xl sm:text-7xl font-black gradient-text font-mono tracking-tight">南瓜</span>
+                  <p className="text-neutral-500 dark:text-neutral-400 mt-4 text-xs font-mono tracking-widest uppercase">ZHCOOL520</p>
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="about-text space-y-6">
+          <div className="about-text space-y-8">
             <div>
-              <h3 className="text-2xl font-bold mb-3 text-neutral-800 dark:text-neutral-100">
-                <span className="text-gradient">多平台开发者</span>
+              <h3 className="text-2xl sm:text-3xl font-bold mb-4 text-neutral-800 dark:text-neutral-100">
+                <span className="gradient-text">多平台开发者</span>
               </h3>
-              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed">
+              <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed text-lg">
                 专注于 HarmonyOS 与 Android 跨平台开发，同时也是 Minecraft Mod & Plugin 创作者，
                 热爱开源社区，所有项目公开托管于 GitHub。
               </p>
             </div>
 
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-2">
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-4">
               {stats.map((stat, i) => (
-                <div key={i} className="about-stat liquid-glass-light rounded-2xl p-4 text-center transition-all duration-300 hover:-translate-y-2 hover:scale-[1.08] hover:shadow-lg hover:shadow-indigo-500/5">
-                  <stat.icon className="mx-auto mb-2 text-indigo-500" size={20} />
-                  <div className="text-xl font-bold text-neutral-800 dark:text-neutral-100">{stat.value}</div>
-                  <div className="text-xs text-neutral-500 dark:text-neutral-400">{stat.label}</div>
+                <div key={i} className="about-stat glass-card-sm text-center card-hover cursor-default">
+                  <stat.icon className="mx-auto mb-3 text-indigo-500" size={24} />
+                  <div className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">{stat.value}</div>
+                  <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">{stat.label}</div>
                 </div>
               ))}
             </div>

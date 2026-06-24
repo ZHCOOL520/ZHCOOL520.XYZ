@@ -32,28 +32,33 @@ export default function Contact() {
   }, { scope: sectionRef });
 
   return (
-    <section id="contact" ref={sectionRef} className="relative py-24 px-6 z-10">
+    <section id="contact" ref={sectionRef} className="relative py-32 px-6 z-10">
       <div className="max-w-4xl mx-auto">
         <SectionTitle title="联系我" subtitle="// Get In Touch" />
 
         <div className="max-w-lg mx-auto">
           <div className="contact-left text-center">
-            <h3 className="text-xl font-bold mb-4 text-neutral-800 dark:text-neutral-100">
-              一起<span className="text-gradient">创造</span>吧
+            <h3 className="text-2xl sm:text-3xl font-bold mb-6 text-neutral-800 dark:text-neutral-100">
+              一起<span className="gradient-text">创造</span>吧
             </h3>
-            <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed mb-8">
+            <p className="text-neutral-600 dark:text-neutral-300 leading-relaxed mb-10 text-lg">
               如果你有有趣的项目想法，或者想聊聊技术、开源，欢迎随时联系我！
               我始终对新技术和合作机会保持开放态度。
             </p>
-            <div className="space-y-3">
+            <div className="space-y-4">
               {socialLinks.map((link, i) => (
-                <a key={i} className="contact-link glass-card-sm flex items-center gap-4 group transition-all duration-300" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
-                  <div className={`w-11 h-11 rounded-xl bg-indigo-500/10 flex items-center justify-center group-hover:scale-110 group-hover:bg-indigo-500/20 transition-all duration-300 ${link.hoverColor}`}>
-                    <link.icon size={20} className="text-indigo-500 group-hover:text-white transition-colors" />
+                <a key={i} className="contact-link glass-card-sm flex items-center gap-4 group card-hover" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                  <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
+                    <link.icon size={22} className="text-indigo-500 group-hover:text-indigo-600 transition-colors" />
                   </div>
-                  <div className="text-left">
-                    <div className="font-semibold text-neutral-800 dark:text-neutral-100 text-sm">{link.label}</div>
-                    <div className="text-xs text-neutral-500 dark:text-neutral-400">{link.desc}</div>
+                  <div className="text-left flex-1">
+                    <div className="font-semibold text-neutral-800 dark:text-neutral-100">{link.label}</div>
+                    <div className="text-sm text-neutral-500 dark:text-neutral-400">{link.desc}</div>
+                  </div>
+                  <div className="w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                    <svg className="w-3 h-3 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                    </svg>
                   </div>
                 </a>
               ))}
