@@ -34,6 +34,16 @@ export default function Hero() {
           <span className="gradient-text">ZHCOOL520</span>
         </h1>
 
+        <a 
+          href="#about" 
+          onClick={(e) => { e.preventDefault(); document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' }); }}
+          className="inline-block mb-8 group"
+        >
+          <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1 bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 group-hover:from-indigo-300 group-hover:via-purple-300 group-hover:to-pink-300 transition-all duration-500 group-hover:scale-110 group-hover:shadow-xl group-hover:shadow-indigo-500/20 cursor-pointer">
+            <img src="/images/fox.webp" alt="ZHCOOL520" className="w-full h-full rounded-full object-cover border-2 border-white dark:border-neutral-800" />
+          </div>
+        </a>
+
         <div className="hero-typewriter mb-12">
           {Typewriter ? (
             <Typewriter

@@ -59,11 +59,8 @@ export default function About() {
               <div className="about-ring-glow absolute -inset-10 rounded-full bg-gradient-to-br from-indigo-500/15 via-purple-500/10 to-transparent blur-3xl" />
               <div className="about-ring absolute -inset-6 rounded-full border border-indigo-500/10" />
               <div className="about-ring absolute -inset-3 rounded-full border border-violet-500/8" />
-              <div className="about-avatar w-64 h-64 sm:w-80 sm:h-80 rounded-full glass-effect flex items-center justify-center shadow-xl transition-all duration-500 hover:-translate-y-3 hover:scale-[1.05] hover:shadow-2xl hover:shadow-indigo-500/15 cursor-default">
-                <div className="text-center">
-                  <span className="text-5xl sm:text-7xl font-black gradient-text font-mono tracking-tight">南瓜</span>
-                  <p className="text-neutral-500 dark:text-neutral-400 mt-4 text-xs font-mono tracking-widest uppercase">ZHCOOL520</p>
-                </div>
+              <div className="about-avatar w-64 h-64 sm:w-80 sm:h-80 rounded-full glass-effect flex items-center justify-center shadow-xl transition-all duration-500 hover:-translate-y-3 hover:scale-[1.05] hover:shadow-2xl hover:shadow-indigo-500/15 cursor-default overflow-hidden p-2">
+                <img src="/images/fox.webp" alt="ZHCOOL520" className="w-full h-full rounded-full object-cover" />
               </div>
             </div>
           </div>
