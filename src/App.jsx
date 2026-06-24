@@ -16,6 +16,7 @@ import ProjectDetail from './pages/ProjectDetail';
 import ResourcePreview from './components/ResourcePreview';
 import TzXyz from './pages/TzXyz';
 import TzResources from './pages/TzResources';
+import Tz2019Card from './pages/2019Card';
 import MouseGlow from './components/MouseGlow';
 import ScrollToTopFab from './components/ScrollToTopFab';
 
@@ -77,6 +78,7 @@ export default function App() {
               <Route path="/projects/:projectId" element={<ProjectDetail />} />
               <Route path="/tz" element={<TzXyz />} />
               <Route path="/tz-resources" element={<TzResources />} />
+              <Route path="/2019-card" element={<Tz2019Card />} />
             </Routes>
           </main>
           <Footer />

@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-import { FiGithub } from 'react-icons/fi';
+import { FiGithub, FiExternalLink } from 'react-icons/fi';
 import SectionTitle from './shared/SectionTitle.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +13,7 @@ const projects = [
   { title: 'AUTOcall', description: '安卓手机批量拨打电话工具，高效自动化通话任务处理，支持批量管理与快捷操作。', tags: ['Kotlin', 'Android', 'Automation'], gradient: 'from-green-500/20 to-emerald-500/20', icon: '📱', stars: 3, html_url: 'https://github.com/ZHCOOL520/AUTOcall', linkId: 'auto-call' },
   { title: 'HarmonyOS-McCraftLaucher', description: '基于 HarmonyOS 的 Minecraft 启动器，为鸿蒙生态打造的原生游戏启动与管理工具。', tags: ['C++', 'HarmonyOS', 'Minecraft'], gradient: 'from-orange-500/20 to-red-500/20', icon: '🎮', stars: 2, html_url: 'https://github.com/ZHCOOL520/HarmonyOS-McCraftLaucher', linkId: 'mccraft-launcher' },
   { title: 'HarmonyOS-AUTOcall', description: 'AUTOcall 的 HarmonyOS 移植版，将批量拨号功能带到鸿蒙平台，MIT 开源协议。', tags: ['TypeScript', 'HarmonyOS', 'MIT'], gradient: 'from-blue-500/20 to-cyan-500/20', icon: '📲', stars: 1, html_url: 'https://github.com/ZHCOOL520/HarmonyOS-AUTOcall', linkId: 'harmonyos-autocall' },
+  { title: '2019-card', description: '健康码 & 行程卡纪念版，纯前端生成器，致敬那段难忘的岁月。', tags: ['HTML', 'JavaScript', 'Tailwind CSS'], gradient: 'from-teal-500/20 to-green-500/20', icon: '💚', stars: 1, html_url: 'https://github.com/ZHCOOL520/2019-card', linkId: '2019-card', demo_url: '/2019-card' },
   { title: 'LoliPickaxe-1.20.1AI', description: 'Minecraft 1.20.1 版本的 AI 增强模组，为游戏带来智能化的新玩法与交互体验。', tags: ['Java', 'Minecraft', 'AI', 'Mod'], gradient: 'from-rose-500/20 to-pink-500/20', icon: '⛏️', stars: 2, html_url: 'https://github.com/ZHCOOL520/LoliPickaxe-1.20.1AI', linkId: 'lolipickaxe' },
 ];
 
@@ -51,9 +52,16 @@ export default function Projects() {
                   <div className="flex items-center gap-1 text-sm text-yellow-500">
                     <span>⭐</span><span className="font-mono text-xs">{project.stars}</span>
                   </div>
-                  <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="btn-primary text-sm flex items-center gap-1.5">
-                    <FiGithub size={16} /><span>源码</span>
-                  </a>
+                  <div className="flex items-center gap-2">
+                    {project.demo_url && (
+                      <a href={project.demo_url} onClick={(e) => e.stopPropagation()} className="text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-medium hover:scale-105 transition-transform">
+                        <FiExternalLink size={14} /><span>示例</span>
+                      </a>
+                    )}
+                    <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-primary">
+                      <FiGithub size={14} /><span>源码</span>
+                    </a>
+                  </div>
                 </div>
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-t from-indigo-500/5 to-transparent" />
               </Link>
