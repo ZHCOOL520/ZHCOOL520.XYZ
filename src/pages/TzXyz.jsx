@@ -6,82 +6,169 @@ import { Helmet } from 'react-helmet-async';
 import { FiExternalLink, FiMessageCircle, FiUsers, FiClock, FiPlayCircle, FiStar, FiThumbsUp, FiTrendingUp, FiEye } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 import { Link } from 'react-router-dom';
-import AnimatedButton from '../components/shared/AnimatedButton';
 import AnimatedLink from '../components/shared/AnimatedLink';
 
 gsap.registerPlugin(ScrollTrigger);
 
 const WORKER_URL = 'https://api.zhcool520.xyz';
 
+const TD_MILESTONES = [10, 50, 100, 200, 500, 1000, 2000, 5000, 10000, 20000, 50000, 100000];
+
+const TD_MSG = {
+  10: '不错哦~继续！',
+  50: '手速可以啊！',
+  100: '💯 百发百中！',
+  200: '停不下来了是吧',
+  500: '🔥 燃起来了！',
+  1000: '🎉 千锤百炼！',
+  2000: '你是认真的吗',
+  5000: '⭐ 大佬受我一拜',
+  10000: '🏆 万中无一！',
+  20000: '二万五千里长征',
+  50000: '👑 五万封顶?不存在的',
+  100000: '💎 十万！传说级！',
+};
+
 function TdButton() {
   const [count, setCount] = useState(() => {
     const saved = localStorage.getItem('tz_td_count_backup');
     return saved ? parseInt(saved, 10) : 0;
   });
-  const [animating, setAnimating] = useState(false);
+  const [clicks, setClicks] = useState([]);
+  const [toast, setToast] = useState(null);
   const [error, setError] = useState(false);
+  const wrapperRef = useRef(null);
+  const countRef = useRef(0);
+  const clickId = useRef(0);
+
+  const syncCount = useCallback((v) => {
+    countRef.current = v;
+    setCount(v);
+    localStorage.setItem('tz_td_count_backup', v.toString());
+  }, []);
+
+  const checkMilestone = useCallback((prev, next) => {
+    for (const m of TD_MILESTONES) {
+      if (prev < m && next >= m && TD_MSG[m]) {
+        setToast(TD_MSG[m]);
+        break;
+      }
+    }
+  }, []);
 
   useEffect(() => {
-    fetch(`${WORKER_URL}/get`)
+    fetch(`${WORKER_URL}/get?_t=${Date.now()}`)
       .then(r => r.json())
       .then(data => {
         if (data.value !== undefined) {
-          setCount(data.value);
-          localStorage.setItem('tz_td_count_backup', data.value.toString());
+          const serverVal = data.value;
+          countRef.current = Math.max(countRef.current, serverVal);
+          setCount(countRef.current);
+          localStorage.setItem('tz_td_count_backup', countRef.current.toString());
           setError(false);
         }
       })
       .catch(() => {
         const saved = localStorage.getItem('tz_td_count_backup');
-        if (saved) setCount(parseInt(saved, 10));
+        if (saved) syncCount(parseInt(saved, 10));
         setError(true);
       });
-  }, []);
+  }, [syncCount]);
 
+  // Clean up particles
+  useEffect(() => {
+    if (clicks.length === 0) return;
+    const timer = setTimeout(() => setClicks(prev => prev.slice(1)), 800);
+    return () => clearTimeout(timer);
+  }, [clicks]);
 
+  // Clean up toast
+  useEffect(() => {
+    if (!toast) return;
+    const timer = setTimeout(() => setToast(null), 2200);
+    return () => clearTimeout(timer);
+  }, [toast]);
 
-  const handleTd = useCallback(() => {
-    setAnimating(true);
-    setCount(c => c + 1);
+  const handleTd = useCallback((e) => {
+    const id = ++clickId.current;
+    const rect = wrapperRef.current?.getBoundingClientRect();
+    const x = e.clientX - (rect?.left || 0);
+    const y = e.clientY - (rect?.top || 0);
 
-    fetch(`${WORKER_URL}/hit`, { method: 'POST' })
+    const prev = countRef.current;
+    const next = prev + 1;
+    countRef.current = next;
+    setCount(next);
+    checkMilestone(prev, next);
+    setClicks(prev => [...prev.slice(-8), { id, x, y }]);
+
+    fetch(`${WORKER_URL}/hit?_t=${Date.now()}`, { method: 'POST' })
       .then(r => r.json())
       .then(data => {
         if (data.value !== undefined) {
-          setCount(data.value);
-          localStorage.setItem('tz_td_count_backup', data.value.toString());
+          countRef.current = Math.max(countRef.current, data.value);
+          setCount(countRef.current);
+          localStorage.setItem('tz_td_count_backup', countRef.current.toString());
           setError(false);
         }
       })
-      .catch(() => {
-        setError(true);
-      })
-      .finally(() => setTimeout(() => setAnimating(false), 600));
-  }, []);
+      .catch(() => setError(true));
+  }, [checkMilestone, syncCount]);
 
-  const display = count >= 10000 ? (count / 10000).toFixed(1).replace(/\.0$/, '') + '万' : count.toLocaleString('zh-CN');
+  const display = count.toLocaleString('zh-CN');
 
   return (
-    <AnimatedButton
-      onClick={handleTd}
-      title={error ? '同步中...' : '点击 TD'}
-      className={`tz-hero-btn relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 ease-out liquid-glass-light
-        ${error ? 'text-amber-500' : 'text-neutral-600 dark:text-neutral-300'}
-        ${animating ? 'scale-120 bg-rose-500/40 shadow-2xl shadow-rose-500/50 -rotate-6' : ''}
-        hover:scale-110 hover:shadow-xl hover:shadow-indigo-500/20 hover:text-rose-500 hover:bg-rose-500/15 hover:-translate-y-1`}>
-      {animating && (
-        <>
-          <span className="absolute inset-0 rounded-xl bg-gradient-to-r from-rose-400/30 via-pink-400/30 to-rose-400/30 animate-pulse" />
-          <span className="absolute inset-0 rounded-xl bg-white/40 animate-ping" />
-        </>
+    <div ref={wrapperRef} className="relative inline-flex">
+      {/* 粒子层 — 在按钮外面，不被裁剪 */}
+      {clicks.map(c => (
+        <span key={c.id}
+          className="absolute w-1 h-1 rounded-full bg-rose-400/60 pointer-events-none z-50"
+          style={{ left: c.x, top: c.y, animation: 'td-ripple 0.5s ease-out forwards' }}
+        />
+      ))}
+      {clicks.map(c => (
+        <span key={`p-${c.id}`}
+          className="absolute pointer-events-none text-rose-500 font-bold text-sm z-50"
+          style={{ left: c.x, top: c.y, animation: 'td-float 0.8s ease-out forwards' }}>
+          +1
+        </span>
+      ))}
+
+      {/* 里程碑对话气泡 */}
+      {toast && (
+        <div className="absolute -top-12 left-1/2 -translate-x-1/2 pointer-events-none z-50 animate-bounce">
+          <span className="inline-block px-3 py-1.5 rounded-xl bg-gradient-to-r from-rose-500 to-pink-500 text-white text-xs font-bold shadow-lg whitespace-nowrap">
+            {toast}
+          </span>
+        </div>
       )}
-      <FiThumbsUp size={16} className={`relative transition-all duration-200 ${animating ? 'scale-250 -rotate-20 text-rose-500' : 'hover:scale-110'}`} />
-      <span className={`relative transition-all duration-150 ${animating ? 'text-rose-500 font-bold scale-130' : ''}`}>TD</span>
-      <span className={`relative text-xs font-mono tabular-nums transition-all duration-150 ${animating ? 'text-rose-500 font-bold scale-180' : ''}`}>
-        {display}
-      </span>
-      {error && <span className="relative w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />}
-    </AnimatedButton>
+
+      <button
+        onClick={handleTd}
+        title={error ? '同步中...' : '猛戳 TD！'}
+        className={`tz-hero-btn relative inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold transition-colors duration-200 liquid-glass-light
+          ${error ? 'text-amber-500' : 'text-neutral-600 dark:text-neutral-300'}
+          hover:scale-110 hover:shadow-xl hover:shadow-rose-500/20 hover:text-rose-500 hover:bg-rose-500/15 hover:-translate-y-1 active:scale-95 active:duration-75`}>
+        <FiThumbsUp size={16} className="relative group-hover:scale-110 transition-transform duration-200" />
+        <span className="relative">TD</span>
+        <span className="relative text-xs font-mono tabular-nums">
+          {display}
+        </span>
+        {error && <span className="relative w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse" />}
+      </button>
+
+      <style>{`
+        @keyframes td-ripple {
+          0% { transform: scale(1); opacity: 0.8; }
+          100% { transform: scale(30); opacity: 0; }
+        }
+        @keyframes td-float {
+          0% { transform: translateY(0) scale(1); opacity: 1; }
+          50% { transform: translateY(-28px) scale(1.4); opacity: 0.9; }
+          100% { transform: translateY(-52px) scale(0.7); opacity: 0; }
+        }
+      `}</style>
+    </div>
   );
 }
 

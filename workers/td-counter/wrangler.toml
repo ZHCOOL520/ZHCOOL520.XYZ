@@ -1,0 +1,8 @@
+name = "td-counter"
+main = "src/index.js"
+compatibility_date = "2025-06-25"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "td-counter-db"
+database_id = "your-database-id-here"
