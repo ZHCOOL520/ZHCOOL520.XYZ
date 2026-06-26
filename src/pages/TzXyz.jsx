@@ -364,7 +364,7 @@ export default function TzXyz() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
             <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
               <FiUsers className="mx-auto mb-3 text-indigo-500 transition-transform duration-300 hover:scale-110" size={28} />
-              <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">2.4万</div>
+              <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">2.5万</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">B站粉丝</div>
             </div>
             <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
