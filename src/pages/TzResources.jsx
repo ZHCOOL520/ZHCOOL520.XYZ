@@ -106,7 +106,7 @@ export default function TzResources() {
               <span className="gradient-text">资源下载</span>
             </h1>
             <p className="text-neutral-500 dark:text-neutral-400 text-sm sm:text-base max-w-md mx-auto">
-              Minecraft 整合包资源导航 · 主播推荐平台
+              整合包下载平台导航 · 站长搜集资源
             </p>
           </div>
         </div>
@@ -114,18 +114,19 @@ export default function TzResources() {
 
       <section className="pb-8 px-6">
         <div className="max-w-3xl mx-auto">
-          <div className="tzr-notice liquid-glass-light rounded-2xl p-6 sm:p-8">
+          <div className="tzr-notice liquid-glass-light rounded-2xl p-6 sm:p-8 border-2 border-rose-200 dark:border-rose-800/50">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-amber-500/10 flex items-center justify-center flex-shrink-0">
-                <FiAlertTriangle className="text-amber-500" size={20} />
+              <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center flex-shrink-0">
+                <FiAlertTriangle className="text-rose-500" size={20} />
               </div>
               <div className="flex-1">
-                <h2 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-3">关于整合包下载</h2>
-                <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-3">
-                  由于模组授权协议及版权原因，本站无法直接提供整合包文件下载。整合包中包含的大量模组各有其独立的许可证和分发条款，直接分发可能侵犯模组作者的权益。
+                <h2 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-3">❌ 本页面不提供天真资源下载</h2>
+                <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-2">
+                  <strong>天真SkyerNovie 的整合包文件、视频资源等</strong>，本站<b>无法提供</b>。请前往 <strong>QQ 群</strong>向主播或群友询问获取方式。
                 </p>
-                <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed">
-                  因此我们整理了以下主流整合包平台，你可以在这些平台上找到视频中使用的整合包及相关资源：
+                <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-2">
+                  此页面仅整理了<b>主流整合包下载平台</b>和<b>站长自己搜集的 Minecraft 资源</b>，
+                  与天真SkyerNovie 无直接关联，仅供学习交流参考。
                 </p>
               </div>
             </div>
@@ -145,28 +146,28 @@ export default function TzResources() {
             </div>
             
             <div className="grid sm:grid-cols-2 gap-6">
-              <div className="liquid-glass-light rounded-xl p-5">
+              <div className="liquid-glass-light rounded-xl p-5 border border-rose-100 dark:border-rose-900/30">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-emerald-500/10 flex items-center justify-center">
-                    <FiUsers className="text-emerald-500" size={18} />
+                  <div className="w-10 h-10 rounded-lg bg-rose-500/10 flex items-center justify-center">
+                    <FiUsers className="text-rose-500" size={18} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-neutral-800 dark:text-neutral-100">主播相关资源</h3>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">天真SkyerNovie 推荐</p>
+                    <h3 className="font-bold text-neutral-800 dark:text-neutral-100">天真SkyerNovie 资源</h3>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400">请通过QQ群获取</p>
                   </div>
                 </div>
                 <ul className="text-sm text-neutral-600 dark:text-neutral-300 space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">•</span>
-                    <span>直播中使用的整合包</span>
+                    <span className="text-rose-500">•</span>
+                    <span>整合包文件本页不提供</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">•</span>
-                    <span>视频系列对应的模组资源</span>
+                    <span className="text-rose-500">•</span>
+                    <span>视频模组资源请加群询问</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-emerald-500">•</span>
-                    <span>主播推荐的游戏平台</span>
+                    <span className="text-rose-500">•</span>
+                    <span>下方仅为第三方下载平台导航</span>
                   </li>
                 </ul>
               </div>
@@ -271,7 +272,7 @@ export default function TzResources() {
 
       <section className="py-8 px-6 text-center">
         <p className="text-xs text-neutral-400 dark:text-neutral-500">
-          每晚8点-10点直播 · 特殊情况可能暂停，详见B站动态或QQ群
+          资源仅供学习交流 · 请支持正版软件
         </p>
       </section>
     </div>
