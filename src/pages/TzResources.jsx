@@ -3,7 +3,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
-import { FiExternalLink, FiAlertTriangle, FiBookOpen, FiGlobe, FiGrid, FiPackage, FiArrowRight, FiArrowLeft, FiInfo, FiDatabase, FiUsers } from 'react-icons/fi';
+import { FiExternalLink, FiAlertTriangle, FiBookOpen, FiGlobe, FiGrid, FiPackage, FiArrowRight, FiArrowLeft, FiInfo, FiDatabase, FiUsers, FiCoffee } from 'react-icons/fi';
 import BackLink from '../components/shared/BackLink.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -252,19 +252,51 @@ export default function TzResources() {
       </section>
 
       <section className="py-16 px-6">
-        <div className="tzr-link max-w-3xl mx-auto">
-          <div className="liquid-glass rounded-2xl p-8 sm:p-12 text-center">
-            <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center mx-auto mb-6 shadow-lg text-white">
-              <FiPackage size={28} />
-            </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-100 mb-3">更多 Minecraft 资源</h2>
-            <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-lg mx-auto mb-6">
-              本站主页也收录了 Minecraft 相关资源，包括整合包推荐、实用工具等，由站长搜集整理，持续更新中。
-            </p>
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-800 dark:text-neutral-50 mb-3">本站 Minecraft 资源</h2>
+            <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400">由站长独立搜集整理，持续更新中</p>
+          </div>
+          
+          <div className="grid sm:grid-cols-2 gap-6">
             <Link to="/resources/minecraft-pack"
-              className="inline-flex items-center gap-2 btn-primary text-sm sm:text-base">
-              <span>查看 Minecraft 资源</span>
-              <FiArrowRight size={16} />
+              className="tzr-card group relative liquid-glass rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400">
+                  <FiPackage size={24} />
+                </div>
+                <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-2">Minecraft 整合包</h3>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-4">科技向、魔法向以及生活类的 Minecraft Java 版整合包合集。</p>
+                <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
+                  <span>查看详情</span>
+                  <FiArrowRight size={14} />
+                </div>
+              </div>
+            </Link>
+            
+            <Link to="/resources/minecraft-java-jdk"
+              className="tzr-card group relative liquid-glass rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
+              <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
+              <div className="relative">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400">
+                  <FiCoffee size={24} />
+                </div>
+                <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-2">Minecraft Java JDK</h3>
+                <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-4">适用于 Minecraft Java 版的 JDK 运行环境推荐合集。</p>
+                <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
+                  <span>查看详情</span>
+                  <FiArrowRight size={14} />
+                </div>
+              </div>
+            </Link>
+          </div>
+          
+          <div className="text-center mt-10">
+            <Link to="/resources"
+              className="inline-flex items-center gap-2 liquid-glass-light rounded-xl px-6 py-3 text-sm font-semibold text-neutral-600 dark:text-neutral-300 hover:text-indigo-500 transition-all duration-300">
+              <span>查看全部资源</span>
+              <FiArrowRight size={14} />
             </Link>
           </div>
         </div>
