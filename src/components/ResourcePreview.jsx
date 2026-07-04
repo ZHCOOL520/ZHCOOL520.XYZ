@@ -50,7 +50,7 @@ export default function ResourcePreview() {
           <div className="text-sm">
             <span className="font-semibold text-neutral-800 dark:text-neutral-100">说明：</span>
             <span className="text-neutral-600 dark:text-neutral-400">
-              本站资源由站长搜集整理，与各内容创作者（如天真SkyerNovie）无关。资源仅供学习交流，请支持正版软件。
+              本站资源由站长搜集整理，资源仅供学习交流，请支持正版软件。
             </span>
           </div>
         </div>
