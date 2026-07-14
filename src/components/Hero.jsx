@@ -89,11 +89,6 @@ export default function Hero() {
           </a>
         </div>
       </div>
-
-      <div className={`hero-scroll absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 z-20 transition-all duration-500 ${showScroll ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-        <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500 tracking-widest">SCROLL</span>
-        <FiChevronDown className="hero-scroll-arrow text-indigo-400/60" size={20} />
-      </div>
     </section>
   );
 }

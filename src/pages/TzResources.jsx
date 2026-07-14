@@ -114,19 +114,18 @@ export default function TzResources() {
 
       <section className="pb-8 px-6">
         <div className="max-w-3xl mx-auto">
-          <div className="tzr-notice liquid-glass-light rounded-2xl p-6 sm:p-8 border-2 border-rose-200 dark:border-rose-800/50">
+          <div className="tzr-notice liquid-glass-light rounded-2xl p-6 sm:p-8 border-2 border-pink-200 dark:border-pink-800/50">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-xl bg-rose-500/10 flex items-center justify-center flex-shrink-0">
-                <FiAlertTriangle className="text-rose-500" size={20} />
+              <div className="w-12 h-12 rounded-xl bg-pink-500/10 flex items-center justify-center flex-shrink-0">
+                <FiAlertTriangle className="text-pink-500" size={20} />
               </div>
               <div className="flex-1">
-                <h2 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-3">❌ 本页面不提供天真资源下载</h2>
+                <h2 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-3">✨ 有天真资源超级复刻版哦~</h2>
                 <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-2">
-                  <strong>天真SkyerNovie 的整合包文件、视频资源等</strong>，本站<b>无法提供</b>。请前往 <strong>QQ 群</strong>向主播或群友询问获取方式。
+                  喵~ 这里有站长搜集整理的 <strong>天真资源超级复刻版</strong> 哦，添加了可爱的猫娘语言呢~
                 </p>
                 <p className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 leading-relaxed mb-2">
-                  此页面仅整理了<b>主流整合包下载平台</b>和<b>站长自己搜集的 Minecraft 资源</b>，
-                  与天真SkyerNovie 无直接关联，仅供学习交流参考。
+                  此复刻版与天真SkyerNovie <b>无直接关联</b>，只是站长自己超级复刻的哦，仅供学习交流参考喵~
                 </p>
               </div>
             </div>
@@ -146,28 +145,28 @@ export default function TzResources() {
             </div>
             
             <div className="grid sm:grid-cols-2 gap-6">
-              <div className="liquid-glass-light rounded-xl p-5 border border-rose-100 dark:border-rose-900/30">
+              <div className="liquid-glass-light rounded-xl p-5 border border-pink-100 dark:border-pink-900/30">
                 <div className="flex items-center gap-3 mb-3">
-                  <div className="w-10 h-10 rounded-lg bg-rose-500/10 flex items-center justify-center">
-                    <FiUsers className="text-rose-500" size={18} />
+                  <div className="w-10 h-10 rounded-lg bg-pink-500/10 flex items-center justify-center">
+                    <FiUsers className="text-pink-500" size={18} />
                   </div>
                   <div>
-                    <h3 className="font-bold text-neutral-800 dark:text-neutral-100">天真SkyerNovie 资源</h3>
-                    <p className="text-xs text-neutral-500 dark:text-neutral-400">请通过QQ群获取</p>
+                    <h3 className="font-bold text-neutral-800 dark:text-neutral-100">超级复刻版资源</h3>
+                    <p className="text-xs text-neutral-500 dark:text-neutral-400">站长超级复刻</p>
                   </div>
                 </div>
                 <ul className="text-sm text-neutral-600 dark:text-neutral-300 space-y-2">
                   <li className="flex items-start gap-2">
-                    <span className="text-rose-500">•</span>
-                    <span>整合包文件本页不提供</span>
+                    <span className="text-pink-500">•</span>
+                    <span>有天真资源超级复刻版哦~</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-rose-500">•</span>
-                    <span>视频模组资源请加群询问</span>
+                    <span className="text-pink-500">•</span>
+                    <span>添加了可爱的猫娘语言喵~</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <span className="text-rose-500">•</span>
-                    <span>下方仅为第三方下载平台导航</span>
+                    <span className="text-pink-500">•</span>
+                    <span>与天真SkyerNovie无直接关联</span>
                   </li>
                 </ul>
               </div>
@@ -202,7 +201,7 @@ export default function TzResources() {
             <div className="mt-6 pt-5 border-t border-neutral-100/80 dark:border-white/8">
               <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center">
                 <span className="font-semibold text-neutral-700 dark:text-neutral-200">重要提示：</span>
-                本站主页资源由站长独立搜集整理，与天真SkyerNovie 等内容创作者无关，资源仅供学习交流，请支持正版软件。
+                本站资源由站长独立搜集整理，超级复刻版与天真SkyerNovie等内容创作者无关喵~ 仅供学习交流，请支持正版软件哦~
               </p>
             </div>
           </div>
