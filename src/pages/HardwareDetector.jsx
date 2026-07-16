@@ -46,7 +46,7 @@ export default function HardwareDetector() {
         <div className="flex justify-center mb-10">
           <div className="relative w-full max-w-lg rounded-[24px] overflow-hidden shadow-2xl shadow-sky-500/10 ring-1 ring-neutral-200 dark:ring-neutral-700 bg-black">
             <iframe
-              src="/hardware-detector/index.html"
+              src="/static/hardware-detector/index.html"
               title="AI 电脑体检"
               className="w-full border-0"
               style={{ height: '750px' }}
