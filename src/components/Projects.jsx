@@ -11,10 +11,10 @@ gsap.registerPlugin(ScrollTrigger);
 const projects = [
   { title: 'EchoMusicPluginst', description: 'EchoMusic 的非官方插件仓库，主打神人。为音乐爱好者提供丰富的插件扩展与个性化功能。', tags: ['JavaScript', 'EchoMusic', 'Plugin'], gradient: 'from-purple-500/20 to-pink-500/20', icon: '🎵', stars: 1, html_url: 'https://github.com/ZHCOOL520/EchoMusicPluginst', linkId: 'echomusic-pluginst' },
   { title: 'AUTOcall', description: '安卓手机批量拨打电话工具，高效自动化通话任务处理，支持批量管理与快捷操作。', tags: ['Kotlin', 'Android', 'Automation'], gradient: 'from-green-500/20 to-emerald-500/20', icon: '📱', stars: 3, html_url: 'https://github.com/ZHCOOL520/AUTOcall', linkId: 'auto-call' },
-  { title: 'HarmonyOS-McCraftLaucher', description: '基于 HarmonyOS 的 Minecraft 启动器，为鸿蒙生态打造的原生游戏启动与管理工具。', tags: ['C++', 'HarmonyOS', 'Minecraft'], gradient: 'from-orange-500/20 to-red-500/20', icon: '🎮', stars: 2, html_url: 'https://github.com/ZHCOOL520/HarmonyOS-McCraftLaucher', linkId: 'mccraft-launcher' },
+  { title: 'HarmonyOS-McCraftLaucher', description: '基于 HarmonyOS 的 Minecraft 启动器，为鸿蒙生态打造的原生游戏启动与管理工具。', tags: ['C++', 'HarmonyOS', 'Minecraft'], gradient: 'from-orange-500/20 to-red-500/20', icon: '🎮', stars: 3, html_url: 'https://github.com/ZHCOOL520/HarmonyOS-McCraftLaucher', linkId: 'mccraft-launcher' },
   { title: 'HarmonyOS-AUTOcall', description: 'AUTOcall 的 HarmonyOS 移植版，将批量拨号功能带到鸿蒙平台，MIT 开源协议。', tags: ['TypeScript', 'HarmonyOS', 'MIT'], gradient: 'from-blue-500/20 to-cyan-500/20', icon: '📲', stars: 1, html_url: 'https://github.com/ZHCOOL520/HarmonyOS-AUTOcall', linkId: 'harmonyos-autocall' },
+  { title: 'AI 电脑体检', description: '一键检测电脑硬件配置，评估本地 AI 应用部署能力，纯浏览器运行，隐私安全。', tags: ['HTML', 'JavaScript', 'AI', 'Hardware'], gradient: 'from-sky-500/20 to-cyan-500/20', icon: '🖥️', stars: 0, html_url: 'https://github.com/ZHCOOL520/hardware-detector', linkId: 'hardware-detector', demo_url: '/hardware-detector' },
   { title: '2019-card', description: '健康码 & 行程卡纪念版，纯前端生成器，致敬那段难忘的岁月。', tags: ['HTML', 'JavaScript', 'Tailwind CSS'], gradient: 'from-teal-500/20 to-green-500/20', icon: '💚', stars: 1, html_url: 'https://github.com/ZHCOOL520/2019-card', linkId: '2019-card', demo_url: '/2019-card' },
-  { title: 'LoliPickaxe-1.20.1AI', description: 'Minecraft 1.20.1 版本的 AI 增强模组，为游戏带来智能化的新玩法与交互体验。', tags: ['Java', 'Minecraft', 'AI', 'Mod'], gradient: 'from-rose-500/20 to-pink-500/20', icon: '⛏️', stars: 2, html_url: 'https://github.com/ZHCOOL520/LoliPickaxe-1.20.1AI', linkId: 'lolipickaxe' },
 ];
 
 export default function Projects() {
@@ -69,9 +69,9 @@ export default function Projects() {
         </div>
 
         <div className="project-cta text-center mt-16">
-          <a href="https://github.com/ZHCOOL520" target="_blank" rel="noopener noreferrer" className="btn-outline inline-flex items-center gap-2">
-            <FiGithub size={18} /> 在 GitHub 上查看更多
-          </a>
+          <Link to="/projects" className="btn-outline inline-flex items-center gap-2">
+            <FiGithub size={18} /> 查看更多项目
+          </Link>
         </div>
       </div>
     </section>

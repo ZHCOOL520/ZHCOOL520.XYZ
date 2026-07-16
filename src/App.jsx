@@ -1,25 +1,30 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
-import { HelmetProvider, Helmet } from 'react-helmet-async';
+import { useEffect, lazy, Suspense } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import ParticleBackground from './components/ParticleBackground';
 import Navbar from './components/Navbar';
-import Hero from './components/Hero';
-import About from './components/About';
-import Projects from './components/Projects';
-import Contact from './components/Contact';
-import Skills from './components/Skills';
 import Footer from './components/Footer';
-import Resources from './pages/resources/index.jsx';
-import ResourceDetail from './pages/resources/detail.jsx';
-import SkillDetail from './pages/SkillDetail';
-import ProjectDetail from './pages/ProjectDetail';
-import ResourcePreview from './components/ResourcePreview';
-import TzXyz from './pages/TzXyz';
-import TzResources from './pages/TzResources';
-import Tz2019Card from './pages/2019Card';
-import XiGua from './pages/XiGua';
+import Loading from './components/Loading';
 import MouseGlow from './components/MouseGlow';
 import ScrollToTopFab from './components/ScrollToTopFab';
+import LazyLoadSection from './components/LazyLoadSection';
+
+const Hero = lazy(() => import('./components/Hero'));
+const About = lazy(() => import('./components/About'));
+const Projects = lazy(() => import('./components/Projects'));
+const ProjectsList = lazy(() => import('./pages/ProjectsList'));
+const Contact = lazy(() => import('./components/Contact'));
+const Skills = lazy(() => import('./components/Skills'));
+const Resources = lazy(() => import('./pages/resources/index.jsx'));
+const ResourceDetail = lazy(() => import('./pages/resources/detail.jsx'));
+const SkillDetail = lazy(() => import('./pages/SkillDetail'));
+const ProjectDetail = lazy(() => import('./pages/ProjectDetail'));
+const ResourcePreview = lazy(() => import('./components/ResourcePreview'));
+const TzXyz = lazy(() => import('./pages/TzXyz'));
+const TzResources = lazy(() => import('./pages/TzResources'));
+const Tz2019Card = lazy(() => import('./pages/2019Card'));
+const XiGua = lazy(() => import('./pages/XiGua'));
+const HardwareDetector = lazy(() => import('./pages/HardwareDetector'));
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -40,23 +45,34 @@ function ScrollToTop() {
 function HomePage() {
   return (
     <>
-      <Helmet>
-        <title>ZHCOOL520 - 个人主页 | HarmonyOS & Android 开发者</title>
-        <meta name="description" content="ZHCOOL520 的个人主页 - HarmonyOS & Android 开发者，Minecraft Mod & Plugin 创作者，热爱开源与技术创新。" />
-        <link rel="canonical" href="https://zhcool520.xyz/" />
-        <meta property="og:title" content="ZHCOOL520 - 个人主页" />
-        <meta property="og:description" content="HarmonyOS & Android 开发者，Minecraft Mod & Plugin 创作者" />
-        <meta property="og:url" content="https://zhcool520.xyz/" />
-        <meta property="og:image" content="https://zhcool520.xyz/images/fox.webp" />
-        <meta name="twitter:title" content="ZHCOOL520 - 个人主页" />
-        <meta name="twitter:description" content="HarmonyOS & Android 开发者，Minecraft Mod & Plugin 创作者" />
-      </Helmet>
-      <Hero />
-      <ResourcePreview />
-      <About />
-      <Skills />
-      <Projects />
-      <Contact />
+      <Suspense fallback={<div className="min-h-screen" />}>
+        <Hero />
+      </Suspense>
+      <LazyLoadSection rootMargin="200px">
+        <Suspense fallback={<div className="h-80 bg-gradient-to-r from-slate-200/30 via-slate-100/30 to-slate-200/30 dark:from-slate-800/30 dark:via-slate-700/30 dark:to-slate-800/30 rounded-xl animate-pulse" />}>
+          <ResourcePreview />
+        </Suspense>
+      </LazyLoadSection>
+      <LazyLoadSection rootMargin="200px">
+        <Suspense fallback={<div className="h-80 bg-gradient-to-r from-slate-200/30 via-slate-100/30 to-slate-200/30 dark:from-slate-800/30 dark:via-slate-700/30 dark:to-slate-800/30 rounded-xl animate-pulse" />}>
+          <About />
+        </Suspense>
+      </LazyLoadSection>
+      <LazyLoadSection rootMargin="200px">
+        <Suspense fallback={<div className="h-96 bg-gradient-to-r from-slate-200/30 via-slate-100/30 to-slate-200/30 dark:from-slate-800/30 dark:via-slate-700/30 dark:to-slate-800/30 rounded-xl animate-pulse" />}>
+          <Skills />
+        </Suspense>
+      </LazyLoadSection>
+      <LazyLoadSection rootMargin="200px">
+        <Suspense fallback={<div className="h-96 bg-gradient-to-r from-slate-200/30 via-slate-100/30 to-slate-200/30 dark:from-slate-800/30 dark:via-slate-700/30 dark:to-slate-800/30 rounded-xl animate-pulse" />}>
+          <Projects />
+        </Suspense>
+      </LazyLoadSection>
+      <LazyLoadSection rootMargin="200px">
+        <Suspense fallback={<div className="h-80 bg-gradient-to-r from-slate-200/30 via-slate-100/30 to-slate-200/30 dark:from-slate-800/30 dark:via-slate-700/30 dark:to-slate-800/30 rounded-xl animate-pulse" />}>
+          <Contact />
+        </Suspense>
+      </LazyLoadSection>
     </>
   );
 }
@@ -71,17 +87,21 @@ export default function App() {
           <MouseGlow />
           <Navbar />
           <main className="relative z-10">
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/resources/:resourceId" element={<ResourceDetail />} />
-              <Route path="/skills/:skillId" element={<SkillDetail />} />
-              <Route path="/projects/:projectId" element={<ProjectDetail />} />
-              <Route path="/tz" element={<TzXyz />} />
-              <Route path="/tz-resources" element={<TzResources />} />
-              <Route path="/2019-card" element={<Tz2019Card />} />
-              <Route path="/xigua" element={<XiGua />} />
-            </Routes>
+            <Suspense fallback={<Loading />}>
+              <Routes>
+                <Route path="/" element={<HomePage />} />
+                <Route path="/resources" element={<Resources />} />
+                <Route path="/resources/:resourceId" element={<ResourceDetail />} />
+                <Route path="/skills/:skillId" element={<SkillDetail />} />
+                <Route path="/projects" element={<ProjectsList />} />
+                <Route path="/projects/:projectId" element={<ProjectDetail />} />
+                <Route path="/tz" element={<TzXyz />} />
+                <Route path="/tz-resources" element={<TzResources />} />
+                <Route path="/2019-card" element={<Tz2019Card />} />
+                <Route path="/xigua" element={<XiGua />} />
+                <Route path="/hardware-detector" element={<HardwareDetector />} />
+              </Routes>
+            </Suspense>
           </main>
           <Footer />
           <ScrollToTopFab />
