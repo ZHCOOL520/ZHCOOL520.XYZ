@@ -24,7 +24,6 @@ const TzXyz = lazy(() => import('./pages/TzXyz'));
 const TzResources = lazy(() => import('./pages/TzResources'));
 const Tz2019Card = lazy(() => import('./pages/2019Card'));
 const XiGua = lazy(() => import('./pages/XiGua'));
-const HardwareDetector = lazy(() => import('./pages/HardwareDetector'));
 
 function ScrollToTop() {
   const { pathname, hash } = useLocation();
@@ -99,7 +98,6 @@ export default function App() {
                 <Route path="/tz-resources" element={<TzResources />} />
                 <Route path="/2019-card" element={<Tz2019Card />} />
                 <Route path="/xigua" element={<XiGua />} />
-                <Route path="/hardware-detector" element={<HardwareDetector />} />
               </Routes>
             </Suspense>
           </main>

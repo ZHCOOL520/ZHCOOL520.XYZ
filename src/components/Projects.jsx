@@ -13,7 +13,7 @@ const projects = [
   { title: 'AUTOcall', description: '安卓手机批量拨打电话工具，高效自动化通话任务处理，支持批量管理与快捷操作。', tags: ['Kotlin', 'Android', 'Automation'], gradient: 'from-green-500/20 to-emerald-500/20', icon: '📱', stars: 3, html_url: 'https://github.com/ZHCOOL520/AUTOcall', linkId: 'auto-call' },
   { title: 'HarmonyOS-McCraftLaucher', description: '基于 HarmonyOS 的 Minecraft 启动器，为鸿蒙生态打造的原生游戏启动与管理工具。', tags: ['C++', 'HarmonyOS', 'Minecraft'], gradient: 'from-orange-500/20 to-red-500/20', icon: '🎮', stars: 3, html_url: 'https://github.com/ZHCOOL520/HarmonyOS-McCraftLaucher', linkId: 'mccraft-launcher' },
   { title: 'HarmonyOS-AUTOcall', description: 'AUTOcall 的 HarmonyOS 移植版，将批量拨号功能带到鸿蒙平台，MIT 开源协议。', tags: ['TypeScript', 'HarmonyOS', 'MIT'], gradient: 'from-blue-500/20 to-cyan-500/20', icon: '📲', stars: 1, html_url: 'https://github.com/ZHCOOL520/HarmonyOS-AUTOcall', linkId: 'harmonyos-autocall' },
-  { title: 'AI 电脑体检', description: '一键检测电脑硬件配置，评估本地 AI 应用部署能力，纯浏览器运行，隐私安全。', tags: ['HTML', 'JavaScript', 'AI', 'Hardware'], gradient: 'from-sky-500/20 to-cyan-500/20', icon: '🖥️', stars: 0, html_url: 'https://github.com/ZHCOOL520/hardware-detector', linkId: 'hardware-detector', demo_url: '/hardware-detector' },
+  
   { title: '2019-card', description: '健康码 & 行程卡纪念版，纯前端生成器，致敬那段难忘的岁月。', tags: ['HTML', 'JavaScript', 'Tailwind CSS'], gradient: 'from-teal-500/20 to-green-500/20', icon: '💚', stars: 1, html_url: 'https://github.com/ZHCOOL520/2019-card', linkId: '2019-card', demo_url: '/2019-card' },
 ];
 
