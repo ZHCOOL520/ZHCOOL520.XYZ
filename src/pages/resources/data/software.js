@@ -1,4 +1,4 @@
-import { FiTerminal, FiMessageCircle } from 'react-icons/fi';
+import { FiTerminal, FiMessageCircle, FiType } from 'react-icons/fi';
 
 const software = [
   {
@@ -24,6 +24,18 @@ const software = [
     requirements: 'Windows 7+ · 50MB 磁盘空间 · 依赖 VC++ 运行库',
     links: [
       { label: '蓝奏云', url: 'https://wwavs.lanzouv.com/b01d70zyuh', note: '密码：2333', code: '2333', type: '蓝奏云' },
+    ],
+  },
+  {
+    id: 'fonts-collection', category: 'software',
+    title: '字体合集（1000+）', icon: FiType,
+    version: '精选合集', size: '按字体不同', updated: '2026-07-16',
+    tags: ['字体', '设计素材', '非商用'],
+    desc: '收录 1000+ 款精选字体合集，适用于平面设计、排版参考与个人学习使用。⚠️ 不支持商用。',
+    detail: '本合集收录了 1000+ 款精选字体，涵盖中文字体、英文字体、手写体、艺术字、衬线体、无衬线体等多种风格，适用于平面设计、排版参考、个人学习等场景。\n\n⚠️ 重要声明：本合集中的字体仅限个人学习与参考使用，不支持商用。如需商用，请前往正版字体厂商官网购买商用授权。\n\n使用方法：下载后解压，将字体文件复制到系统字体目录即可安装。',
+    requirements: 'Windows / macOS / Linux · 安装字体管理器',
+    links: [
+      { label: '百度网盘', url: 'https://pan.baidu.com/s/1j6iNNKB2lZG0rJllBihR_w?pwd=2333', note: '提取码：2333', code: '2333', type: '百度网盘' },
     ],
   },
 ];
