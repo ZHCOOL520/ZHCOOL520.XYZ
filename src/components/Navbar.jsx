@@ -85,14 +85,32 @@ export default function Navbar() {
   const isTzArea = location.pathname.startsWith('/tz');
   const links = isTzArea ? tzNavLinks : navLinks;
   const navRef = useRef(null);
+  const scrollRafRef = useRef(null);
+  const scrollRetryTimerRef = useRef(null);
 
   useEffect(() => { setMobileOpen(false); }, [location.pathname]);
 
   useEffect(() => {
     gsap.fromTo(navRef.current, { y: -100, autoAlpha: 0 }, { y: 0, autoAlpha: 1, duration: 0.7, ease: 'power3.out' });
-    const onScroll = () => setScrolled(window.scrollY > 50);
+    const onScroll = () => {
+      if (scrollRafRef.current !== null) return;
+      scrollRafRef.current = requestAnimationFrame(() => {
+        scrollRafRef.current = null;
+        setScrolled(window.scrollY > 50);
+      });
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      if (scrollRafRef.current !== null) {
+        cancelAnimationFrame(scrollRafRef.current);
+        scrollRafRef.current = null;
+      }
+      if (scrollRetryTimerRef.current !== null) {
+        clearTimeout(scrollRetryTimerRef.current);
+        scrollRetryTimerRef.current = null;
+      }
+    };
   }, []);
 
   const scrollTo = (href) => {
@@ -100,16 +118,18 @@ export default function Navbar() {
       const el = document.querySelector(href);
       if (!el) {
         // 如果元素不存在，稍后重试
-        setTimeout(() => {
+        if (scrollRetryTimerRef.current !== null) clearTimeout(scrollRetryTimerRef.current);
+        scrollRetryTimerRef.current = setTimeout(() => {
+          scrollRetryTimerRef.current = null;
           const retryEl = document.querySelector(href);
           if (retryEl) {
-            const top = retryEl.getBoundingClientRect().top + window.scrollY - 85;
+            const top = retryEl.getBoundingClientRect().top + window.scrollY - 100;
             window.scrollTo({ top, behavior: 'smooth' });
           }
         }, 100);
         return;
       }
-      const top = el.getBoundingClientRect().top + window.scrollY - 85;
+      const top = el.getBoundingClientRect().top + window.scrollY - 100;
       window.scrollTo({ top, behavior: 'smooth' });
     };
     if (!isHome && !isTzArea) {
@@ -172,7 +192,7 @@ export default function Navbar() {
         </div>
       </div>
       {mobileOpen && (
-        <div className="md:hidden glass-effect mx-4 rounded-2xl mt-2 overflow-hidden animate-scale-in">
+        <div className="md:hidden glass-effect mx-4 rounded-2xl mt-2 overflow-hidden max-h-[70vh] overflow-y-auto pb-[env(safe-area-inset-bottom)] animate-scale-in">
           <div className="flex flex-col px-4 py-4 gap-1">
             {links.map((link, i) => (
               <div key={link.href}>

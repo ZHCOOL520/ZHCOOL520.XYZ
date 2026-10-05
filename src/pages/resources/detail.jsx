@@ -3,7 +3,6 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { useParams, Link } from 'react-router-dom';
 import { FiDownload, FiHardDrive, FiAlertCircle, FiArrowLeft } from 'react-icons/fi';
-import ReactMarkdown from 'react-markdown';
 import { getResource, categoryMeta } from './data/index.js';
 import DownloadButton from './components/DownloadButton.jsx';
 import PageLayout from '../../components/shared/PageLayout.jsx';

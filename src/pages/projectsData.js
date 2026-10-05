@@ -1,5 +1,4 @@
 export const projectsData = {
-  
   'auto-call': {
     id: 'auto-call',
     title: 'AUTOcall',
@@ -8,7 +7,7 @@ export const projectsData = {
     fullDescription: 'AUTOcall 是一款基于 Kotlin 开发的 Android 自动化拨号工具。通过简洁的 UI 和强大的后台调度系统，用户可以批量导入电话号码，设置拨号间隔和重试策略，实现高效的通话任务自动化。适用于客户回访、通知提醒等场景。',
     tags: ['Kotlin', 'Android', 'Automation'],
     gradient: 'from-green-500/20 to-emerald-500/20',
-    stars: 3,
+    stars: 4,
     html_url: 'https://github.com/ZHCOOL520/AUTOcall',
     features: [
       '批量导入号码列表（CSV/TXT 支持）',
@@ -25,6 +24,7 @@ export const projectsData = {
     ],
     readmeSummary: 'AUTOcall 是一款实用的 Android 自动化拨号工具。项目结构清晰，采用 Kotlin + Jetpack 架构，支持从 CSV/TXT 文件批量导入号码，可灵活配置拨号间隔、重试次数等参数。适用于需要批量拨打电话的业务场景。',
   },
+
   'echomusic-pluginst': {
     id: 'echomusic-pluginst',
     title: 'EchoMusicPluginst',
@@ -33,7 +33,7 @@ export const projectsData = {
     fullDescription: 'EchoMusicPluginst 是 EchoMusic 音乐播放器的非官方插件集合仓库。收录了 10+ 款实用插件，涵盖歌词显示、频谱可视化、界面动效、封面处理等功能。每个插件独立打包，用户可按需安装。所有插件均与官方版本无关联，属社区贡献。',
     tags: ['JavaScript', 'EchoMusic', 'Plugin'],
     gradient: 'from-purple-500/20 to-pink-500/20',
-    stars: 1,
+    stars: 2,
     html_url: 'https://github.com/ZHCOOL520/EchoMusicPluginst',
     features: [
       'dynamic-island-lyric — 灵动岛歌词',
@@ -56,6 +56,65 @@ export const projectsData = {
     ],
     readmeSummary: '本仓库收录 EchoMusic 播放器的 10+ 款非官方插件。涵盖灵动岛歌词(dynamic-island-lyric)、水波纹特效(water-lyrics)、频谱可视化(spectrum-visualizer)、黑胶旋转(echomusic-vinyl-rotation)、MIUIX 主题等实用功能。支持在线安装和本地安装两种方式。MIT 开源协议。',
   },
+
+  'gtl-skyline-wonders': {
+    id: 'gtl-skyline-wonders',
+    title: 'GTL：天际线奇观',
+    icon: '🌌',
+    description: 'GTL（格雷科技休闲版）附属模组，手持奇观终端右键奇观原石，一整座 70 万方块的巨构建筑「唰」地长出来。',
+    fullDescription: 'GTL Skyline Wonders 是面向 Minecraft 1.20.1 / Forge 47.x 的 GTL（GregTech Leisure 格雷科技休闲版）附属模组。不用材料、不用电、不用配方表——它就是纯粹的、没用的、好看的东西。目前内置两座奇观：终焉晶面尖碑（217×208×217，295,622 方块）与维度之环（247×219×247，409,088 方块），合计 70 万+ 方块，全部由模组一块一块真实放置，不是投影也不是贴图欺骗；建筑材质全部取自 GTL 现有方块，一像素新贴图都没画。支持一次性建造、逐层建造与安全拆除三种模式，并提供净空预检，避免建筑被截断。项目同时公开征集玩家投稿的巨构建筑（Sponge .schem / .nbt / .litematic / 整个存档均可）。',
+    tags: ['Java', 'Minecraft', 'Forge', 'GTL'],
+    gradient: 'from-indigo-500/20 to-violet-500/20',
+    stars: 2,
+    html_url: 'https://github.com/ZHCOOL520/GTL-Skyline-Wonders',
+    features: [
+      '奇观终端 + 奇观原石，右键即一键生成整座巨构建筑',
+      '内置两座奇观：终焉晶面尖碑（29.5 万方块）、维度之环（40.9 万方块）',
+      '三种模式：一次性建造 / 逐层建造 / 拆除，潜行右键切换',
+      '拆除只清除与原始结构一致的方块，绝不误删玩家的机器',
+      '建造前自动预检头顶净空高度，避免建筑被截断',
+      '建筑材质全部取自 GTL 现有方块，零新增贴图',
+      '公开征集玩家巨构建筑投稿（.schem / .nbt / .litematic / 存档）',
+    ],
+    techStack: [
+      { name: 'Java 17', desc: 'Minecraft 运行环境' },
+      { name: 'Minecraft Forge 47.x', desc: '模组加载器（1.20.1）' },
+      { name: 'GTL GregTech Leisure', desc: '前置整合包' },
+      { name: 'Gradle', desc: '构建系统' },
+    ],
+    readmeSummary: '面向 Minecraft 1.20.1 / Forge 47.x 的 GTL 附属模组。核心玩法：合成「奇观终端」与「奇观原石」，把原石放在建筑最底层外缘沿边居中的锚点位置，手持终端右键即可生成整座奇观。内置终焉晶面尖碑（217×208×217，295,622 方块）与维度之环（247×219×247，409,088 方块）两座建筑，共 70 万+ 方块真实放置。支持一次性建造、逐层建造、安全拆除三种模式，拆除仅清除与原始结构一致的方块。作者长期征集玩家投稿的 GTL 巨构建筑。',
+  },
+
+  skylfolk: {
+    id: 'skylfolk',
+    title: 'skylfolk 天穹生灵',
+    icon: '🌸',
+    description: '把僵尸命名为「喜欢萝莉」，它会变成 1000 血、刀枪无入的飞行 Boss；唯一能击败它的，是本模组的调教棒。',
+    fullDescription: 'Skylfolk（天穹生灵）是一个 Minecraft Forge 模组：把僵尸命名为「喜欢萝莉」，它会立刻转化为一只血量 1000、刀枪不入的飞行 Boss。Boss 不会受到任何伤害，也无法被任何方式移除——原版武器、爆炸、岩浆、摔落全部无效，其它模组的武器还会被它没收，连 /kill 和其它模组的清实体工具都不起作用。唯一能击败它的，是本模组的「调教棒」（外形是末地烛）。Boss 会以 5 tick 的攻击间隔反击，普攻 20 点，并有 10% 概率打出 500 点暴击（带 0.4 秒前摇），还会瞬移贴脸、穿墙、挖穿掩体、隔墙锁定玩家。模组还包含末影龙式粉色血条、12 类共 51 句嘲讽台词，以及跨存档「魅影」彩蛋。已在 Minecraft 1.20.1 / Forge 47.x 构建验证，1.21.1 源码就绪未编译，MIT 开源。',
+    tags: ['Java', 'Minecraft', 'Forge', 'MIT'],
+    gradient: 'from-pink-500/20 to-rose-500/20',
+    stars: 1,
+    html_url: 'https://github.com/ZHCOOL520/skylfolk',
+    features: [
+      '命名牌「喜欢萝莉」/ 刷怪蛋 / 指令三种方式召唤飞行 Boss',
+      'Boss 完全免疫伤害且无法被任何方式移除（含 /kill 与其它模组手段）',
+      '调教棒（末地烛）是唯一击败方式，无需权限，拿到手就能用',
+      '5 tick 攻击间隔、20 点普攻、10% 概率 500 点暴击（带前摇可躲）',
+      '瞬移贴脸、穿墙、挖穿掩体、隔墙锁定玩家',
+      '末影龙式粉色 Boss 血条，默认显示 1000 / 1000',
+      '12 类共 51 句嘲讽台词，只发给 32 格内的玩家',
+      '跨存档「魅影」彩蛋：在其它存档的出生点站着一个只会看着你的身影',
+      '无额外前置依赖（不需要 GeckoLib / Curios / JEI）',
+    ],
+    techStack: [
+      { name: 'Java 17', desc: 'Minecraft 运行环境' },
+      { name: 'Minecraft Forge 47.x', desc: '已构建验证（1.20.1）' },
+      { name: 'Minecraft Forge 52.x', desc: '1.21.1 源码就绪、未编译' },
+      { name: 'Gradle', desc: '多版本工程构建' },
+    ],
+    readmeSummary: '一个 Minecraft Forge 模组：把僵尸命名为「喜欢萝莉」，它会变成血量 1000、刀枪不入的飞行 Boss，唯一能击败它的是本模组的调教棒（末地烛）。Boss 免疫一切伤害与移除手段（原版武器、爆炸、岩浆、/kill、其它模组的武器与清实体工具均无效，武器还会被没收），但仍会主动攻击玩家：5 tick 攻击间隔、20 点普攻、10% 概率 500 点暴击。附带末影龙式血条、51 句嘲讽台词、跨存档魅影彩蛋。已构建验证 Minecraft 1.20.1 / Forge 47.x，无额外依赖，MIT 开源。',
+  },
+
   'mccraft-launcher': {
     id: 'mccraft-launcher',
     title: 'HarmonyOS-McCraftLaucher',
@@ -64,7 +123,7 @@ export const projectsData = {
     fullDescription: 'McCraftLauncher 是专为 HarmonyOS NEXT（鸿蒙）打造的 Minecraft 启动器。充分利用鸿蒙原生能力和 ArkUI 框架，提供原生级的游戏启动体验。支持多版本管理、横竖屏自适应、Material Design 风格 UI，是鸿蒙生态中 Minecraft 游戏的重要基础设施。',
     tags: ['C++', 'HarmonyOS', 'Minecraft'],
     gradient: 'from-orange-500/20 to-red-500/20',
-    stars: 2,
+    stars: 3,
     html_url: 'https://github.com/ZHCOOL520/HarmonyOS-McCraftLaucher',
     features: [
       '原生鸿蒙 NEXT 游戏启动体验',
@@ -84,6 +143,7 @@ export const projectsData = {
     ],
     readmeSummary: '基于 HarmonyOS NEXT 开发的 Minecraft 启动器。采用原生 C++ + ArkTS 混合架构，支持多版本游戏管理、Material Design UI、横竖屏自适应。使用 DevEco Studio 开发，目标 SDK API 12+。MIT 开源协议。作者 ZHCOOL520，B站：space.bilibili.com/1414910921。',
   },
+
   'harmonyos-autocall': {
     id: 'harmonyos-autocall',
     title: 'HarmonyOS-AUTOcall',
@@ -114,6 +174,7 @@ export const projectsData = {
     ],
     readmeSummary: 'AUTOcall 的 HarmonyOS NEXT 移植版。使用 ArkTS (TypeScript 超集) 重写，完整实现 Android 版的批量拨号功能，包括通话状态监听(observer)、录音(AVRecorder)、音频播放(AVPlayer)、CSV/文本导入、SIM 选择等。构建工具使用 hvigor，目标 HarmonyOS API 9+。MIT 开源协议。',
   },
+
   '2019-card': {
     id: '2019-card',
     title: '2019-card',
@@ -124,6 +185,7 @@ export const projectsData = {
     gradient: 'from-teal-500/20 to-green-500/20',
     stars: 1,
     html_url: 'https://github.com/ZHCOOL520/2019-card',
+    demo_url: '/2019-card',
     features: [
       '健康码高度还原真实样式，大时间显示 + 二维码 + 核酸检测 + 状态标签',
       '行程卡还原样式，大箭头图标 + 行程信息展示',
@@ -147,35 +209,35 @@ export const projectsData = {
       { name: 'html2canvas', desc: 'DOM 转图片导出' },
       { name: 'QRCode.js', desc: '二维码生成' },
     ],
-    readmeSummary: '纯前端的健康码 & 行程卡纪念版生成器。单文件架构，所有 HTML/CSS/JS 在一个 index.html 中。支持健康码和行程卡双模式切换，GSAP 流畅动画，颜色/信息全自定义，html2canvas 一键导出高清图片，localStorage 自动保存配置。采用 Tailwind CSS CDN + QRCode.js。MIT 开源协议，仅供学习和纪念使用。本项目仅作纪念用途，仅供娱乐，无任何实际作用。',
+    readmeSummary: '纯前端的健康码 & 行程卡纪念版生成器。单文件架构，所有 HTML/CSS/JS 在一个 index.html 中。支持健康码和行程卡双模式切换，GSAP 流畅动画，颜色/信息全自定义，html2canvas 一键导出高清图片，localStorage 自动保存配置。采用 Tailwind CSS CDN + QRCode.js。MIT 开源协议，仅供学习和纪念使用。本项目仅作纪念用途，仅供娱乐，无任何实际作用。本站在线演示：/2019-card',
   },
+
   lolipickaxe: {
     id: 'lolipickaxe',
-    title: 'LoliPickaxe-1.20.1AI',
+    title: 'LoliPickaxe 1.20.1 移植版',
     icon: '⛏️',
-    description: 'Minecraft 1.20.1 版本的 AI 增强模组，为游戏带来智能化的新玩法与交互体验。',
-    fullDescription: 'LoliPickaxe 是一个 Minecraft 1.20.1 Forge 模组。正在从 1.12.2 版本迁移中，添加了多种有趣的功能武器系统、方块系统、配方系统、附魔系统和网络数据同步。包含 24+ 种物品、自定义 GUI/Container、实体渲染增强等。是 Java Forge 模组开发的综合实践项目。',
-    tags: ['Java', 'Minecraft', 'AI', 'Mod'],
+    description: '把 1.12.2 的「氪金萝莉」移植到 Minecraft 1.20.1 + Forge 47+，保留无敌、范围挖掘与储藏室等全套能力。',
+    fullDescription: 'LoliPickaxe 1.20.1 移植版把原作者 Is_GK 的 1.12.2 Forge 模组「氪金萝莉」迁移到 Minecraft 1.20.1 + Forge 47+，mod 版本 1.0.1。核心物品「氪金萝莉」拥有无敌、范围挖掘、范围攻击、储藏室等全套能力，前置的「普通萝莉」可以逐项升级属性；另有 14 种升级材料，每种用 damage 值承载等级，等级越高效果越强。mods.toml 中完整保留原作者署名与出处，遵循 GPL-3.0 传染性条款，本移植版同样以 GPL-3.0 发布。JEI 为可选前置，仅在需要查看合成表时使用。',
+    tags: ['Java', 'Minecraft', 'Forge', 'Fork'],
     gradient: 'from-rose-500/20 to-pink-500/20',
-    stars: 2,
-    html_url: 'https://github.com/ZHCOOL520/LoliPickaxe-1.20.1AI',
+    stars: 1,
+    html_url: 'https://github.com/ZHCOOL520/LoliPickaxe',
+    forkOf: { name: 'IslenautsGK/LoliPickaxe', url: 'https://github.com/IslenautsGK/LoliPickaxe' },
     features: [
-      '24+ 种自定义武器/工具',
-      '3 个自定义方块',
-      '自定义配方系统',
-      '附魔系统（新附魔效果）',
-      'GUI 和 Container 系统',
-      '自定义实体与渲染',
-      '网络数据包同步（Network Handling）',
-      '客户端-服务端分离架构',
-      '事件监听与拦截',
+      '核心工具「氪金萝莉」：无敌、范围挖掘、范围攻击、储藏室',
+      '「普通萝莉」可逐项升级属性，平滑过渡到完全体',
+      '14 种升级材料，每种以 damage 值承载等级，等级越高效果越强',
+      '「萝莉退散!」用于解除萝莉效果',
+      '内置客户端残留实体清理工具（擦屁股）',
+      '从 1.12.2 到 1.20.1 的完整 Forge 迁移与重新适配',
+      'mods.toml 保留原作者署名与出处，遵循 GPL-3.0 条款',
     ],
     techStack: [
-      { name: 'Java 17', desc: 'Minecraft 运行环境' },
-      { name: 'Minecraft Forge 47.2+', desc: '模组加载器' },
-      { name: 'Gradle', desc: '构建系统' },
-      { name: 'Mojang Mappings', desc: '源码映射' },
+      { name: 'Java 17', desc: 'Forge 1.20.1 要求' },
+      { name: 'Minecraft Forge 47+', desc: '模组加载器（1.20.1）' },
+      { name: 'Gradle 8.1.1', desc: '已用 wrapper 锁定版本' },
+      { name: 'GPL-3.0-only', desc: '继承上游许可证' },
     ],
-    readmeSummary: '基于 Minecraft 1.20.1 + Forge 47.2 的综合模组项目。从 1.12.2 迁移中（约35%完成度），已完成物品系统(24个)、方块系统(3个)、配方系统、附魔系统、GUI/Container、网络通信框架等。使用 Java 17 + Gradle 构建。MIT 开源协议。作者原 ID：Is_GK。',
+    readmeSummary: 'LoliPickaxe 从 Minecraft 1.12.2 Forge 到 1.20.1 + Forge 47+ 的移植版本，mod 版本 1.0.1，mod id 为 lolipickaxe。核心物品「氪金萝莉」拥有无敌、范围挖掘、范围攻击、储藏室等能力，前置「普通萝莉」可逐项升级；14 种升级材料用 damage 值承载等级。原作者 Is_GK（1.12.2 版本，mod 版本 1.2.16f），1.20.1 移植由 ZHCOOL520 完成，两套版本号各自独立编号。原始项目与本移植版均以 GPL-3.0 发布，JEI 为可选前置。',
   },
 };

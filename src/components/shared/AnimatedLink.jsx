@@ -11,9 +11,9 @@ export default function AnimatedLink({ children, className = '', ...props }) {
 
   return (
     <a
-      onClick={handleClick}
-      className={`relative transition-all duration-300 ease-out ${animating ? 'scale-90 opacity-70' : 'hover:scale-108 hover:shadow-xl'} ${className}`}
       {...props}
+      onClick={handleClick}
+      className={`relative transition-all duration-300 ease-out ${animating ? 'scale-90 opacity-70' : 'hover:scale-105 hover:shadow-xl'} ${className}`}
     >
       {children}
     </a>

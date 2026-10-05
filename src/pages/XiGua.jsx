@@ -63,7 +63,7 @@ export default function XiGua() {
   }, { scope: pageRef });
 
   return (
-    <div ref={pageRef} className="min-h-screen">
+    <div ref={pageRef} className="min-h-screen page-backdrop">
       <section className="relative py-20 sm:py-28 px-6">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 right-10 w-96 h-96 bg-red-500/10 rounded-full blur-3xl animate-float" />
@@ -100,25 +100,25 @@ export default function XiGua() {
       <section className="py-8 px-6">
         <div className="max-w-2xl mx-auto">
           <div className="grid grid-cols-3 gap-4">
-            <div className="xg-stat-item liquid-glass rounded-2xl p-5 text-center">
+            <div className="xg-stat-item liquid-glass rounded-2xl p-3 sm:p-5 text-center">
               <div className="w-10 h-10 mx-auto mb-3 rounded-xl bg-red-500/10 flex items-center justify-center">
                 <FiVideo className="text-red-500" size={18} />
               </div>
-              <div className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">--</div>
+              <div className="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-100">--</div>
               <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">视频数</div>
             </div>
-            <div className="xg-stat-item liquid-glass rounded-2xl p-5 text-center">
+            <div className="xg-stat-item liquid-glass rounded-2xl p-3 sm:p-5 text-center">
               <div className="w-10 h-10 mx-auto mb-3 rounded-xl bg-orange-500/10 flex items-center justify-center">
                 <FiUsers className="text-orange-500" size={18} />
               </div>
-              <div className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">--</div>
+              <div className="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-100">--</div>
               <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">粉丝数</div>
             </div>
-            <div className="xg-stat-item liquid-glass rounded-2xl p-5 text-center">
+            <div className="xg-stat-item liquid-glass rounded-2xl p-3 sm:p-5 text-center">
               <div className="w-10 h-10 mx-auto mb-3 rounded-xl bg-pink-500/10 flex items-center justify-center">
                 <FiHeart className="text-pink-500" size={18} />
               </div>
-              <div className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">--</div>
+              <div className="text-xl sm:text-2xl font-bold text-neutral-800 dark:text-neutral-100">--</div>
               <div className="text-xs text-neutral-500 dark:text-neutral-400 mt-1">获赞数</div>
             </div>
           </div>
@@ -155,7 +155,7 @@ export default function XiGua() {
             <div className="xg-card group relative liquid-glass rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
               <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <FiStar size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-2">Minecraft 整合包体验</h3>
@@ -164,7 +164,7 @@ export default function XiGua() {
                   href="https://space.bilibili.com/42893943/video" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-semibold text-red-500 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0"
+                  className="flex items-center gap-2 text-sm font-semibold text-red-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0"
                 >
                   <span>观看视频</span>
                   <FiExternalLink size={14} />
@@ -175,7 +175,7 @@ export default function XiGua() {
             <div className="xg-card group relative liquid-glass rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
               <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <FiBookOpen size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-2">模组介绍与教程</h3>
@@ -184,7 +184,7 @@ export default function XiGua() {
                   href="https://space.bilibili.com/42893943/video" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 text-sm font-semibold text-purple-500 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0"
+                  className="flex items-center gap-2 text-sm font-semibold text-purple-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0"
                 >
                   <span>观看视频</span>
                   <FiExternalLink size={14} />

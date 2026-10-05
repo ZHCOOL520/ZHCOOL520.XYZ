@@ -48,7 +48,7 @@ export default function Resources() {
       <BackLink to="/" label="返回首页" hash="resources" />
 
       <div ref={headerRef} className="text-center mb-10">
-        <h1 className="text-4xl sm:text-5xl font-black mb-4 tracking-tight text-gradient">资源下载</h1>
+        <h1 className="text-4xl sm:text-5xl font-black mb-4 tracking-tight gradient-text">资源下载</h1>
         <p className="text-neutral-500 dark:text-neutral-400 text-sm max-w-lg mx-auto">{'// 精选工具与资源合集 · 持续更新中'}</p>
       </div>
 

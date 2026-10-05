@@ -36,11 +36,13 @@ export default function About() {
       trigger: el, start: 'top 88%',
       onEnter: () => {
         const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-        tl.to(avatar, { autoAlpha: 1, scale: 1, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.2)' }, 0)
+        // clearProps 把 GSAP 写的内联 transform 清掉，否则会永久压住元素自身的
+        // Tailwind hover: 类（hover:-translate-y-3 / card-hover 等）——动画照旧，hover 恢复
+        tl.to(avatar, { autoAlpha: 1, scale: 1, rotation: 0, duration: 1, ease: 'elastic.out(1, 0.2)', clearProps: 'transform' }, 0)
           .to(ringGlow, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(2.5)' }, '-=0.5')
           .to(rings, { autoAlpha: 1, scale: 1, duration: 0.5, stagger: 0.15, ease: 'back.out(2)' }, '-=0.3')
           .to(text, { autoAlpha: 1, x: 0, duration: 0.6 }, '-=0.1')
-          .to(statEls, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.12, ease: 'back.out(2.5)' }, '-=0.1');
+          .to(statEls, { autoAlpha: 1, y: 0, scale: 1, duration: 0.5, stagger: 0.12, ease: 'back.out(2.5)', clearProps: 'transform' }, '-=0.1');
       },
       once: true,
     });

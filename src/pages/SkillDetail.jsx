@@ -11,7 +11,8 @@ import NotFound from '../components/shared/NotFound.jsx';
 const pNames = {
   'auto-call': 'AUTOcall', 'echomusic-pluginst': 'EchoMusicPluginst',
   'mccraft-launcher': 'HarmonyOS-McCraftLaucher', 'harmonyos-autocall': 'HarmonyOS-AUTOcall',
-  'lolipickaxe': 'LoliPickaxe-1.20.1AI',
+  'gtl-skyline-wonders': 'GTL：天际线奇观', 'skylfolk': 'skylfolk 天穹生灵',
+  'lolipickaxe': 'LoliPickaxe 1.20.1 移植版',
 };
 
 export default function SkillDetail() {

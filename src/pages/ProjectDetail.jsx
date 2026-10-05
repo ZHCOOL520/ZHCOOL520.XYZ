@@ -36,6 +36,13 @@ export default function ProjectDetail() {
                   <span key={tag} className="px-2 py-0.5 text-xs rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 font-mono">{tag}</span>
                 ))}
               </div>
+              {project.forkOf && (
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 mt-2">
+                  Fork / 移植自{' '}
+                  <a href={project.forkOf.url} target="_blank" rel="noopener noreferrer" className="text-indigo-500 dark:text-indigo-400 hover:underline">{project.forkOf.name}</a>
+                  ，原作者署名与许可证按上游保留。
+                </p>
+              )}
             </div>
           </div>
         </div>
@@ -73,7 +80,13 @@ export default function ProjectDetail() {
           </div>
         </div>
 
-        <div className="detail-section">
+        <div className="detail-section flex flex-wrap gap-3">
+          {project.demo_url && (
+            <a href={project.demo_url}
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-teal-500 to-emerald-500 text-white font-semibold text-sm uppercase tracking-wider hover:scale-[1.02] transition-transform shadow-lg shadow-emerald-500/20">
+              <FiExternalLink size={18} /> 在线演示（本站） <FiExternalLink size={16} />
+            </a>
+          )}
           <a href={project.html_url} target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-semibold text-sm uppercase tracking-wider hover:scale-[1.02] transition-transform shadow-lg shadow-indigo-500/20">
             <FiGithub size={20} /> 在 GitHub 上查看源码 <FiExternalLink size={16} />

@@ -2,10 +2,12 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/webp" href="/images/fox.webp" />
+    <link rel="icon" type="image/webp" href="/images/favicon-64.webp" sizes="64x64" />
+    <link rel="apple-touch-icon" href="/images/apple-touch-icon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#6366f1" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- 自托管字体（保底：加载失败自动回落系统字体，font-display: swap 不阻塞渲染） -->
+    <link rel="preload" as="font" type="font/woff2" href="/fonts/Geist-Variable.woff2" crossorigin>
     <title>ZHCOOL520 - 个人主页</title>
     <meta name="description" content="ZHCOOL520 的个人主页 - HarmonyOS & Android 开发者，Minecraft Mod & Plugin 创作者，热爱开源与技术创新。" />
     <meta name="keywords" content="ZHCOOL520, 开发者, HarmonyOS, Android, Minecraft, Mod, Plugin, 开源" />
@@ -41,6 +43,17 @@
       })(window.location);
     </script>
     <div id="root"></div>
+    <!-- 保底：未开启 JavaScript 时给出一句可读的说明，而不是一片空白 -->
+    <noscript>
+      <div style="max-width:32rem;margin:15vh auto;padding:1.5rem;font-family:system-ui,-apple-system,'Segoe UI','Microsoft YaHei',sans-serif;line-height:1.7;color:#334155;text-align:center">
+        <h1 style="font-size:1.25rem;margin-bottom:.75rem">需要开启 JavaScript</h1>
+        <p style="font-size:.9rem">本站是单页应用，页面内容由浏览器端渲染。请在浏览器设置中开启 JavaScript 后刷新页面。</p>
+        <p style="font-size:.9rem;margin-top:.75rem">也可以直接访问我的
+          <a href="https://github.com/ZHCOOL520" style="color:#6366f1">GitHub</a> 或
+          <a href="https://space.bilibili.com/1414910921" style="color:#6366f1">Bilibili</a>。
+        </p>
+      </div>
+    </noscript>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>

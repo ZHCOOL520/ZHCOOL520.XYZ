@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FiGithub, FiExternalLink, FiArrowRight } from 'react-icons/fi';
 import { projectsData } from './projectsData.js';
 import PageLayout from '../components/shared/PageLayout.jsx';
@@ -12,6 +12,7 @@ gsap.registerPlugin(ScrollTrigger);
 
 export default function ProjectsList() {
   const pageRef = useRef(null);
+  const navigate = useNavigate();
 
   useGSAP(() => {
     const el = pageRef.current;
@@ -45,9 +46,12 @@ export default function ProjectsList() {
 
         <div className="grid sm:grid-cols-2 gap-6">
           {projects.map((project) => (
-            <Link 
-              key={project.id} 
-              to={`/projects/${project.id}`} 
+            <div
+              key={project.id}
+              role="link"
+              tabIndex={0}
+              onClick={() => navigate(`/projects/${project.id}`)}
+              onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); navigate(`/projects/${project.id}`); } }}
               className="pl-card group relative glass-card h-full flex flex-col cursor-pointer hover:scale-[1.02] transition-transform duration-300"
             >
               <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${project.gradient} flex items-center justify-center text-2xl mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
@@ -60,6 +64,9 @@ export default function ProjectsList() {
                 {project.description}
               </p>
               <div className="flex flex-wrap gap-2 mb-5">
+                {project.forkOf && (
+                  <span className="px-2.5 py-1 text-xs rounded-full bg-amber-500/10 text-amber-600 dark:text-amber-400 font-mono border border-amber-500/20">Fork</span>
+                )}
                 {project.tags.map((tag) => (
                   <span key={tag} className="px-2.5 py-1 text-xs rounded-full bg-neutral-100/80 dark:bg-neutral-800/80 text-neutral-600 dark:text-neutral-300 font-mono border border-white/50 dark:border-black/20">
                     {tag}
@@ -82,7 +89,7 @@ export default function ProjectsList() {
                 </div>
               </div>
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-t from-indigo-500/5 to-transparent" />
-            </Link>
+            </div>
           ))}
         </div>
 

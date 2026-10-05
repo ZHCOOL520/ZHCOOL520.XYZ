@@ -28,7 +28,6 @@ export default function Hero() {
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-indigo-500/8 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/8 rounded-full blur-3xl animate-float" style={{ animationDelay: '-4s' }} />
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gradient-radial from-indigo-400/5 via-transparent to-transparent rounded-full" />
       </div>
 
       <div className="relative z-10 text-center max-w-5xl w-full flex flex-col items-center">
@@ -51,20 +50,16 @@ export default function Hero() {
           >
             <div className="absolute -inset-2 rounded-full bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 blur-lg opacity-50 group-hover:opacity-80 group-hover:scale-110 transition-all duration-500" />
             <div className="relative w-20 h-20 sm:w-24 sm:h-24 rounded-full p-1.5 bg-gradient-to-br from-indigo-400 via-purple-400 to-pink-400 group-hover:scale-105 transition-all duration-500 cursor-pointer shadow-xl">
-              <img src="/images/fox.webp" alt="ZHCOOL520" className="w-full h-full rounded-full object-cover border-2 border-white dark:border-neutral-800" />
+              <img src="/images/fox.webp" alt="ZHCOOL520" decoding="async" className="w-full h-full rounded-full object-cover border-2 border-white dark:border-neutral-800" />
             </div>
           </a>
         </div>
 
         <div className="hero-typewriter mb-10">
-          {Typewriter ? (
-            <Typewriter
-              texts={['用代码构建未来 ✨', '热爱开源与技术创新', 'HarmonyOS & Android 开发者', 'Minecraft Mod & Plugin 创作者']}
-              className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-600 dark:text-neutral-300 font-mono"
-            />
-          ) : (
-            <p className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-600 dark:text-neutral-300 font-mono">用代码构建未来 ✨</p>
-          )}
+          <Typewriter
+            texts={['用代码构建未来 ✨', '热爱开源与技术创新', 'HarmonyOS & Android 开发者', 'Minecraft Mod & Plugin 创作者']}
+            className="text-base sm:text-lg md:text-xl lg:text-2xl text-neutral-600 dark:text-neutral-300 font-mono"
+          />
         </div>
 
         <div className="hero-cta flex flex-wrap items-center justify-center gap-4 mb-12">

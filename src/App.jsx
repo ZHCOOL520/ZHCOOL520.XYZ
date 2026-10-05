@@ -41,6 +41,32 @@ function ScrollToTop() {
   return null;
 }
 
+/*
+ * 动画保底（fail-safe）。
+ * 全站的进场动画都靠 ScrollTrigger 触发，元素先被 gsap.set 成 autoAlpha:0（visibility:hidden）。
+ * 万一某个触发器没被创建或没触发（视口太矮、懒加载刚挂载、插件异常），那块内容会一直不可见。
+ * 这里在每次路由挂载 2.5 秒后兜底一次：只把「当前在视口内、且仍被内联样式隐藏」的元素显示出来。
+ * 它只会让内容出现，不会隐藏任何东西，也不会打扰已经播完的动画。
+ */
+function AnimationFailsafe() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const hidden = document.querySelectorAll('[style*="visibility: hidden"], [style*="visibility:hidden"]');
+      hidden.forEach((el) => {
+        const rect = el.getBoundingClientRect();
+        const inView = rect.height > 0 && rect.top < window.innerHeight && rect.bottom > 0;
+        if (!inView) return;
+        el.style.visibility = 'visible';
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [pathname]);
+  return null;
+}
+
 function HomePage() {
   return (
     <>
@@ -81,7 +107,8 @@ export default function App() {
     <HelmetProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="relative min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 dark:via-slate-800 dark:to-indigo-900/20 transition-colors duration-300">
+        <AnimationFailsafe />
+        <div className="relative min-h-screen page-backdrop transition-colors duration-300">
           <ParticleBackground />
           <MouseGlow />
           <Navbar />

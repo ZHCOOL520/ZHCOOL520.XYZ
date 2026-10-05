@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function SectionTitle({ title, subtitle, light = false }) {
+export default function SectionTitle({ title, subtitle }) {
   const ref = useRef(null);
   useGSAP(() => {
     const el = ref.current;
@@ -26,11 +26,11 @@ export default function SectionTitle({ title, subtitle, light = false }) {
   }, { scope: ref });
   return (
     <div ref={ref} className="text-center mb-16">
-      <h2 className={`section-title-text text-2xl sm:text-3xl md:text-4xl font-bold mb-4 ${light ? 'text-white' : 'text-neutral-800 dark:text-white'}`}>
+      <h2 className="section-title-text text-2xl sm:text-3xl md:text-4xl font-bold mb-4 text-neutral-800 dark:text-neutral-100">
         {title}
       </h2>
       {subtitle && (
-        <p className="section-subtitle text-sm font-mono text-neutral-500 dark:text-gray-400 tracking-widest">
+        <p className="section-subtitle text-sm font-mono text-neutral-500 dark:text-neutral-400 tracking-widest">
           {subtitle}
         </p>
       )}

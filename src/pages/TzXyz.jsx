@@ -304,7 +304,7 @@ export default function TzXyz() {
   }, { scope: pageRef });
 
   return (
-    <div ref={pageRef} className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 via-slate-800 dark:to-indigo-900/20">
+    <div ref={pageRef} className="min-h-screen page-backdrop">
       <Helmet>
         <title>天真SkyerNovie - Minecraft 游戏主播主页</title>
         <meta name="description" content="天真SkyerNovie 的个人主页 - Minecraft 游戏视频创作者，整合包推荐，粉丝社区互动。" />
@@ -326,7 +326,7 @@ export default function TzXyz() {
               <div className="relative">
                 <div className="absolute inset-0 w-32 h-32 sm:w-36 sm:h-36 rounded-full bg-gradient-to-br from-purple-500/30 to-pink-500/30 blur-xl animate-pulse" />
                 <div className="relative w-32 h-32 sm:w-36 sm:h-36 rounded-full overflow-hidden ring-4 ring-white/50 dark:ring-white/20 shadow-2xl hover:scale-105 transition-transform duration-500">
-                  <img src="/images/avatar.webp" alt="天真SkyerNovie" className="w-full h-full object-cover" />
+                  <img src="/images/avatar.webp" alt="天真SkyerNovie" className="w-full h-full object-cover" decoding="async" />
                 </div>
               </div>
               
@@ -362,22 +362,22 @@ export default function TzXyz() {
       <section className="py-8 sm:py-12 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl hover:-translate-y-1">
               <FiUsers className="mx-auto mb-3 text-indigo-500 transition-transform duration-300 hover:scale-110" size={28} />
-              <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">3.2万</div>
+              <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">3.7万</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">B站粉丝</div>
             </div>
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl hover:-translate-y-1">
               <FiPlayCircle className="mx-auto mb-3 text-emerald-500 transition-transform duration-300 hover:scale-110" size={28} />
               <div className="text-lg sm:text-xl font-bold text-neutral-800 dark:text-neutral-50">《格雷空岛》</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">主要系列</div>
             </div>
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl hover:-translate-y-1">
               <FiClock className="mx-auto mb-3 text-amber-500 transition-transform duration-300 hover:scale-110" size={28} />
               <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">3天/期</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">更新频率</div>
             </div>
-            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-108 hover:shadow-xl hover:-translate-y-1">
+            <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl hover:-translate-y-1">
               <FiTrendingUp className="mx-auto mb-3 text-rose-500 transition-transform duration-300 hover:scale-110" size={28} />
               <div className="text-lg sm:text-xl font-bold text-neutral-800 dark:text-neutral-50">整合包实况</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">核心领域</div>
@@ -398,10 +398,10 @@ export default function TzXyz() {
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {featuredItems.map((item, i) => (
               <a key={i} 
-                className="tz-video-card liquid-glass rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-all duration-400"
+                className="tz-video-card liquid-glass rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-all duration-300"
                 href={item.url} target="_blank" rel="noopener noreferrer">
                 <div className="relative overflow-hidden aspect-video">
-                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
+                  <img src={item.image} alt={item.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" decoding="async" loading="lazy" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                     <div className="absolute inset-0 flex items-center justify-center">
                       <div className="w-16 h-16 rounded-full bg-white/20 backdrop-blur-sm flex items-center justify-center hover:scale-110 transition-transform">
@@ -429,17 +429,17 @@ export default function TzXyz() {
             
             {/* 查看更多 */}
             <a 
-              className="tz-video-card liquid-glass-light rounded-2xl flex flex-col items-center justify-center gap-4 py-10 sm:py-12 group cursor-pointer hover:scale-[1.02] transition-all duration-400"
+              className="tz-video-card liquid-glass-light rounded-2xl flex flex-col items-center justify-center gap-4 py-10 sm:py-12 group cursor-pointer hover:scale-[1.02] transition-all duration-300"
               href="https://space.bilibili.com/25770857" target="_blank" rel="noopener noreferrer">
               <div className="relative">
                 <div className="absolute inset-0 w-20 h-20 rounded-full bg-indigo-500/20 blur-xl group-hover:bg-indigo-500/40 group-hover:scale-150 transition-all duration-500" />
-                <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 transition-all duration-400">
+                <div className="relative w-20 h-20 rounded-full bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center group-hover:bg-indigo-500 group-hover:text-white group-hover:scale-110 transition-all duration-300">
                   <FiExternalLink size={36} />
                 </div>
               </div>
               <div className="text-center">
                 <span className="block text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-1">查看更多视频</span>
-                <span className="block text-xs text-neutral-400">前往B站空间发现更多精彩</span>
+                <span className="block text-xs text-neutral-400 dark:text-neutral-500">前往B站空间发现更多精彩</span>
               </div>
             </a>
           </div>
@@ -515,7 +515,7 @@ export default function TzXyz() {
               <SiBilibili className="text-[#FB7299]" size={28} />
               <div>
                 <div className="font-bold text-neutral-800 dark:text-neutral-100 group-hover:text-[#FB7299] transition-colors">B站私信</div>
-                <div className="text-xs text-neutral-400">商务合作首选</div>
+                <div className="text-xs text-neutral-400 dark:text-neutral-500">商务合作首选</div>
               </div>
             </a>
             <a href="https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933" target="_blank" rel="noopener noreferrer"
@@ -523,7 +523,7 @@ export default function TzXyz() {
               <FiMessageCircle className="text-teal-500" size={28} />
               <div>
                 <div className="font-bold text-neutral-800 dark:text-neutral-100 group-hover:text-teal-500 transition-colors">QQ群</div>
-                <div className="text-xs text-neutral-400">粉丝交流互动</div>
+                <div className="text-xs text-neutral-400 dark:text-neutral-500">粉丝交流互动</div>
               </div>
             </a>
           </div>

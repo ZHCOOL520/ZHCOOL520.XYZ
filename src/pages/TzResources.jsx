@@ -90,7 +90,7 @@ export default function TzResources() {
   }, { scope: pageRef });
 
   return (
-    <div ref={pageRef} className="min-h-screen">
+    <div ref={pageRef} className="min-h-screen page-backdrop">
       <section className="relative py-20 sm:py-28 px-6">
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-20 right-10 w-96 h-96 bg-indigo-500/10 rounded-full blur-3xl animate-float" />
@@ -198,7 +198,7 @@ export default function TzResources() {
               </div>
             </div>
             
-            <div className="mt-6 pt-5 border-t border-neutral-100/80 dark:border-white/8">
+            <div className="mt-6 pt-5 border-t border-neutral-100/80 dark:border-white/10">
               <p className="text-sm text-neutral-500 dark:text-neutral-400 text-center">
                 <span className="font-semibold text-neutral-700 dark:text-neutral-200">重要提示：</span>
                 本站资源由站长独立搜集整理，超级复刻版与天真SkyerNovie等内容创作者无关喵~ 仅供学习交流，请支持正版软件哦~
@@ -215,7 +215,7 @@ export default function TzResources() {
             <p className="text-sm sm:text-base text-neutral-500 dark:text-neutral-400">点击前往对应平台浏览和下载整合包</p>
           </div>
           
-          <div className="grid sm:grid-cols-3 gap-6">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {platforms.map((p, i) => (
               <a 
                 key={i} 
@@ -228,7 +228,7 @@ export default function TzResources() {
                 <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${p.color} opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none`} />
                 
                 <div className="relative">
-                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center shadow-lg text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400`}>
+                  <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${p.color} flex items-center justify-center shadow-lg text-white mb-6 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                     <p.icon size={28} />
                   </div>
                   
@@ -239,7 +239,7 @@ export default function TzResources() {
                   
                   <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-5">{p.desc}</p>
                   
-                  <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
+                  <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
                     <span>前往平台</span>
                     <FiExternalLink size={14} />
                   </div>
@@ -262,12 +262,12 @@ export default function TzResources() {
               className="tzr-card group relative liquid-glass rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
               <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-purple-500 to-pink-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <FiPackage size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-2">Minecraft 整合包</h3>
                 <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-4">科技向、魔法向以及生活类的 Minecraft Java 版整合包合集。</p>
-                <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
+                <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
                   <span>查看详情</span>
                   <FiArrowRight size={14} />
                 </div>
@@ -278,12 +278,12 @@ export default function TzResources() {
               className="tzr-card group relative liquid-glass rounded-2xl p-6 sm:p-8 transition-all duration-500 hover:-translate-y-2 hover:scale-[1.02] hover:shadow-2xl">
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 opacity-5 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none" />
               <div className="relative">
-                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-400">
+                <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-orange-500 to-red-500 flex items-center justify-center shadow-lg text-white mb-5 group-hover:scale-110 group-hover:rotate-6 transition-all duration-300">
                   <FiCoffee size={24} />
                 </div>
                 <h3 className="text-lg font-bold text-neutral-800 dark:text-neutral-100 mb-2">Minecraft Java JDK</h3>
                 <p className="text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed mb-4">适用于 Minecraft Java 版的 JDK 运行环境推荐合集。</p>
-                <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
+                <div className="flex items-center gap-2 text-sm font-semibold text-indigo-500 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-300 translate-x-[-4px] group-hover:translate-x-0">
                   <span>查看详情</span>
                   <FiArrowRight size={14} />
                 </div>

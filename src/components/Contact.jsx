@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import { FiGithub, FiMail, FiMessageCircle } from 'react-icons/fi';
+import { FiGithub, FiMail, FiMessageCircle, FiChevronRight } from 'react-icons/fi';
 import { SiBilibili } from 'react-icons/si';
 import SectionTitle from './shared/SectionTitle.jsx';
 
@@ -27,7 +27,7 @@ export default function Contact() {
     gsap.set(left, { autoAlpha: 0, x: -30 });
     gsap.set(links, { autoAlpha: 0, x: -20 });
     const st1 = ScrollTrigger.create({ trigger: el, start: 'top 88%', onEnter: () => gsap.to(left, { autoAlpha: 1, x: 0, duration: 0.6, ease: 'power3.out' }), once: true });
-    const st2 = ScrollTrigger.create({ trigger: el, start: 'top 85%', onEnter: () => gsap.to(links, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.12, delay: 0.2, ease: 'back.out(1.4)' }), once: true });
+    const st2 = ScrollTrigger.create({ trigger: el, start: 'top 85%', onEnter: () => gsap.to(links, { autoAlpha: 1, x: 0, duration: 0.5, stagger: 0.12, delay: 0.2, ease: 'back.out(1.4)', clearProps: 'transform' }), once: true });
     return () => { st1.kill(); st2.kill(); };
   }, { scope: sectionRef });
 
@@ -47,18 +47,16 @@ export default function Contact() {
             </p>
             <div className="space-y-4">
               {socialLinks.map((link, i) => (
-                <a key={i} className="contact-link glass-card-sm flex items-center gap-4 group card-hover" href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                <a key={i} className={`contact-link glass-card-sm flex items-center gap-4 group card-hover transition-colors duration-300 ${link.hoverColor}`} href={link.href} target={link.href.startsWith('http') ? '_blank' : undefined} rel={link.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
                   <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 flex items-center justify-center group-hover:scale-110 transition-all duration-300">
-                    <link.icon size={22} className="text-indigo-500 group-hover:text-indigo-600 transition-colors" />
+                    <link.icon size={22} className="text-indigo-500 group-hover:text-white transition-colors duration-300" />
                   </div>
                   <div className="text-left flex-1">
-                    <div className="font-semibold text-neutral-800 dark:text-neutral-100">{link.label}</div>
-                    <div className="text-sm text-neutral-500 dark:text-neutral-400">{link.desc}</div>
+                    <div className="font-semibold text-neutral-800 dark:text-neutral-100 group-hover:text-white transition-colors duration-300">{link.label}</div>
+                    <div className="text-sm text-neutral-500 dark:text-neutral-400 group-hover:text-white/80 transition-colors duration-300">{link.desc}</div>
                   </div>
                   <div className="w-5 h-5 rounded-full bg-indigo-500/10 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
-                    <svg className="w-3 h-3 text-indigo-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
+                    <FiChevronRight size={14} className="text-indigo-500" />
                   </div>
                 </a>
               ))}

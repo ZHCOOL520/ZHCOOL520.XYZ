@@ -4,7 +4,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { Link } from 'react-router-dom';
 import { SiKotlin, SiTypescript, SiJavascript, SiCplusplus, SiAndroid, SiGit, SiGradle, SiIntellijidea } from 'react-icons/si';
-import { FiCode, FiBox, FiTerminal } from 'react-icons/fi';
+import { FiCode, FiTool, FiPackage, FiLayers, FiCpu } from 'react-icons/fi';
 import SectionTitle from './shared/SectionTitle.jsx';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -16,10 +16,10 @@ const allSkills = [
   { name: 'TypeScript', id: 'typescript', icon: SiTypescript, color: '#3178C6' },
   { name: 'JavaScript', id: 'javascript', icon: SiJavascript, color: '#F7DF1E' },
   { name: 'Android', id: 'android', icon: SiAndroid, color: '#34A853' },
-  { name: 'HarmonyOS', id: 'harmonyos', icon: FiBox, color: '#FF6B35' },
-  { name: 'Minecraft Forge', id: 'minecraft-forge', icon: FiTerminal, color: '#8B4513' },
-  { name: 'Minecraft Mod', id: 'minecraft-mod', icon: FiTerminal, color: '#8B4513' },
-  { name: 'Minecraft Plugin', id: 'minecraft-plugin', icon: FiBox, color: '#D4A574' },
+  { name: 'HarmonyOS', id: 'harmonyos', icon: FiCpu, color: '#FF6B35' },
+  { name: 'Minecraft Forge', id: 'minecraft-forge', icon: FiTool, color: '#8B4513' },
+  { name: 'Minecraft Mod', id: 'minecraft-mod', icon: FiPackage, color: '#8B4513' },
+  { name: 'Minecraft Plugin', id: 'minecraft-plugin', icon: FiLayers, color: '#D4A574' },
   { name: 'Git', id: 'git', icon: SiGit, color: '#F05032' },
   { name: 'Gradle', id: 'gradle', icon: SiGradle, color: '#02303A' },
   { name: 'Android Studio', id: 'android-studio', icon: SiIntellijidea, color: '#3DDC84' },
@@ -37,7 +37,7 @@ export default function Skills() {
     triggers.push(ScrollTrigger.create({
       trigger: el,
       start: 'top 88%',
-      onEnter: () => gsap.to(skillButtons, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out' }),
+      onEnter: () => gsap.to(skillButtons, { autoAlpha: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out', clearProps: 'transform' }),
       once: true,
     }));
     return () => { triggers.forEach(st => st.kill()); };
@@ -58,7 +58,7 @@ export default function Skills() {
               <div className="absolute inset-0 rounded-2xl bg-gradient-to-br opacity-0 group-hover:opacity-10 transition-opacity duration-500 pointer-events-none"
                 style={{ background: `${skill.color}20` }} />
               <div
-                className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-all duration-400 group-hover:scale-110 group-hover:rotate-6"
+                className="w-12 h-12 rounded-xl flex items-center justify-center shadow-lg transition-all duration-300 group-hover:scale-110 group-hover:rotate-6"
                 style={{ background: `linear-gradient(135deg, ${skill.color}, ${skill.color}80)` }}
               >
                 <skill.icon size={24} className="text-white" />

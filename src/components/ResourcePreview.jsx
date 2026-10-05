@@ -29,7 +29,7 @@ export default function ResourcePreview() {
       onEnter: () => {
         gsap.to(cards, {
           autoAlpha: 1, y: 0, scale: 1,
-          duration: 0.6, stagger: 0.15, ease: 'power3.out',
+          duration: 0.6, stagger: 0.15, ease: 'power3.out', clearProps: 'transform',
         });
         gsap.to(noteRef.current, { autoAlpha: 1, x: 0, duration: 0.5, delay: 0.3, ease: 'power3.out' });
         gsap.to(btnRef.current, { autoAlpha: 1, y: 0, duration: 0.5, delay: 0.4, ease: 'back.out(1.5)' });
@@ -61,20 +61,20 @@ export default function ResourcePreview() {
             const items = resourceList.filter(r => r.category === cat.id);
             const first = items[0];
             const IconComp = catIcons[cat.id];
-            const topBorder = `border-t-2 ${meta.border.replace('/15', '/30')}`;
+            const topBorder = `border-t-2 ${meta.borderStrong}`;
 
             return (
               <Link 
                 key={cat.id} 
                 to={first ? `/resources/${first.id}` : '/resources'}
-                className={`group relative liquid-glass rounded-2xl p-6 transition-all duration-400 hover:-translate-y-3 hover:scale-[1.02] ${topBorder} hover:shadow-2xl hover:shadow-indigo-500/15`}
+                className={`group relative liquid-glass rounded-2xl p-6 transition-all duration-300 hover:-translate-y-3 hover:scale-[1.02] ${topBorder} hover:shadow-2xl hover:shadow-indigo-500/15`}
               >
                 {/* 渐变背景动画 */}
                 <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-indigo-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
                 
                 <div className="relative">
                   <div className="flex items-center gap-3 mb-5">
-                    <div className={`w-14 h-14 rounded-xl ${meta.iconBg} flex items-center justify-center shadow-lg text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-400`}>
+                    <div className={`w-14 h-14 rounded-xl ${meta.iconBg} flex items-center justify-center shadow-lg text-white group-hover:scale-110 group-hover:rotate-6 transition-all duration-300`}>
                       <IconComp size={24} />
                     </div>
                     <span className={`text-[11px] px-3 py-1.5 rounded-full ${meta.accentBg} ${meta.accent} font-mono font-semibold`}>
@@ -91,7 +91,7 @@ export default function ResourcePreview() {
                   </p>
 
                   {first && (
-                    <div className="flex items-center gap-3 mt-4 pt-3 border-t border-neutral-100/80 dark:border-white/8">
+                    <div className="flex items-center gap-3 mt-4 pt-3 border-t border-neutral-100/80 dark:border-white/10">
                       {first.size && <span className="text-xs font-mono text-neutral-400">{first.size}</span>}
                       {first.updated && <span className="text-xs text-neutral-400">更新于 {first.updated}</span>}
                     </div>

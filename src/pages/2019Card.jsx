@@ -15,7 +15,7 @@ const features = [
 
 export default function Tz2019Card() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-blue-50/30 dark:from-slate-900 via-slate-800 dark:to-indigo-900/20">
+    <div className="min-h-screen page-backdrop">
       <Helmet>
         <title>健康码 & 行程卡 - 纪念版 | ZHCOOL520</title>
         <meta name="description" content="疫情时代的纪念，纯前端健康码/行程卡生成器，仅供纪念和娱乐用途。" />
