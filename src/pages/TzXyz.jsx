@@ -175,7 +175,7 @@ function TdButton() {
 const socialLinks = [
   { icon: SiBilibili, label: 'B站主页', url: 'https://space.bilibili.com/25770857', color: 'hover:bg-[#FB7299]/20 hover:text-[#FB7299]' },
   { icon: FiExternalLink, label: '直播间', url: 'https://live.bilibili.com/303427', color: 'hover:bg-orange-500/20 hover:text-orange-500' },
-  { icon: FiMessageCircle, label: 'QQ群', url: 'https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933', color: 'hover:bg-teal-500/20 hover:text-teal-500' },
+  { icon: FiMessageCircle, label: 'QQ群', url: 'https://qm.qq.com/q/xa0u5yocV4', color: 'hover:bg-teal-500/20 hover:text-teal-500' },
   { icon: FiExternalLink, label: '抖音', url: 'https://v.douyin.com/TCPDQ1sFpEA/', color: 'hover:bg-neutral-800/20 hover:text-neutral-800 dark:hover:text-white' },
 ];
 
@@ -186,9 +186,10 @@ const featuredItems = [
 ];
 
 const downloadItems = [
-  { icon: '💬', title: '催更①群', desc: 'Minecraft模组交流，催更讨论。', btnLabel: '加入群聊', btnColor: 'bg-emerald-500 hover:bg-emerald-600', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=X1wN9HgYwSiPQoTOfFeQCIsvv1tJP1aR&authKey=Qvpoj8yGRb9KuEdyCHKj7uKe7ZmuQqphmvAoAIrDBGNgAX6BxVGB1wP1%2FGairuyE&noverify=0&group_code=768587905', code: '768587905', status: '开放加入', statusColor: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
-  { icon: '💬', title: '催更②群', desc: '粉丝交流②群，更多讨论空间。', btnLabel: '加入群聊', btnColor: 'bg-emerald-500 hover:bg-emerald-600', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=mDc4o5DA6jJimZ_uR7wrN8VLq5NqClfJ&authKey=%2BV64u1ibJD5Ww%2FeEpxbajM%2FSgMfrmmYYaX9OBtlBanx%2FhaPSSCLsB4c17hEwLWP9&noverify=0&group_code=564472763', code: '564472763', status: '开放加入', statusColor: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
-  { icon: '💬', title: '催更③群', desc: '新群开放中，欢迎加入！', btnLabel: '加入群聊', btnColor: 'bg-emerald-500 hover:bg-emerald-600', url: 'https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933', code: '694474933', status: '开放加入', statusColor: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
+  { icon: '💬', title: '催更①群', desc: 'Minecraft模组交流，催更讨论。', btnLabel: '已满员', btnColor: 'bg-neutral-400', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=X1wN9HgYwSiPQoTOfFeQCIsvv1tJP1aR&authKey=Qvpoj8yGRb9KuEdyCHKj7uKe7ZmuQqphmvAoAIrDBGNgAX6BxVGB1wP1%2FGairuyE&noverify=0&group_code=768587905', code: '768587905', status: '已满员', statusColor: 'text-neutral-500 bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-400', disabled: true },
+  { icon: '💬', title: '催更②群', desc: '粉丝交流②群，更多讨论空间。', btnLabel: '已满员', btnColor: 'bg-neutral-400', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=mDc4o5DA6jJimZ_uR7wrN8VLq5NqClfJ&authKey=%2BV64u1ibJD5Ww%2FeEpxbajM%2FSgMfrmmYYaX9OBtlBanx%2FhaPSSCLsB4c17hEwLWP9&noverify=0&group_code=564472763', code: '564472763', status: '已满员', statusColor: 'text-neutral-500 bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-400', disabled: true },
+  { icon: '💬', title: '催更③群', desc: '③群已满，欢迎加入④群。', btnLabel: '已满员', btnColor: 'bg-neutral-400', url: 'https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933', code: '694474933', status: '已满员', statusColor: 'text-neutral-500 bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-400', disabled: true },
+  { icon: '💬', title: '催更④群', desc: '新群开放中，欢迎加入！', btnLabel: '加入群聊', btnColor: 'bg-emerald-500 hover:bg-emerald-600', url: 'https://qm.qq.com/q/xa0u5yocV4', status: '开放加入', statusColor: 'text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30' },
   { icon: '📡', title: 'QQ频道', desc: '获取最新动态、直播通知和独家内容。', btnLabel: '加入频道', btnColor: 'bg-sky-500 hover:bg-sky-600', url: 'https://pd.qq.com/s/pd39356778', code: 'pd39356778', status: '官方频道', statusColor: 'text-sky-600 bg-sky-50 dark:bg-sky-900/30' },
 ];
 
@@ -364,7 +365,7 @@ export default function TzXyz() {
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6">
             <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl hover:-translate-y-1">
               <FiUsers className="mx-auto mb-3 text-indigo-500 transition-transform duration-300 hover:scale-110" size={28} />
-              <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">3.7万</div>
+              <div className="text-2xl sm:text-3xl font-bold text-neutral-800 dark:text-neutral-50">3.9万</div>
               <div className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-1">B站粉丝</div>
             </div>
             <div className="tz-stat-card liquid-glass-light rounded-2xl p-5 sm:p-6 text-center transition-all duration-300 ease-out hover:scale-105 hover:shadow-xl hover:-translate-y-1">
@@ -484,11 +485,16 @@ export default function TzXyz() {
                     <p className="text-neutral-500 dark:text-neutral-400 text-xs sm:text-sm mb-3">{item.desc}</p>
                     <div className="flex items-center gap-2 flex-wrap">
                       {item.code && <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500 bg-neutral-100/80 dark:bg-neutral-800/80 px-3 py-1.5 rounded-lg">{item.code}</span>}
-                      <a href={item.url} target="_blank" rel="noopener noreferrer" 
-                        className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 hover:scale-105 ${item.btnColor} text-white`}
-                        {...(item.disabled ? { onClick: (e) => e.preventDefault(), tabIndex: -1, 'aria-disabled': true } : {})}>
-                        <FiExternalLink size={12} /><span>{item.btnLabel}</span>
-                      </a>
+                      {item.disabled ? (
+                        <span className="inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold bg-neutral-200/80 text-neutral-500 dark:bg-neutral-800 dark:text-neutral-400 cursor-not-allowed">
+                          <FiUsers size={12} /><span>{item.btnLabel}</span>
+                        </span>
+                      ) : (
+                        <a href={item.url} target="_blank" rel="noopener noreferrer" 
+                          className={`inline-flex items-center gap-1.5 px-4 py-2 rounded-xl text-xs font-semibold transition-all duration-300 hover:scale-105 ${item.btnColor} text-white`}>
+                          <FiExternalLink size={12} /><span>{item.btnLabel}</span>
+                        </a>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -518,7 +524,7 @@ export default function TzXyz() {
                 <div className="text-xs text-neutral-400 dark:text-neutral-500">商务合作首选</div>
               </div>
             </a>
-            <a href="https://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=o56dxRJfYHO8TN-XI5RdYip0Ofc5tP6x&authKey=hAw3ZnvNAsK51XCYi3ImJdxJtMmqzm2Lel%2BXjXekjlmshwnq8qHmMeAzyfhFUATJ&noverify=0&group_code=694474933" target="_blank" rel="noopener noreferrer"
+            <a href="https://qm.qq.com/q/xa0u5yocV4" target="_blank" rel="noopener noreferrer"
               className="liquid-glass rounded-2xl p-6 flex items-center gap-4 hover:scale-[1.02] transition-all duration-300 group">
               <FiMessageCircle className="text-teal-500" size={28} />
               <div>
