@@ -185,6 +185,13 @@ const featuredItems = [
   { title: '资源蜜蜂版无中生有 开局送创造马达！蜂蜂空坊Ep1', desc: '蜜蜂版无中生有整合包实况，开局赠送创造马达，开启蜂蜂空坊全新系列冒险！', image: '/images/video3.webp', url: 'https://www.bilibili.com/video/BV1xeSRBpEt9', views: '6.1万', tag: '蜜蜂空岛' },
 ];
 
+const collectionItems = [
+  { title: '新时代科技', desc: '高版本轮椅模组整合爽包，开局送AE一路爽到创造飞行，全6集完结。', image: '/images/collection1.jpg', url: 'https://space.bilibili.com/25770857/channel/collectiondetail?sid=8816969', views: '34.5万', tag: '视频合集 · 全6集' },
+  { title: '无限遗产', desc: '无限遗产II私货版，AE与创造蜜蜂一路爽飞，全6集完结。', image: '/images/collection2.jpg', url: 'https://space.bilibili.com/25770857/channel/collectiondetail?sid=9154355', views: '30.6万', tag: '视频合集 · 全6集' },
+];
+
+const showcaseItems = [...featuredItems, ...collectionItems];
+
 const downloadItems = [
   { icon: '💬', title: '催更①群', desc: 'Minecraft模组交流，催更讨论。', btnLabel: '已满员', btnColor: 'bg-neutral-400', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=X1wN9HgYwSiPQoTOfFeQCIsvv1tJP1aR&authKey=Qvpoj8yGRb9KuEdyCHKj7uKe7ZmuQqphmvAoAIrDBGNgAX6BxVGB1wP1%2FGairuyE&noverify=0&group_code=768587905', code: '768587905', status: '已满员', statusColor: 'text-neutral-500 bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-400', disabled: true },
   { icon: '💬', title: '催更②群', desc: '粉丝交流②群，更多讨论空间。', btnLabel: '已满员', btnColor: 'bg-neutral-400', url: 'http://qm.qq.com/cgi-bin/qm/qr?_wv=1027&k=mDc4o5DA6jJimZ_uR7wrN8VLq5NqClfJ&authKey=%2BV64u1ibJD5Ww%2FeEpxbajM%2FSgMfrmmYYaX9OBtlBanx%2FhaPSSCLsB4c17hEwLWP9&noverify=0&group_code=564472763', code: '564472763', status: '已满员', statusColor: 'text-neutral-500 bg-neutral-100 dark:bg-neutral-800 dark:text-neutral-400', disabled: true },
@@ -392,12 +399,12 @@ export default function TzXyz() {
         <div className="max-w-5xl mx-auto">
           <div className="tz-video-title text-center mb-12">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-neutral-800 dark:text-neutral-50 mb-4">精选视频</h2>
-            <p className="text-neutral-500 dark:text-neutral-400 text-sm sm:text-base">Minecraft模组实况与玩法体验，持续更新中</p>
+            <p className="text-neutral-500 dark:text-neutral-400 text-sm sm:text-base">Minecraft 模组实况与系列合集，持续更新中</p>
             <div className="w-32 h-1 mx-auto mt-6 bg-gradient-to-r from-transparent via-indigo-500 to-transparent rounded-full" />
           </div>
           
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            {featuredItems.map((item, i) => (
+            {showcaseItems.map((item, i) => (
               <a key={i} 
                 className="tz-video-card liquid-glass rounded-2xl overflow-hidden group cursor-pointer hover:scale-[1.02] transition-all duration-300"
                 href={item.url} target="_blank" rel="noopener noreferrer">
