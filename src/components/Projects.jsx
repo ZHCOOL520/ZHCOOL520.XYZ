@@ -14,6 +14,7 @@ const projects = [
   { title: 'GTL：天际线奇观', description: 'GTL（格雷科技休闲版）附属模组，手持奇观终端右键奇观原石，一整座 70 万方块的巨构建筑「唰」地长出来。', tags: ['Java', 'Minecraft', 'Forge', 'GTL'], gradient: 'from-indigo-500/20 to-violet-500/20', icon: '🌌', stars: 2, html_url: 'https://github.com/ZHCOOL520/GTL-Skyline-Wonders', linkId: 'gtl-skyline-wonders' },
   { title: 'skylfolk 天穹生灵', description: '把僵尸命名为「喜欢萝莉」，它会变成 1000 血、刀枪不入的飞行 Boss；唯一能击败它的是本模组的调教棒。', tags: ['Java', 'Minecraft', 'Forge', 'MIT'], gradient: 'from-pink-500/20 to-rose-500/20', icon: '🌸', stars: 1, html_url: 'https://github.com/ZHCOOL520/skylfolk', linkId: 'skylfolk' },
   { title: '2019-card', description: '健康码 & 行程卡纪念版，纯前端生成器，致敬那段难忘的岁月。', tags: ['HTML', 'JavaScript', 'Tailwind CSS'], gradient: 'from-teal-500/20 to-green-500/20', icon: '💚', stars: 1, html_url: 'https://github.com/ZHCOOL520/2019-card', linkId: '2019-card', demo_url: '/2019-card' },
+  { title: 'Precision Touchpad Lab', description: 'Windows 触控板素质测试台：判断是不是精准触控板，双指捏合 / 旋转 / 压力 / 轨迹逐项测试，六维加权评分并对标 MacBook Pro。', tags: ['HTML', 'JavaScript', 'Pointer Events'], gradient: 'from-cyan-500/20 to-blue-500/20', icon: '🖱️', stars: 0, linkId: 'precision-touchpad-lab', demo_url: '/precision-touchpad-lab' },
   { title: 'LoliPickaxe 1.20.1 移植版', description: '把 1.12.2 的「氪金萝莉」移植到 Minecraft 1.20.1 + Forge 47+，保留无敌、范围挖掘与储藏室等全套能力。', tags: ['Java', 'Minecraft', 'Forge', 'Fork'], gradient: 'from-rose-500/20 to-pink-500/20', icon: '⛏️', stars: 1, html_url: 'https://github.com/ZHCOOL520/LoliPickaxe', linkId: 'lolipickaxe', isFork: true },
 ];
 
@@ -58,7 +59,7 @@ export default function Projects() {
                 </div>
                 <div className="flex items-center justify-between pt-4 border-t border-neutral-200/30 dark:border-white/5">
                   <div className="flex items-center gap-1 text-sm text-yellow-500">
-                    <span>⭐</span><span className="font-mono text-xs">{project.stars}</span>
+                    {project.stars > 0 && (<><span>⭐</span><span className="font-mono text-xs">{project.stars}</span></>)}
                   </div>
                   <div className="flex items-center gap-2">
                     {project.demo_url && (
@@ -66,9 +67,11 @@ export default function Projects() {
                         <FiExternalLink size={14} /><span>示例</span>
                       </a>
                     )}
-                    <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-primary">
-                      <FiGithub size={14} /><span>源码</span>
-                    </a>
+                    {project.html_url && (
+                      <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-primary">
+                        <FiGithub size={14} /><span>源码</span>
+                      </a>
+                    )}
                   </div>
                 </div>
                 <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-t from-indigo-500/5 to-transparent" />

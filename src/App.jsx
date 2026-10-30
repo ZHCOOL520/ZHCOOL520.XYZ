@@ -23,6 +23,7 @@ const ResourcePreview = lazy(() => import('./components/ResourcePreview'));
 const TzXyz = lazy(() => import('./pages/TzXyz'));
 const TzResources = lazy(() => import('./pages/TzResources'));
 const Tz2019Card = lazy(() => import('./pages/2019Card'));
+const PrecisionTouchpadLab = lazy(() => import('./pages/PrecisionTouchpadLab'));
 const XiGua = lazy(() => import('./pages/XiGua'));
 
 function ScrollToTop() {
@@ -124,6 +125,7 @@ export default function App() {
                 <Route path="/tz" element={<TzXyz />} />
                 <Route path="/tz-resources" element={<TzResources />} />
                 <Route path="/2019-card" element={<Tz2019Card />} />
+                <Route path="/precision-touchpad-lab" element={<PrecisionTouchpadLab />} />
                 <Route path="/xigua" element={<XiGua />} />
               </Routes>
             </Suspense>

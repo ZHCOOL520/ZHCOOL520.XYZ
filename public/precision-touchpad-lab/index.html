@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="description" content="Windows 触控板素质测试台：捏合缩放、旋转、压力、轨迹、采样率与硬件指纹检测，并对标 MacBook Pro 触控板给出综合评分。" />
+  <title>Precision Touchpad Lab · Windows 触控板素质测试台</title>
+  <link rel="icon" type="image/svg+xml" href="assets/favicon.svg" />
+  <link rel="stylesheet" href="styles/main.css" />
+</head>
+<body>
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand">
+        <img src="assets/favicon.svg" alt="" width="36" height="36" />
+        <div class="brand-text">
+          <h1>Precision Touchpad Lab</h1>
+          <p>Windows 触控板素质测试台 · 捏合 / 旋转 / 压力 / 轨迹 · 对标 MacBook Pro</p>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="chips" aria-label="能力检测">
+          <span class="chip" id="chip-pointer">Pointer Events<span class="dot" data-state="idle"></span></span>
+          <span class="chip" id="chip-touch">Touch<span class="dot" data-state="idle"></span></span>
+          <span class="chip" id="chip-gesture">Gesture<span class="dot" data-state="idle"></span></span>
+          <span class="chip" id="chip-hid">WebHID<span class="dot" data-state="idle"></span></span>
+        </div>
+        <button class="btn btn-ghost" id="btn-help" type="button" title="查看测试说明">说明</button>
+      </div>
+    </header>
+
+    <main class="layout">
+      <section class="stage-card" id="stage-card" aria-labelledby="stage-title">
+        <div class="stage-head">
+          <h2 id="stage-title">双指手势测试区</h2>
+          <div class="stage-tabs" role="tablist" aria-label="手势模式">
+            <button class="tab is-active" role="tab" aria-selected="true" data-gesture="pinch" type="button">捏合缩放</button>
+            <button class="tab" role="tab" aria-selected="false" data-gesture="rotate" type="button">旋转</button>
+            <button class="tab" role="tab" aria-selected="false" data-gesture="both" type="button">缩放 + 旋转</button>
+          </div>
+          <div class="stage-actions">
+            <button class="btn" id="btn-reset" type="button" title="R">重置手势</button>
+            <button class="btn" id="btn-fullscreen" type="button" title="F">全屏</button>
+          </div>
+        </div>
+
+        <div class="stage" id="stage" tabindex="0" aria-label="手势测试画布：把两根手指放在触控板上做捏合或旋转">
+          <div class="stage-grid" aria-hidden="true"></div>
+          <div class="transform-object" id="transform-object">
+            <div class="object-glow" aria-hidden="true"></div>
+            <img id="test-card" class="test-card" src="assets/test-card.svg" alt="触控板校准测试卡：中心十字、四象限标记与角度参考线" draggable="false" />
+          </div>
+          <div class="pointers-layer" id="pointers-layer" aria-hidden="true"></div>
+          <canvas class="trail-layer" id="trail-layer" aria-hidden="true"></canvas>
+          <div class="stage-overlay" id="stage-overlay">
+            <div class="overlay-badge" id="overlay-badge">双指捏合 / 旋转</div>
+            <div class="overlay-hint" id="overlay-hint">把两根手指放在触控板上，做捏合、张开或旋转手势</div>
+          </div>
+          <div class="stage-hud">
+            <div class="hud-item"><span class="hud-label">缩放</span><strong id="hud-scale">1.00×</strong></div>
+            <div class="hud-item"><span class="hud-label">旋转</span><strong id="hud-rotate">0.0°</strong></div>
+            <div class="hud-item"><span class="hud-label">触点</span><strong id="hud-pointers">0</strong></div>
+          </div>
+        </div>
+
+        <p class="stage-foot">
+          <kbd>+</kbd>/<kbd>-</kbd> 缩放 · <kbd>[</kbd>/<kbd>]</kbd> 旋转 · <kbd>R</kbd> 重置 · <kbd>F</kbd> 全屏；也可以按住 <kbd>Ctrl</kbd> 滚动滚轮做缩放。
+        </p>
+      </section>
+
+      <aside class="side">
+        <section class="panel panel-score" id="verdict-panel">
+          <div class="panel-head">
+            <h2>综合评分</h2>
+            <span class="panel-sub" id="verdict-sub">未开始</span>
+          </div>
+
+          <div class="score-hero">
+            <div class="grade-badge" id="score-grade" data-grade="none">—</div>
+            <div class="score-main">
+              <div class="score-number"><strong id="score-value">--</strong><span>/ 100</span></div>
+              <div class="score-caption" id="score-caption">按「测试项」逐项完成，实时计算素质评分</div>
+            </div>
+          </div>
+
+          <div class="verdict" id="verdict" data-level="unknown">
+            <span class="verdict-dot"></span>
+            <div class="verdict-text">
+              <strong id="verdict-title">等待测试</strong>
+              <p id="verdict-desc">把两根手指放在上方测试区，先试一次捏合缩放。</p>
+            </div>
+          </div>
+
+          <div class="meter-list">
+            <div class="meter">
+              <span>精准信号</span>
+              <div class="meter-track"><i id="meter-precision"></i></div>
+              <em id="meter-precision-val">0%</em>
+            </div>
+            <div class="meter">
+              <span>手势覆盖</span>
+              <div class="meter-track"><i id="meter-gesture"></i></div>
+              <em id="meter-gesture-val">0%</em>
+            </div>
+            <div class="meter">
+              <span>轨迹连续</span>
+              <div class="meter-track"><i id="meter-smooth"></i></div>
+              <em id="meter-smooth-val">0%</em>
+            </div>
+          </div>
+
+          <div class="verdict-actions">
+            <button class="btn btn-primary" id="btn-report" type="button">生成报告</button>
+            <button class="btn" id="btn-copy" type="button" disabled>复制</button>
+          </div>
+        </section>
+
+        <section class="panel" id="apple-panel">
+          <div class="panel-head">
+            <h2>对标苹果</h2>
+            <span class="panel-sub" id="apple-sub">MacBook Pro 参考基线</span>
+          </div>
+          <div class="cmp" id="apple-rows"></div>
+          <p class="cmp-note" id="apple-summary">完成左侧测试后，这里会给出与 MacBook Pro 触控板的逐项差距。</p>
+          <p class="cmp-fine">
+            参考基线取自 MacBook Pro 14/16 吋：玻璃一体式压感触控板、Force Touch 连续压力、100 Hz 以上采样、五指手势、约 13 × 8 cm 大面积。
+            材质、震动反馈与表面摩擦力浏览器无法测量，因此不计入评分。
+          </p>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>测试项</h2>
+            <span class="panel-sub" id="test-progress">0 / 5</span>
+          </div>
+          <ul class="tests" id="tests">
+            <li class="test" data-test="precision">
+              <span class="test-icon" data-status="idle"></span>
+              <div class="test-body">
+                <strong>精准指针检测</strong>
+                <p>判断指针是否携带接触面积 / 压力等精准设备信号。</p>
+              </div>
+              <span class="test-state" id="state-precision" data-status="idle">待测</span>
+            </li>
+            <li class="test" data-test="pinch">
+              <span class="test-icon" data-status="idle"></span>
+              <div class="test-body">
+                <strong>双指捏合</strong>
+                <p>两指张开 / 收拢，测试卡应平滑缩放。</p>
+              </div>
+              <span class="test-state" id="state-pinch" data-status="idle">待测</span>
+            </li>
+            <li class="test" data-test="rotate">
+              <span class="test-icon" data-status="idle"></span>
+              <div class="test-body">
+                <strong>双指旋转</strong>
+                <p>两指绕中心转动，测试卡应跟着旋转。</p>
+              </div>
+              <span class="test-state" id="state-rotate" data-status="idle">待测</span>
+            </li>
+            <li class="test" data-test="pressure">
+              <span class="test-icon" data-status="idle"></span>
+              <div class="test-body">
+                <strong>压力 / 接触面积</strong>
+                <p>按压力度变化时，压力值或接触尺寸是否跟随变化。</p>
+              </div>
+              <span class="test-state" id="state-pressure" data-status="idle">待测</span>
+            </li>
+            <li class="test" data-test="trajectory">
+              <span class="test-icon" data-status="idle"></span>
+              <div class="test-body">
+                <strong>单指轨迹平滑度</strong>
+                <p>单指画圆或画斜线，观察轨迹是否连续、无断点。</p>
+              </div>
+              <span class="test-state" id="state-trajectory" data-status="idle">待测</span>
+            </li>
+          </ul>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>硬件指纹</h2>
+            <span class="panel-sub">实时</span>
+          </div>
+          <dl class="fingerprint" id="fingerprint">
+            <div><dt>指针类型</dt><dd id="fp-pointer-type">—</dd></div>
+            <div><dt>接触面积</dt><dd id="fp-size">—</dd></div>
+            <div><dt>压力</dt><dd id="fp-pressure">—</dd></div>
+            <div><dt>倾斜</dt><dd id="fp-tilt">—</dd></div>
+            <div><dt>最大触点</dt><dd id="fp-max-pointers">0</dd></div>
+            <div><dt>事件频率</dt><dd id="fp-rate">0 /s</dd></div>
+            <div><dt>设备像素比</dt><dd id="fp-dpr">—</dd></div>
+            <div><dt>平台</dt><dd id="fp-platform">—</dd></div>
+          </dl>
+        </section>
+
+        <section class="panel log-panel">
+          <div class="panel-head">
+            <h2>事件流</h2>
+            <button class="btn btn-tiny" id="btn-clear-log" type="button">清空</button>
+          </div>
+          <ol class="log" id="log" aria-live="polite"></ol>
+        </section>
+      </aside>
+    </main>
+
+    <footer class="foot">
+      <span>Precision Touchpad Lab · 纯前端 · 数据不离开本机</span>
+      <span id="foot-build">静态页面 · 可直接双击 index.html 打开</span>
+    </footer>
+  </div>
+
+  <dialog class="help" id="help-dialog">
+    <form method="dialog" class="help-inner">
+      <h2>怎么测？</h2>
+      <ol>
+        <li><strong>双指捏合：</strong>两根手指放在触控板上，同时向外张开或向内收拢。测试卡应该平滑放大或缩小。</li>
+        <li><strong>双指旋转：</strong>保持两指距离，绕两指中心一起转动。测试卡与中心角度读数应该跟着转。</li>
+        <li><strong>压力 / 面积：</strong>单指按压时逐渐加力，观察「压力」「接触面积」是否变化。部分触控板只在浏览器里上报固定值，这是正常的。</li>
+        <li><strong>轨迹：</strong>单指在触控板上画一个圆，观察是否出现断线或明显折角。</li>
+      </ol>
+      <p class="help-note">
+        如果触控板不是精准触控板（Precision Touchpad），浏览器通常只能拿到「鼠标 + 滚轮」信号，捏合与旋转不会生效，本页会给出对应判定。
+        旧款 Synaptics / ELAN 驱动可尝试在其控制面板中开启「精准触控板」兼容模式。
+      </p>
+      <p class="help-note">
+        <strong>综合评分</strong>由六项加权得出：精准信号、手势覆盖、轨迹连续、采样率、多点触控、压力分层；没测到的项不参与计算，页面会显示「已测 N/6」。
+        「对标苹果」把各项得分与 MacBook Pro 触控板的参考基线逐项比较，差距最大的两项会写进结论。
+      </p>
+      <div class="help-actions">
+        <button class="btn btn-primary" value="close">知道了</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="report" id="report" hidden>
+    <div class="report-card">
+      <div class="report-head">
+        <h2>触控板诊断报告</h2>
+        <button class="btn btn-tiny" id="btn-close-report" type="button">关闭</button>
+      </div>
+      <pre id="report-text"></pre>
+    </div>
+  </div>
+
+  <script src="scripts/app.js" defer></script>
+</body>
+</html>

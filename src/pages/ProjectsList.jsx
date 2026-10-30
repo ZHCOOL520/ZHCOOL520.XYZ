@@ -75,7 +75,7 @@ export default function ProjectsList() {
               </div>
               <div className="flex items-center justify-between pt-4 border-t border-neutral-200/30 dark:border-white/5">
                 <div className="flex items-center gap-1 text-sm text-yellow-500">
-                  <span>⭐</span><span className="font-mono text-xs">{project.stars}</span>
+                  {project.stars > 0 && (<><span>⭐</span><span className="font-mono text-xs">{project.stars}</span></>)}
                 </div>
                 <div className="flex items-center gap-2">
                   {project.demo_url && (
@@ -83,9 +83,11 @@ export default function ProjectsList() {
                       <FiExternalLink size={14} /><span>示例</span>
                     </a>
                   )}
-                  <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-primary">
-                    <FiGithub size={14} /><span>源码</span>
-                  </a>
+                  {project.html_url && (
+                    <a href={project.html_url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} className="text-sm flex items-center gap-1.5 px-3 py-1.5 rounded-lg btn-primary">
+                      <FiGithub size={14} /><span>源码</span>
+                    </a>
+                  )}
                 </div>
               </div>
               <div className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-t from-indigo-500/5 to-transparent" />

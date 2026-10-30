@@ -95,6 +95,7 @@ npm run preview
 │   ├── pages/               # 页面组件
 │   │   ├── resources/       # 资源页面
 │   │   ├── 2019Card.jsx     # 健康码纪念版入口
+│   │   ├── PrecisionTouchpadLab.jsx # 触控板测试台示例入口
 │   │   ├── SkillDetail.jsx  # 技能详情页
 │   │   ├── TzResources.jsx  # 天真的资源页
 │   │   └── ...
@@ -104,13 +105,25 @@ npm run preview
 │   ├── main.jsx             # React 渲染
 │   └── index.css            # 全局样式
 ├── public/
-│   └── 2019-card/           # 健康码纪念版静态页面
+│   ├── 2019-card/           # 健康码纪念版静态页面
+│   └── precision-touchpad-lab/ # 触控板测试台静态页面
 ├── index.html               # HTML 模板
 ├── vite.config.js           # Vite 配置
 ├── tailwind.config.js       # Tailwind 配置
 ├── package.json             # 项目配置
 └── README.md                # 本文件
 ```
+
+---
+
+## 在线示例
+
+| 路径 | 项目 | 说明 |
+|------|------|------|
+| `/2019-card` | 2019-card | 健康码 & 行程卡纪念版 |
+| `/precision-touchpad-lab` | Precision Touchpad Lab | Windows 触控板素质测试台 |
+
+示例都放在 `public/<slug>/` 下，作为独立静态页面直接运行（`public/<slug>/index.html`）；`src/pages/` 里各有一个同名的 React 页面，用 iframe 内嵌这份静态页面；再在 `src/pages/projectsData.js` 中给对应项目补上 `demo_url`，项目卡片上的「示例」按钮就会亮起。
 
 ---
 

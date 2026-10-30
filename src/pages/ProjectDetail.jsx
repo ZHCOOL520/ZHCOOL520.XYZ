@@ -31,7 +31,9 @@ export default function ProjectDetail() {
             <div>
               <h1 className="text-3xl sm:text-4xl font-bold text-neutral-800 dark:text-neutral-100 mb-2">{project.title}</h1>
               <div className="flex items-center gap-3 flex-wrap">
-                <span className="flex items-center gap-1 text-sm text-yellow-500"><FiStar size={14} />{project.stars}</span>
+                {project.stars > 0 && (
+                  <span className="flex items-center gap-1 text-sm text-yellow-500"><FiStar size={14} />{project.stars}</span>
+                )}
                 {project.tags.map((tag) => (
                   <span key={tag} className="px-2 py-0.5 text-xs rounded-full bg-neutral-100 dark:bg-neutral-800 text-neutral-600 dark:text-neutral-300 font-mono">{tag}</span>
                 ))}
@@ -87,10 +89,12 @@ export default function ProjectDetail() {
               <FiExternalLink size={18} /> 在线演示（本站） <FiExternalLink size={16} />
             </a>
           )}
-          <a href={project.html_url} target="_blank" rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-semibold text-sm uppercase tracking-wider hover:scale-[1.02] transition-transform shadow-lg shadow-indigo-500/20">
-            <FiGithub size={20} /> 在 GitHub 上查看源码 <FiExternalLink size={16} />
-          </a>
+          {project.html_url && (
+            <a href={project.html_url} target="_blank" rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-gradient-to-r from-indigo-500 to-violet-500 text-white font-semibold text-sm uppercase tracking-wider hover:scale-[1.02] transition-transform shadow-lg shadow-indigo-500/20">
+              <FiGithub size={20} /> 在 GitHub 上查看源码 <FiExternalLink size={16} />
+            </a>
+          )}
         </div>
       </div>
     </PageLayout>
