@@ -20,11 +20,19 @@
         </div>
       </div>
       <div class="topbar-right">
-        <div class="chips" aria-label="能力检测">
-          <span class="chip" id="chip-pointer">Pointer Events<span class="dot" data-state="idle"></span></span>
-          <span class="chip" id="chip-touch">Touch<span class="dot" data-state="idle"></span></span>
-          <span class="chip" id="chip-gesture">Gesture<span class="dot" data-state="idle"></span></span>
-          <span class="chip" id="chip-hid">WebHID<span class="dot" data-state="idle"></span></span>
+        <div class="chips" id="chips" aria-label="浏览器能力检测">
+          <span class="chip" id="chip-pointer" title="Pointer Events：本页靠它读取触控板指针信号（触点、压力、接触面积）">
+            <span class="chip-name">指针事件</span><b class="chip-state" data-state="idle">检测中</b>
+          </span>
+          <span class="chip" id="chip-touch" title="Touch Events：浏览器是否能拿到触摸点，触控板一般在 pointer 事件里上报">
+            <span class="chip-name">触摸事件</span><b class="chip-state" data-state="idle">检测中</b>
+          </span>
+          <span class="chip" id="chip-gesture" title="Gesture Events：旧版 Safari/WebKit 专用手势事件，Windows 上通常不可用，不影响测试">
+            <span class="chip-name">手势事件</span><b class="chip-state" data-state="idle">检测中</b>
+          </span>
+          <span class="chip" id="chip-hid" title="WebHID：浏览器能否直连 HID 设备，仅作能力参考，不参与评分">
+            <span class="chip-name">WebHID</span><b class="chip-state" data-state="idle">检测中</b>
+          </span>
         </div>
         <button class="btn btn-ghost" id="btn-help" type="button" title="查看测试说明">说明</button>
       </div>
@@ -35,9 +43,9 @@
         <div class="stage-head">
           <h2 id="stage-title">双指手势测试区</h2>
           <div class="stage-tabs" role="tablist" aria-label="手势模式">
-            <button class="tab is-active" role="tab" aria-selected="true" data-gesture="pinch" type="button">捏合缩放</button>
+            <button class="tab" role="tab" aria-selected="false" data-gesture="pinch" type="button">捏合缩放</button>
             <button class="tab" role="tab" aria-selected="false" data-gesture="rotate" type="button">旋转</button>
-            <button class="tab" role="tab" aria-selected="false" data-gesture="both" type="button">缩放 + 旋转</button>
+            <button class="tab is-active" role="tab" aria-selected="true" data-gesture="both" type="button">缩放 + 旋转</button>
           </div>
           <div class="stage-actions">
             <button class="btn" id="btn-reset" type="button" title="R">重置手势</button>
@@ -80,7 +88,7 @@
             <div class="grade-badge" id="score-grade" data-grade="none">—</div>
             <div class="score-main">
               <div class="score-number"><strong id="score-value">--</strong><span>/ 100</span></div>
-              <div class="score-caption" id="score-caption">按「测试项」逐项完成，实时计算素质评分</div>
+              <div class="score-caption" id="score-caption">取本次测试的最好成绩，只升不降</div>
             </div>
           </div>
 
@@ -111,9 +119,11 @@
           </div>
 
           <div class="verdict-actions">
-            <button class="btn btn-primary" id="btn-report" type="button">生成报告</button>
+            <button class="btn btn-primary" id="btn-report" type="button">预览报告</button>
+            <button class="btn" id="btn-export" type="button" title="导出 TXT 文件，数值为本次测试的最好成绩">导出 TXT</button>
             <button class="btn" id="btn-copy" type="button" disabled>复制</button>
           </div>
+          <button class="btn btn-tiny btn-restart" id="btn-restart" type="button" title="清空本次最好成绩，从 0 重新开始">↺ 重新测试（清零成绩）</button>
         </section>
 
         <section class="panel" id="apple-panel">
@@ -226,7 +236,15 @@
       </p>
       <p class="help-note">
         <strong>综合评分</strong>由六项加权得出：精准信号、手势覆盖、轨迹连续、采样率、多点触控、压力分层；没测到的项不参与计算，页面会显示「已测 N/6」。
-        「对标苹果」把各项得分与 MacBook Pro 触控板的参考基线逐项比较，差距最大的两项会写进结论。
+        <strong>每一项都取本次测试里的最好成绩</strong>，所以分数只会升、不会来回跳动；想重新开始点「重新测试」。
+        「对标苹果」把各项最好成绩与 MacBook Pro 触控板的参考基线逐项比较，差距最大的两项会写进结论。
+      </p>
+      <p class="help-note">
+        <strong>顶部四个色块是什么：</strong>那是「浏览器能力检测」，不参与评分，只说明当前浏览器能不能拿到对应的输入能力。
+        <span class="help-legend"><b data-state="on">绿</b> 支持</span>
+        <span class="help-legend"><b data-state="off">红</b> 不支持</span>
+        ——
+        <em>指针事件</em>是测触控板的前提；<em>触摸事件</em>显示系统报告的最大触点数，触控板测试不依赖它；<em>手势事件</em>是旧版 WebKit 的东西，Windows 上红着完全正常；<em>WebHID</em> 仅作参考。
       </p>
       <div class="help-actions">
         <button class="btn btn-primary" value="close">知道了</button>
@@ -237,8 +255,11 @@
   <div class="report" id="report" hidden>
     <div class="report-card">
       <div class="report-head">
-        <h2>触控板诊断报告</h2>
-        <button class="btn btn-tiny" id="btn-close-report" type="button">关闭</button>
+        <h2>触控板素质报告</h2>
+        <div class="report-head-actions">
+          <button class="btn btn-primary btn-tiny" id="btn-export-2" type="button">导出 TXT</button>
+          <button class="btn btn-tiny" id="btn-close-report" type="button">关闭</button>
+        </div>
       </div>
       <pre id="report-text"></pre>
     </div>

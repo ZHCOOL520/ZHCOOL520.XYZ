@@ -217,7 +217,7 @@ export const projectsData = {
     title: 'Precision Touchpad Lab',
     icon: '🖱️',
     description: 'Windows 触控板素质测试台：判断是不是精准触控板，双指捏合 / 旋转 / 压力 / 轨迹逐项测试，六维加权评分并对标 MacBook Pro。',
-    fullDescription: 'Precision Touchpad Lab 是一个零依赖的纯前端测试台，用来判断手边的 Windows 触控板是不是「精准触控板（Precision Touchpad）」。页面通过 Pointer Events 读取 pointerType、接触面积、压力与采样点，配合双指捏合缩放、双指旋转、单指轨迹平滑度等交互测试，把结果汇总成六维加权评分（精准信号 22%、手势覆盖 22%、轨迹连续 18%、采样率 16%、多点触控 10%、压力分层 12%），给出 S / A / B / C / D 等级，并与 MacBook Pro 14/16 吋的玻璃压感触控板逐项对标。只把已测到的维度纳入加权，没测到的不会拉低分数；所有数据都留在本机，不联网、不上传。',
+    fullDescription: 'Precision Touchpad Lab 是一个零依赖的纯前端测试台，用来判断手边的 Windows 触控板是不是「精准触控板（Precision Touchpad）」。页面通过 Pointer Events 读取 pointerType、接触面积、压力与采样点，配合双指捏合缩放、双指旋转、单指轨迹平滑度等交互测试，把结果汇总成六维加权评分（精准信号 22%、手势覆盖 22%、轨迹连续 18%、采样率 16%、多点触控 10%、压力分层 12%），给出 S / A / B / C / D 等级，并与 MacBook Pro 14/16 吋的玻璃压感触控板逐项对标。只把已测到的维度纳入加权，没测到的不会拉低分数；每个维度取本次测试的最好成绩，所以分数只升不降，想从头再来可一键「重新测试（清零成绩）」。报告支持预览、导出 TXT 与一键复制，所有数据都留在本机，不联网、不上传。',
     tags: ['HTML', 'JavaScript', 'CSS', 'Pointer Events'],
     gradient: 'from-cyan-500/20 to-blue-500/20',
     stars: 0,
@@ -231,7 +231,9 @@ export const projectsData = {
       '六维加权评分 + S / A / B / C / D 等级，未测项不参与计算',
       '对标苹果：逐项显示「你的分数 / MacBook Pro 基线」',
       '硬件指纹面板：指针类型、最大触点、事件频率、设备像素比、平台',
-      '一键生成诊断报告，可复制文本',
+      '成绩取本次测试的最好成绩，只升不降，可一键清零重测',
+      '报告预览 / 导出 TXT（带 BOM）/ 一键复制，数值与页面一致',
+      '顶部能力检测色块（指针 / 触摸 / 手势 / WebHID）仅作参考，不参与评分',
       '零依赖纯前端，双击 index.html 也能跑，数据不离开本机',
     ],
     techStack: [
@@ -240,7 +242,7 @@ export const projectsData = {
       { name: 'Pointer Events', desc: '读取精准触控板信号（pointerType / 压力 / 面积）' },
       { name: 'Canvas 2D', desc: '单指轨迹绘制与断点检测' },
     ],
-    readmeSummary: '一个零依赖的静态网页，用来判断 Windows 触控板是不是精准触控板并给综合素质打分。测试项包括精准指针检测、双指捏合、双指旋转、压力 / 接触面积、单指轨迹平滑度；综合评分由六个维度加权（精准信号 22%、手势覆盖 22%、轨迹连续 18%、采样率 16%、多点触控 10%、压力分层 12%），只把已测到的维度纳入计算，映射成 S/A/B/C/D 等级并与 MacBook Pro 14/16 吋的 Force Touch 触控板逐项对标。材质、震动反馈、表面摩擦力浏览器读不到，不计入评分。打开 index.html 即可使用，双击文件也能跑，不需要服务器、不联网、数据不离开本机。本站在线演示：/precision-touchpad-lab',
+    readmeSummary: '一个零依赖的静态网页，用来判断 Windows 触控板是不是精准触控板并给综合素质打分。测试项包括精准指针检测、双指捏合、双指旋转、压力 / 接触面积、单指轨迹平滑度；综合评分由六个维度加权（精准信号 22%、手势覆盖 22%、轨迹连续 18%、采样率 16%、多点触控 10%、压力分层 12%），只把已测到的维度纳入计算，映射成 S/A/B/C/D 等级并与 MacBook Pro 14/16 吋的 Force Touch 触控板逐项对标。每个维度取本次测试的最好成绩（只升不降），可点「重新测试」清零；报告支持预览、导出 TXT、一键复制。材质、震动反馈、表面摩擦力浏览器读不到，不计入评分。打开 index.html 即可使用，双击文件也能跑，不需要服务器、不联网、数据不离开本机。本站在线演示：/precision-touchpad-lab',
   },
 
   lolipickaxe: {

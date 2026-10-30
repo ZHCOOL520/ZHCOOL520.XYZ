@@ -24,7 +24,7 @@
     rotation: 0,
     tx: 0,
     ty: 0,
-    mode: "pinch", // pinch | rotate | both
+    mode: "both", // pinch | rotate | both
     pointers: new Map(), // pointerId -> {x, y, pressure, width, height, kind}
     maxPointers: 0,
     dragStart: null,
@@ -47,6 +47,19 @@
     lastTransformUpdate: 0,
     renderQueued: false,
     verdictLevel: "unknown",
+    bestTotal: 0,
+    maxScale: 1,
+    maxRotation: 0,
+    maxRate: 0,
+    // 每个维度的历史最好成绩（只升不降）
+    best: {
+      precision: { value: 0, measured: false },
+      gesture: { value: 0, measured: false },
+      smooth: { value: 0, measured: false },
+      rate: { value: 0, measured: false },
+      pointers: { value: 0, measured: false },
+      pressure: { value: 0, measured: false },
+    },
     tests: { precision: "idle", pinch: "idle", rotate: "idle", pressure: "idle", trajectory: "idle" },
     smoothness: { points: 0, jumpCount: 0, maxJump: 0, maxAllowedJump: 0 },
     trail: { x: null, y: null, points: 0 },
@@ -90,10 +103,10 @@
     scoreCaption: $("#score-caption"),
     appleRows: $("#apple-rows"),
     appleSummary: $("#apple-summary"),
-    chipPointer: $("#chip-pointer .dot"),
-    chipTouch: $("#chip-touch .dot"),
-    chipGesture: $("#chip-gesture .dot"),
-    chipHid: $("#chip-hid .dot"),
+    chipPointer: $("#chip-pointer .chip-state"),
+    chipTouch: $("#chip-touch .chip-state"),
+    chipGesture: $("#chip-gesture .chip-state"),
+    chipHid: $("#chip-hid .chip-state"),
     fpType: $("#fp-pointer-type"),
     fpSize: $("#fp-size"),
     fpPressure: $("#fp-pressure"),
@@ -105,6 +118,9 @@
     report: $("#report"),
     reportText: $("#report-text"),
     btnCopy: $("#btn-copy"),
+    btnExport: $("#btn-export"),
+    btnExport2: $("#btn-export-2"),
+    btnRestart: $("#btn-restart"),
     help: $("#help-dialog"),
   };
 
@@ -145,6 +161,13 @@
   /* ------------------------------------------------------------------ */
   /* Transform                                                           */
   /* ------------------------------------------------------------------ */
+  /** 记录本次测试达到过的最大缩放 / 旋转（报告用峰值，不用瞬时值） */
+  function trackPeaks() {
+    const s = clamp(state.scale, 0.2, 8);
+    if (s > state.maxScale) state.maxScale = s;
+    if (Math.abs(state.rotation) > state.maxRotation) state.maxRotation = Math.abs(state.rotation);
+  }
+
   function applyTransform(smooth = false) {
     const s = clamp(state.scale, 0.2, 8);
     const r = state.rotation;
@@ -153,9 +176,11 @@
     dom.hudScale.textContent = `${s.toFixed(2)}×`;
     dom.hudRotate.textContent = `${r.toFixed(1)}°`;
     dom.hudPointers.textContent = String(state.pointers.size);
+    trackPeaks();
   }
 
   function scheduleTransform(smooth = false) {
+    trackPeaks();
     if (state.renderQueued) return;
     state.renderQueued = true;
     requestAnimationFrame(() => {
@@ -571,8 +596,8 @@
     }));
   }
 
-  function qualityScore() {
-    const rows = metricRows();
+  /** 只按已测维度加权平均 */
+  function weightedScore(rows) {
     let weighted = 0;
     let weightSum = 0;
     for (const row of rows) {
@@ -581,11 +606,15 @@
       weightSum += row.weight;
     }
     return {
-      rows,
       score: weightSum ? Math.round(weighted / weightSum) : 0,
       measuredCount: rows.filter((row) => row.measured).length,
       weightSum,
     };
+  }
+
+  function qualityScore() {
+    const rows = metricRows();
+    return { rows, ...weightedScore(rows) };
   }
 
   function gradeOf(score, measuredCount) {
@@ -679,10 +708,40 @@
     }
   }
 
+  /**
+   * 峰值保持：每个维度只记录本次测试中的最好成绩，
+   * 因此评分只会升不会降，导出/报告里的数值也不会来回跳。
+   */
+  function applyBest(rows) {
+    for (const row of rows) {
+      const prev = state.best[row.key];
+      if (row.measured && row.value > prev.value) {
+        prev.value = row.value;
+      }
+      if (row.measured) prev.measured = true;
+      if (prev.measured) {
+        row.value = prev.value;
+        row.measured = true;
+      }
+    }
+    return rows;
+  }
+
   function updateVerdict() {
-    const precision = precisionScore();
-    const gesture = gestureCoverage();
-    const smooth = smoothScore();
+    const q = qualityScore();
+    applyBest(q.rows);
+    Object.assign(q, weightedScore(q.rows));
+
+    // 总分也取本次测试的最高值：新增测试项时不会把已经拿到的分数往回拉
+    if (q.measuredCount >= 2) {
+      state.bestTotal = Math.max(state.bestTotal, q.score);
+      q.liveScore = q.score;
+      q.score = state.bestTotal;
+    }
+
+    const precision = q.rows[0].value;
+    const gesture = q.rows[1].value;
+    const smooth = q.rows[2].value;
 
     if (dom.meterPrecision) {
       dom.meterPrecision.style.width = `${precision}%`;
@@ -693,7 +752,6 @@
       dom.meterSmoothVal.textContent = `${smooth}%`;
     }
 
-    const q = qualityScore();
     const g = gradeOf(q.score, q.measuredCount);
     renderApple(q);
 
@@ -708,7 +766,7 @@
       dom.scoreCaption.textContent =
         q.measuredCount >= 2
           ? `已测 ${q.measuredCount} / 6 项 · 约等于 ${APPLE.name} 的 ${Math.round((q.score / APPLE.refScore) * 100)}%`
-          : "按「测试项」逐项完成，实时计算素质评分";
+          : "逐项完成下面的测试，成绩取本次最好，只升不降";
     }
 
     let level = "unknown";
@@ -767,6 +825,7 @@
     state.eventCount += 1;
     if (state.eventCount % 8 === 0) {
       state.rate = state.eventWindow.length;
+      if (state.rate > state.maxRate) state.maxRate = state.rate;
       if (dom.fpRate) dom.fpRate.textContent = `${state.rate} /s`;
       updateVerdict();
     }
@@ -1059,12 +1118,21 @@
   /* ------------------------------------------------------------------ */
   /* Report                                                              */
   /* ------------------------------------------------------------------ */
-  function buildReport() {
-    const tests = Object.entries(state.tests)
+  /** 本次测试出现过的压力范围（只增不减，导出稳定） */
+  function pressureRangeText() {
+    if (!state.pressureSeen.size) return "—";
+    const values = [...state.pressureSeen].sort((a, b) => a - b);
+    const lo = (values[0] / 20).toFixed(2);
+    const hi = (values[values.length - 1] / 20).toFixed(2);
+    return `${state.pressureSeen.size} 档 (${lo} – ${hi})`;
+  }
+
+  function buildReport() {    const tests = Object.entries(state.tests)
       .map(([k, v]) => `  ${TEST_LABEL[k]}：${v === "pass" ? "通过" : v === "warn" ? "部分" : v === "fail" ? "未通过" : "待测"}`)
       .join("\n");
     const q = state.quality || qualityScore();
     const g = state.grade || gradeOf(q.score, q.measuredCount);
+    const byKey = Object.fromEntries(q.rows.map((row) => [row.key, row]));
     const cmp = q.rows
       .map((row) => {
         const mine = row.measured ? `${row.value}` : "待测";
@@ -1080,6 +1148,8 @@
       `平台：${state.platform}`,
       `UA：${state.userAgent}`,
       "",
+      "（下列数值均为本次测试的最好成绩，只升不降，可重复导出）",
+      "",
       `综合评分：${q.measuredCount >= 2 ? `${q.score} / 100（${g.grade} 级，${g.label}）` : "测试未完成"}`,
       `已测维度：${q.measuredCount} / 6`,
       "判定：" + (state.verdictLevel === "precision"
@@ -1089,7 +1159,7 @@
           : state.verdictLevel === "basic"
             ? "未检测到精准触控板"
             : "未完成测试"),
-      `精准信号得分：${precisionScore()}%   手势覆盖：${gestureCoverage()}%   轨迹平滑：${smoothScore()}%`,
+      `精准信号：${byKey.precision.value}%   手势覆盖：${byKey.gesture.value}%   轨迹平滑：${byKey.smooth.value}%`,
       "",
       "对标 MacBook Pro（参考分 98）：",
       cmp,
@@ -1101,13 +1171,13 @@
       "硬件指纹：",
       `  指针类型：${dom.fpType?.textContent || "—"}`,
       `  接触面积：${dom.fpSize?.textContent || "—"}`,
-      `  压力：${dom.fpPressure?.textContent || "—"}`,
+      `  压力范围：${pressureRangeText()}`,
       `  最大触点：${state.maxPointers}`,
-      `  事件频率：${state.rate} /s`,
+      `  事件频率（峰值）：${state.maxRate} /s`,
       `  devicePixelRatio：${window.devicePixelRatio || 1}`,
       "",
       `精准信号命中：touch=${state.precisionHits.touch} size=${state.precisionHits.size} pressure=${state.precisionHits.pressure} tilt=${state.precisionHits.tilt}`,
-      `手势结果：scale=${state.scale.toFixed(2)}× rotation=${state.rotation.toFixed(1)}°`,
+      `手势峰值：最大缩放 ${state.maxScale.toFixed(2)}×，最大旋转 ${state.maxRotation.toFixed(1)}°`,
       `轨迹采样：${state.smoothness.points} 点，断点 ${state.smoothness.jumpCount} 次`,
     ].join("\n");
   }
@@ -1131,25 +1201,103 @@
     }
   }
 
+  /** 导出为真正的 .txt 文件（数值取最好成绩，内容不会自己变动） */
+  function downloadReport() {
+    updateVerdict();
+    const text = buildReport();
+    state.reportText = text;
+    const stamp = (() => {
+      const d = new Date();
+      const p = (n) => String(n).padStart(2, "0");
+      return `${d.getFullYear()}${p(d.getMonth() + 1)}${p(d.getDate())}-${p(d.getHours())}${p(d.getMinutes())}${p(d.getSeconds())}`;
+    })();
+    const blob = new Blob(["\ufeff", text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `precision-touchpad-report-${stamp}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+    dom.btnCopy.disabled = false;
+    log("good", "导出", `已导出 ${a.download}`);
+    toastOverlay("已导出 TXT", "报告已保存到下载目录", 2600);
+  }
+
+  /** 清空本次成绩，从头再测 */
+  function restart() {
+    for (const key of Object.keys(state.best)) {
+      state.best[key].value = 0;
+      state.best[key].measured = false;
+    }
+    for (const key of Object.keys(state.tests)) state.tests[key] = "idle";
+    state.pressureSeen.clear();
+    state.precisionHits = { size: 0, pressure: 0, tilt: 0, touch: 0 };
+    state.touchSeen = false;
+    state.maxPointers = 0;
+    state.maxScale = 1;
+    state.maxRotation = 0;
+    state.maxRate = 0;
+    state.eventCount = 0;
+    state.eventWindow.length = 0;
+    state.rate = 0;
+    state.smoothness = { points: 0, jumpCount: 0, maxJump: 0, maxAllowedJump: 0 };
+    state.trail = { x: null, y: null, points: 0 };
+    state.reportText = "";
+    state.quality = null;
+    state.grade = null;
+    state.bestTotal = 0;
+
+    for (const name of Object.keys(TEST_LABEL)) {
+      const li = dom.tests?.querySelector(`[data-test="${name}"]`);
+      const icon = li?.querySelector(".test-icon");
+      const badge = li?.querySelector(".test-state");
+      if (icon) icon.dataset.status = "idle";
+      if (badge) {
+        badge.dataset.status = "idle";
+        badge.textContent = "待测";
+      }
+    }
+
+    if (dom.fpMaxPointers) dom.fpMaxPointers.textContent = "0";
+    if (dom.fpRate) dom.fpRate.textContent = "0 /s";
+    if (dom.fpPressure) dom.fpPressure.textContent = "—";
+    if (dom.btnCopy) {
+      dom.btnCopy.disabled = true;
+      dom.btnCopy.textContent = "复制";
+    }
+    if (dom.report) dom.report.hidden = true;
+
+    clearTrail();
+    resetTransform(false);
+    updateProgress();
+    updateVerdict();
+    log("info", "重置", "已清空最好成绩，重新开始测试");
+    toastOverlay("已重新开始", "再做一次捏合 / 旋转，成绩从 0 记起", 2400);
+  }
+
   /* ------------------------------------------------------------------ */
   /* Capability probe                                                    */
   /* ------------------------------------------------------------------ */
-  function setDot(el, stateName) {
+  function setChip(el, stateName, text) {
     if (!el) return;
     el.dataset.state = stateName;
+    el.textContent = text;
   }
 
   function probe() {
     const hasPointer = "PointerEvent" in window;
-    const hasTouch = "ontouchstart" in window || navigator.maxTouchPoints > 0;
+    const touchPoints = navigator.maxTouchPoints || 0;
+    const hasTouch = "ontouchstart" in window || touchPoints > 0;
     const hasGesture = "ongesturestart" in window || "GestureEvent" in window;
     const hasHid = "hid" in navigator;
 
-    state.capi = { hasPointer, hasTouch, hasGesture, hasHid };
-    setDot(dom.chipPointer, hasPointer ? "on" : "off");
-    setDot(dom.chipTouch, hasTouch ? "on" : "warn");
-    setDot(dom.chipGesture, hasGesture ? "on" : "off");
-    setDot(dom.chipHid, hasHid ? "on" : "off");
+    state.capi = { hasPointer, hasTouch, hasGesture, hasHid, touchPoints };
+    setChip(dom.chipPointer, hasPointer ? "on" : "off", hasPointer ? "支持" : "不支持");
+    setChip(dom.chipTouch, hasTouch ? "on" : "off", touchPoints > 0 ? `${touchPoints} 点` : hasTouch ? "支持" : "不支持");
+    setChip(dom.chipGesture, hasGesture ? "on" : "off", hasGesture ? "支持" : "不支持");
+    setChip(dom.chipHid, hasHid ? "on" : "off", hasHid ? "支持" : "不支持");
 
     buildFingerprint();
     log(
@@ -1209,6 +1357,9 @@
     $("#btn-help").addEventListener("click", () => dom.help.showModal());
     $("#btn-report").addEventListener("click", openReport);
     $("#btn-copy").addEventListener("click", copyReport);
+    $("#btn-export").addEventListener("click", downloadReport);
+    dom.btnExport2?.addEventListener("click", downloadReport);
+    dom.btnRestart?.addEventListener("click", restart);
     $("#btn-close-report").addEventListener("click", () => (dom.report.hidden = true));
     $("#btn-clear-log").addEventListener("click", () => {
       state.log = [];

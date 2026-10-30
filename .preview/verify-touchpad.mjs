@@ -87,6 +87,7 @@ report.reactPage = await evalJs(`(() => {
     frame.title = d?.title;
     frame.hasText = (d?.body?.innerText || '').includes('触控板');
     frame.bodyH = Math.round(d?.body?.getBoundingClientRect().height || 0);
+    frame.scrollH = Math.round(d?.documentElement?.scrollHeight || 0);
   } catch (e) { frame.error = String(e); }
   return {
     h1: document.querySelector('#root h1')?.textContent,
@@ -144,6 +145,47 @@ report.afterRelease = await evalJs(`({
 })`);
 await sleep(400);
 await shot('touchpad-demo.png');
+
+// ---------- 2b. new v2 controls: default tab, report modal, TXT export, restart ----------
+report.v2 = await evalJs(`({
+  activeTab: document.querySelector('.stage-tabs .tab.is-active')?.textContent,
+  buttons: ['btn-report', 'btn-export', 'btn-copy', 'btn-restart'].map(id => {
+    const b = document.getElementById(id);
+    return b ? { id, text: b.textContent.trim(), exists: true } : { id, exists: false };
+  }),
+  scrollH: document.documentElement.scrollHeight,
+  vh: innerHeight
+})`);
+
+const downloadDir = OUT;
+try { await send('Page.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadDir }); }
+catch { await send('Browser.setDownloadBehavior', { behavior: 'allow', downloadPath: downloadDir, eventsEnabled: true }); }
+
+await evalJs(`document.getElementById('btn-report').click(); 'ok'`);
+await sleep(500);
+report.v2.modal = await evalJs(`(() => {
+  const m = document.getElementById('report');
+  return { hidden: m?.hidden, textLen: (m?.innerText || '').length, head: (m?.querySelector('h2')?.textContent || '').trim() };
+})()`);
+await evalJs(`document.getElementById('btn-export-2').click(); 'ok'`);
+await sleep(1500);
+const dl = fs.readdirSync(downloadDir).filter(f => /^precision-touchpad-report-.*\.txt$/.test(f)).map(f => {
+  const p = path.join(downloadDir, f);
+  const buf = fs.readFileSync(p);
+  const text = buf.toString('utf8');
+  return { file: f, bytes: buf.length, hasBom: buf[0] === 0xef && buf[1] === 0xbb && buf[2] === 0xbf, firstLine: text.replace(/^\ufeff/, '').split(/\r?\n/)[0], mentionsBest: text.includes('最好成绩') };
+});
+report.v2.downloads = dl;
+for (const d of dl) fs.rmSync(path.join(downloadDir, d.file), { force: true });
+
+await evalJs(`document.getElementById('btn-close-report')?.click(); 'ok'`);
+await evalJs(`document.getElementById('btn-restart').click(); 'ok'`);
+await sleep(700);
+report.v2.afterRestart = await evalJs(`({
+  score: document.querySelector('#score-value')?.textContent,
+  grade: document.querySelector('#score-grade')?.textContent,
+  testsPassed: [...document.querySelectorAll('.test')].filter(t => t.querySelector('.test-state')?.dataset.status === 'pass').length
+})`);
 
 // ---------- 3. homepage projects section ----------
 await navigate(`${BASE}/`);

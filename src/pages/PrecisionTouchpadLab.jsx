@@ -1,6 +1,6 @@
 import { Helmet } from 'react-helmet-async';
 import BackLink from '../components/shared/BackLink.jsx';
-import { FiExternalLink, FiTarget, FiMove, FiRotateCw, FiActivity, FiCpu, FiMaximize2, FiStar } from 'react-icons/fi';
+import { FiExternalLink, FiTarget, FiMove, FiRotateCw, FiActivity, FiCpu, FiMaximize2, FiStar, FiTrendingUp, FiDownload } from 'react-icons/fi';
 
 const DEMO_URL = '/precision-touchpad-lab/index.html';
 
@@ -11,6 +11,8 @@ const features = [
   { icon: FiActivity, label: '压力与接触面积分层读取' },
   { icon: FiCpu, label: '单指轨迹平滑度与采样率统计' },
   { icon: FiMaximize2, label: '六维加权评分 + S/A/B/C/D 等级' },
+  { icon: FiTrendingUp, label: '成绩只升不降：每项取本次最好成绩' },
+  { icon: FiDownload, label: '报告预览 / 导出 TXT / 一键复制' },
 ];
 
 const dims = [
@@ -124,6 +126,7 @@ export default function PrecisionTouchpadLab() {
           </div>
           <p className="text-xs text-neutral-400 dark:text-neutral-500 mt-3 leading-relaxed">
             只把已测到的维度纳入加权，没测的不会拉低分数。等级：S ≥ 90、A ≥ 80、B ≥ 68、C ≥ 52、D 更低。
+            综合评分取本次测试的最好成绩，只管升、不会因为手指停下而回落；想从头再来点「↺ 重新测试（清零成绩）」。
             材质、震动反馈与表面摩擦力浏览器读不到，不计入评分。
           </p>
         </div>
@@ -132,8 +135,9 @@ export default function PrecisionTouchpadLab() {
         <div className="max-w-3xl mx-auto mt-8 glass-card">
           <h3 className="text-sm font-semibold text-neutral-800 dark:text-neutral-100 mb-2">操作提示</h3>
           <ul className="text-xs text-neutral-500 dark:text-neutral-400 space-y-1.5 leading-relaxed">
-            <li>▸ 双指在测试区捏合 / 张开 / 旋转，右侧「测试项」会自动亮起通过、部分或未通过。</li>
+            <li>▸ 双指在测试区捏合 / 张开 / 旋转（默认「缩放 + 旋转」模式，一张图同时测两件事），右侧「测试项」会自动亮起通过、部分或未通过。</li>
             <li>▸ 单指按住画圈或画斜线，观察轨迹是否连续、有无断点。</li>
+            <li>▸ 「预览报告」可弹窗查看完整文本并导出 <code className="px-1 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono">.txt</code>（带 BOM，记事本直接可读），数值统一取本次测试的最好成绩。</li>
             <li>▸ 键盘 <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono">+</kbd>/<kbd className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono">-</kbd> 缩放，
               <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono">[</kbd>/<kbd className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono">]</kbd> 旋转，
               <kbd className="px-1.5 py-0.5 rounded bg-neutral-100 dark:bg-neutral-800 font-mono">R</kbd> 重置，
